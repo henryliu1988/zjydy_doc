@@ -1,0 +1,55 @@
+apply plugin: 'com.android.application'
+apply plugin: 'android-apt'
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion "24.0.1"
+
+    defaultConfig {
+        applicationId "com.zhjydy_doc"
+        minSdkVersion 15
+        targetSdkVersion 24
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+    }
+}
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:24.1.1'
+    compile 'com.android.support:design:24.1.1'
+    compile files('libs/TalkingdataAnalytics.jar')
+    compile files('libs/fastjson-1.2.9.jar')
+    compile files('libs/ksoap2-android-assembly-3.0.0-jar-with-dependencies.jar')
+    compile files('libs/universal-image-loader-1.9.5.jar')
+    compile 'io.reactivex:rxandroid:1.2.1'
+    compile 'io.reactivex:rxjava:1.1.6'
+    compile project(':lib:pulltorefresh')
+    compile project(':lib:calendarcomponent')
+    compile project(':lib:dropdownmenu')
+    compile project(':lib:FlycoTabLayout_Lib')
+    compile 'com.bigkoo:pickerview:2.1.1'
+    compile 'com.jakewharton:butterknife:8.2.1'
+    apt 'com.jakewharton:butterknife-compiler:8.2.1'
+    compile 'homhomlin.lib:apsts:1.4.0'
+    compile 'com.bigkoo:convenientbanner:2.0.5'
+    compile files('libs/android-viewbadger.jar')
+    compile files('libs/android-json-rpc-0.3.4.jar')
+    compile 'de.hdodenhof:circleimageview:2.1.0'
+
+}

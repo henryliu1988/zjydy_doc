@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/lib/FlycoTabLayout_Lib/FlycoTabLayout_Lib.iml" filepath="$PROJECT_DIR$/lib/FlycoTabLayout_Lib/FlycoTabLayout_Lib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib/calendarcomponent/calendarcomponent.iml" filepath="$PROJECT_DIR$/lib/calendarcomponent/calendarcomponent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib/dropdownmenu/dropdownmenu.iml" filepath="$PROJECT_DIR$/lib/dropdownmenu/dropdownmenu.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib/lib.iml" filepath="$PROJECT_DIR$/lib/lib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib/pulltorefresh/pulltorefresh.iml" filepath="$PROJECT_DIR$/lib/pulltorefresh/pulltorefresh.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zjydy_doc.iml" filepath="$PROJECT_DIR$/zjydy_doc.iml" />
+    </modules>
+  </component>
+</project>
