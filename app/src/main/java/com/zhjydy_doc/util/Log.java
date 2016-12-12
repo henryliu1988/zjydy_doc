@@ -10,7 +10,7 @@ public class Log
      */
     public static boolean isDebug=true;
 
-    private static String head = "Sims_";
+    private static String head = "zhuanjia121_doc";
     /**
             * 打印错误
     * @param clazz

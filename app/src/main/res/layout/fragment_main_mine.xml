@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/titlebar_layout_main" />
+
+    <RelativeLayout
+        android:id="@+id/mine_info_layout"
+        style="@style/mine_item_layout"
+        android:paddingLeft="20dp">
+
+        <ImageView
+            android:id="@+id/mine_image"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:scaleType="fitCenter"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:src="@mipmap/photo" />
+
+        <TextView
+            android:id="@+id/mine_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_toRightOf="@id/mine_image"
+            android:paddingLeft="5dp"
+            android:layout_centerVertical="true"
+            android:textColor="@color/black_text2"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/item_turn" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/account_safe_layout"
+        style="@style/mine_item_layout"
+        android:layout_marginTop="15dp">
+
+        <ImageView
+            android:id="@+id/account_safe_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/mine_account_safe" />
+
+        <TextView
+            android:layout_toRightOf="@id/account_safe_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="账户安全"
+            android:textColor="@color/black_text"
+            android:layout_centerVertical="true"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/item_turn" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="15dp"
+        android:background="@color/div_line" />
+
+    <RelativeLayout
+        android:id="@+id/mine_confirm_msg_layout"
+        style="@style/mine_item_layout">
+
+        <ImageView
+            android:id="@+id/mine_confirm_msg_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:scaleType="fitCenter"
+            android:layout_marginRight="10dp"
+            android:src="@mipmap/mine_certificate" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/mine_confirm_msg_img"
+            android:layout_centerVertical="true"
+            android:text="认证信息"
+            android:textColor="@color/black_text"
+            android:textSize="15sp" />
+        <ImageView
+            android:id="@+id/mine_confirm_msg_turn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/item_turn" />
+
+        <TextView
+            android:id="@+id/mine_confirm_msg_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/mine_confirm_msg_turn"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="6dp"
+            android:visibility="gone"
+            android:textSize="15sp"
+            android:textColor="#48C13B"
+            android:text="已认证" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="15dp"
+        android:background="@color/div_line" />
+
+    <RelativeLayout
+        android:id="@+id/mine_history_layout"
+        style="@style/mine_item_layout">
+        <ImageView
+            android:id="@+id/mine_history_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:scaleType="fitCenter"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/mine_case" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/mine_history_image"
+            android:layout_centerVertical="true"
+            android:text="患者病例"
+            android:textColor="@color/black_text"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/item_turn" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="15dp"
+        android:background="@color/div_line" />
+
+    <RelativeLayout
+        android:id="@+id/mine_common_layout"
+        style="@style/mine_item_layout">
+
+        <ImageView
+            android:id="@+id/mine_common_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:src="@mipmap/mine_setting"
+            android:layout_centerVertical="true"
+            android:scaleType="fitCenter" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/mine_common_image"
+            android:layout_centerVertical="true"
+            android:text="通用"
+            android:textColor="@color/black_text"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/item_turn" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/mine_about_layout"
+        style="@style/mine_item_layout"
+        android:layout_marginTop="15dp">
+
+        <ImageView
+            android:id="@+id/mine_about_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:scaleType="fitCenter"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/mine_about" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/mine_about_image"
+            android:text="关于专家一对壹"
+            android:layout_centerVertical="true"
+            android:textColor="@color/black_text"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/item_turn" />
+    </RelativeLayout>
+
+</LinearLayout>

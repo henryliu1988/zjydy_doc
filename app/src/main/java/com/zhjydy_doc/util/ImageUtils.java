@@ -136,9 +136,9 @@ public class ImageUtils
         ImageLoader.getInstance().displayImage(encodedUrl, imageView, getSimpleOptions());
     }
 
-    public File getSimsImageFilePath(String name)
+    public File getAppImageFilePath(String name)
     {
-        File file = getSimsAppFilePath();
+        File file = getAppFilePath();
         if (file == null)
         {
             return null;
@@ -154,8 +154,7 @@ public class ImageUtils
                 + name);
         return imageFile;
     }
-
-    public File getSimsAppFilePath()
+    public File getAppFilePath()
     {
         File sdDir = null;
         boolean sdCardExist = Environment.getExternalStorageState().equals(
@@ -164,7 +163,7 @@ public class ImageUtils
         {
             // 这里可以修改为你的路径
             sdDir = new File(Environment.getExternalStorageDirectory()
-                    + "/Sims");
+                    + "/zhjydy");
             if (!sdDir.exists())
             {
                 sdDir.mkdir();
@@ -173,6 +172,5 @@ public class ImageUtils
         }
         return sdDir;
     }
-
 
 }

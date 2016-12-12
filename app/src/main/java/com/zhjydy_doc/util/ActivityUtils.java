@@ -5,12 +5,14 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.ViewGroup;
 
-
-import com.zhjydy_doc.MainTabsActivity;
-import com.zhjydy_doc.view.activity.IntentKey;
+import com.zhjydy_doc.app.ZhJDocApplication;
+import com.zhjydy_doc.model.entity.IntentKey;
+import com.zhjydy_doc.view.activity.LoginActivity;
+import com.zhjydy_doc.view.activity.MainTabsActivity;
 
 import java.util.Stack;
 
@@ -89,6 +91,15 @@ public class ActivityUtils
         activityStack.clear();
     }
 
+    public static void finishActivityExceptOne(Class<?> cls) {
+        for (Activity activity : activityStack)
+        {
+            if (!activity.getClass().equals(cls))
+            {
+                finishActivity(activity);
+            }
+        }
+    }
     /**
      * 退出应用程序
      */
@@ -117,7 +128,15 @@ public class ActivityUtils
         }
     }
 
-
+    public static void showLogin(Activity context, boolean finish)
+    {
+        if (finish)
+        {
+            finishAllActivity();
+        }
+        Intent intent = new Intent(ZhJDocApplication.getInstance().getContext(), LoginActivity.class);
+        context.startActivity(intent);
+    }
 
     public static void transActivity(Activity context1, Class des, boolean finish)
     {
@@ -148,6 +167,21 @@ public class ActivityUtils
     public static View getRootView(Activity context)
     {
         return ((ViewGroup)context.findViewById(android.R.id.content)).getChildAt(0);
+    }
+
+    public static void refreshFragment(Class activityCl,Class FragmentCl) {
+        Activity activity = null;
+        for (Activity ac : activityStack)
+        {
+            if (ac.getClass().equals(activityCl))
+            {
+                activity = ac;
+            }
+        }
+        if (activity == null && !(activity instanceof FragmentActivity)) {
+            return;
+        }
+
     }
 
 

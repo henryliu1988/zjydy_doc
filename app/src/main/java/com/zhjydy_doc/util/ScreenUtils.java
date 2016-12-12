@@ -10,7 +10,6 @@ import android.view.WindowManager;
 
 import com.zhjydy_doc.app.ZhJDocApplication;
 
-
 /**
  * Created by liutao on 2016/6/21.
  */

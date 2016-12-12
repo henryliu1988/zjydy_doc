@@ -1,5 +1,6 @@
 package com.zhjydy_doc.util;
 
+import java.text.ParseException;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -12,21 +13,21 @@ import java.util.regex.Pattern;
  */
 
 
-public class DateUtil
-{
+public class DateUtil {
 //    protected static Log logger = LogFactory.getLog(DateUtil.class);
 
     // 格式：年－月－日 小时：分钟：秒
-    public static final String FORMAT_ONE = "yyyy-MM-dd HH:mm:ss";
+    public static final String FORMAT_ONE = "yyyy年MM月dd日 HH:mm:ss";
 
     // 格式：年－月－日 小时：分钟
-    public static final String FORMAT_TWO = "yyyy-MM-dd HH:mm";
+    public static final String FORMAT_TWO = "yyyy年MM月dd日 HH:mm";
 
     // 格式：年月日 小时分钟秒
     public static final String FORMAT_THREE = "yyyyMMdd-HHmmss";
 
     // 格式：年－月－日
-    public static final String LONG_DATE_FORMAT = "yyyy-MM-dd";
+    public static final String LONG_DATE_FORMAT = "yyyy年MM月dd日";
+    public static final String LONG_DATE_FORMAT_1 = "yyyy/MM/dd";
 
     // 格式：月－日
     public static final String SHORT_DATE_FORMAT = "MM-dd";
@@ -62,8 +63,7 @@ public class DateUtil
     private static final SimpleDateFormat timeFormat = new SimpleDateFormat(
             "yyyy-MM-dd HH:mm:ss");
 
-    public DateUtil()
-    {
+    public DateUtil() {
     }
 
     /**
@@ -72,16 +72,13 @@ public class DateUtil
      * @param dateStr
      * @return
      */
-    public static Date stringtoDate(String dateStr, String format)
-    {
+    public static Date stringtoDate(String dateStr, String format) {
         Date d = null;
         SimpleDateFormat formater = new SimpleDateFormat(format);
-        try
-        {
+        try {
             formater.setLenient(false);
             d = formater.parse(dateStr);
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             // log.error(e);
             d = null;
         }
@@ -92,16 +89,13 @@ public class DateUtil
      * 把符合日期格式的字符串转换为日期类型
      */
     public static Date stringtoDate(String dateStr, String format,
-                                              ParsePosition pos)
-    {
+                                    ParsePosition pos) {
         Date d = null;
         SimpleDateFormat formater = new SimpleDateFormat(format);
-        try
-        {
+        try {
             formater.setLenient(false);
             d = formater.parse(dateStr, pos);
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             d = null;
         }
         return d;
@@ -113,15 +107,12 @@ public class DateUtil
      * @param date
      * @return
      */
-    public static String dateToString(Date date, String format)
-    {
+    public static String dateToString(Date date, String format) {
         String result = "";
         SimpleDateFormat formater = new SimpleDateFormat(format);
-        try
-        {
+        try {
             result = formater.format(date);
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             // log.error(e);
         }
         return result;
@@ -133,8 +124,7 @@ public class DateUtil
      * @param format
      * @return
      */
-    public static String getCurrDate(String format)
-    {
+    public static String getCurrDate(String format) {
         return dateToString(new Date(), format);
     }
 
@@ -143,8 +133,7 @@ public class DateUtil
      * @param amount
      * @return
      */
-    public static String dateSub(int dateKind, String dateStr, int amount)
-    {
+    public static String dateSub(int dateKind, String dateStr, int amount) {
         Date date = stringtoDate(dateStr, FORMAT_ONE);
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
@@ -159,8 +148,7 @@ public class DateUtil
      * @param secTime
      * @return 相减得到的秒数
      */
-    public static long timeSub(String firstTime, String secTime)
-    {
+    public static long timeSub(String firstTime, String secTime) {
         long first = stringtoDate(firstTime, FORMAT_ONE).getTime();
         long second = stringtoDate(secTime, FORMAT_ONE).getTime();
         return (second - first) / 1000;
@@ -173,26 +161,20 @@ public class DateUtil
      * @param month int
      * @return int
      */
-    public static int getDaysOfMonth(String year, String month)
-    {
+    public static int getDaysOfMonth(String year, String month) {
         int days = 0;
         if (month.equals("1") || month.equals("3") || month.equals("5")
                 || month.equals("7") || month.equals("8") || month.equals("10")
-                || month.equals("12"))
-        {
+                || month.equals("12")) {
             days = 31;
         } else if (month.equals("4") || month.equals("6") || month.equals("9")
-                || month.equals("11"))
-        {
+                || month.equals("11")) {
             days = 30;
-        } else
-        {
+        } else {
             if ((Integer.parseInt(year) % 4 == 0 && Integer.parseInt(year) % 100 != 0)
-                    || Integer.parseInt(year) % 400 == 0)
-            {
+                    || Integer.parseInt(year) % 400 == 0) {
                 days = 29;
-            } else
-            {
+            } else {
                 days = 28;
             }
         }
@@ -207,8 +189,7 @@ public class DateUtil
      * @param month int 月份[1-12]
      * @return int
      */
-    public static int getDaysOfMonth(int year, int month)
-    {
+    public static int getDaysOfMonth(int year, int month) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month - 1, 1);
         return calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
@@ -219,8 +200,7 @@ public class DateUtil
      *
      * @return int
      */
-    public static int getToday()
-    {
+    public static int getToday() {
         Calendar calendar = Calendar.getInstance();
         return calendar.get(Calendar.DATE);
     }
@@ -230,8 +210,7 @@ public class DateUtil
      *
      * @return int
      */
-    public static int getCurrentMonth()
-    {
+    public static int getCurrentMonth() {
         Calendar calendar = Calendar.getInstance();
         return calendar.get(Calendar.MONTH) + 1;
     }
@@ -241,8 +220,7 @@ public class DateUtil
      *
      * @return int
      */
-    public static int getCurrentYear()
-    {
+    public static int getCurrentYear() {
         Calendar calendar = Calendar.getInstance();
         return calendar.get(Calendar.YEAR);
     }
@@ -253,8 +231,7 @@ public class DateUtil
      * @param date Date
      * @return int
      */
-    public static int getDay(Date date)
-    {
+    public static int getDay(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         return calendar.get(Calendar.DATE);
@@ -266,8 +243,7 @@ public class DateUtil
      * @param date Date
      * @return int
      */
-    public static int getYear(Date date)
-    {
+    public static int getYear(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         return calendar.get(Calendar.YEAR);
@@ -279,8 +255,7 @@ public class DateUtil
      * @param date Date
      * @return int
      */
-    public static int getMonth(Date date)
-    {
+    public static int getMonth(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         return calendar.get(Calendar.MONTH) + 1;
@@ -293,8 +268,7 @@ public class DateUtil
      * @param date2 Date
      * @return long
      */
-    public static long dayDiff(Date date1, Date date2)
-    {
+    public static long dayDiff(Date date1, Date date2) {
         return (date2.getTime() - date1.getTime()) / 86400000;
     }
 
@@ -305,8 +279,7 @@ public class DateUtil
      * @param after
      * @return
      */
-    public static int yearDiff(String before, String after)
-    {
+    public static int yearDiff(String before, String after) {
         Date beforeDay = stringtoDate(before, LONG_DATE_FORMAT);
         Date afterDay = stringtoDate(after, LONG_DATE_FORMAT);
         return getYear(afterDay) - getYear(beforeDay);
@@ -318,8 +291,7 @@ public class DateUtil
      * @param after
      * @return
      */
-    public static int yearDiffCurr(String after)
-    {
+    public static int yearDiffCurr(String after) {
         Date beforeDay = new Date();
         Date afterDay = stringtoDate(after, LONG_DATE_FORMAT);
         return getYear(beforeDay) - getYear(afterDay);
@@ -332,8 +304,7 @@ public class DateUtil
      * @return
      * @author chenyz
      */
-    public static long dayDiffCurr(String before)
-    {
+    public static long dayDiffCurr(String before) {
         Date currDate = DateUtil.stringtoDate(currDay(), LONG_DATE_FORMAT);
         Date beforeDate = stringtoDate(before, LONG_DATE_FORMAT);
         return (currDate.getTime() - beforeDate.getTime()) / 86400000;
@@ -348,8 +319,7 @@ public class DateUtil
      * @return
      * @author chenyz
      */
-    public static int getFirstWeekdayOfMonth(int year, int month)
-    {
+    public static int getFirstWeekdayOfMonth(int year, int month) {
         Calendar c = Calendar.getInstance();
         c.setFirstDayOfWeek(Calendar.SATURDAY); // 星期天为第一天
         c.set(year, month - 1, 1);
@@ -364,8 +334,7 @@ public class DateUtil
      * @return
      * @author chenyz
      */
-    public static int getLastWeekdayOfMonth(int year, int month)
-    {
+    public static int getLastWeekdayOfMonth(int year, int month) {
         Calendar c = Calendar.getInstance();
         c.setFirstDayOfWeek(Calendar.SATURDAY); // 星期天为第一天
         c.set(year, month - 1, getDaysOfMonth(year, month));
@@ -377,8 +346,7 @@ public class DateUtil
      *
      * @return
      */
-    public static String getCurrent()
-    {
+    public static String getCurrent() {
         Calendar cal = Calendar.getInstance();
         cal.setTime(new Date());
         int year = cal.get(Calendar.YEAR);
@@ -396,16 +364,29 @@ public class DateUtil
         return sb.toString();
     }
 
-    /**
-     * 获得当前日期字符串，格式"yyyy-MM-dd HH:mm:ss"
-     *
-     * @return
-     */
-    public static String getNow()
-    {
-        Calendar today = Calendar.getInstance();
-        return dateToString(today.getTime(), FORMAT_ONE);
+    public static int getYearDiffBySeconds(long seconds) {
+        Date dateBegin = getDateBySeconds(seconds);
+        Date dateEnd = new Date();
+        Calendar calBegin = Calendar.getInstance(); //获取日历实例
+        Calendar calEnd = Calendar.getInstance();
+        calBegin.setTime(dateBegin); //字符串按照指定格式转化为日期
+        calEnd.setTime(dateEnd);
+        return calEnd.get(Calendar.YEAR) - calBegin.get(Calendar.YEAR);
     }
+
+    public static Date getDateBySeconds(long seconds){
+        return new Date(seconds*1000);
+    }
+    public static long getDiffOfBaseTime(String current,String formate) {
+        SimpleDateFormat sdf = new SimpleDateFormat(formate);
+        try {
+            long millionSeconds = sdf.parse(current).getTime();//毫秒
+            return millionSeconds/1000;
+        }catch (ParseException e) {
+            return 0;
+        }
+    }
+
 
     /**
      * 根据生日获取星座
@@ -413,14 +394,11 @@ public class DateUtil
      * @param birth YYYY-mm-dd
      * @return
      */
-    public static String getAstro(String birth)
-    {
-        if (!isDate(birth))
-        {
+    public static String getAstro(String birth) {
+        if (!isDate(birth)) {
             birth = "2000" + birth;
         }
-        if (!isDate(birth))
-        {
+        if (!isDate(birth)) {
             return "";
         }
         int month = Integer.parseInt(birth.substring(birth.indexOf("-") + 1,
@@ -438,8 +416,7 @@ public class DateUtil
      * @param date YYYY-mm-dd
      * @return
      */
-    public static boolean isDate(String date)
-    {
+    public static boolean isDate(String date) {
         StringBuffer reg = new StringBuffer(
                 "^((\\d{2}(([02468][048])|([13579][26]))-?((((0?");
         reg.append("[13578])|(1[02]))-?((0?[1-9])|([1-2][0-9])|(3[01])))");
@@ -456,14 +433,12 @@ public class DateUtil
     /**
      * 取得指定日期过 months 月后的日期 (当 months 为负数表示指定月之前);
      *
-     * @param date  日期 为null时表示当天
+     * @param date   日期 为null时表示当天
      * @param months 相加(相减)的月数
      */
-    public static Date nextMonth(Date date, int months)
-    {
+    public static Date nextMonth(Date date, int months) {
         Calendar cal = Calendar.getInstance();
-        if (date != null)
-        {
+        if (date != null) {
             cal.setTime(date);
         }
         cal.add(Calendar.MONTH, months);
@@ -472,13 +447,10 @@ public class DateUtil
 
     /**
      * 取得指定日期过 day 天后的日期 (当 day 为负数表示指日期之前);
-     *
      */
-    public static Date nextDay(Date date, int day)
-    {
+    public static Date nextDay(Date date, int day) {
         Calendar cal = Calendar.getInstance();
-        if (date != null)
-        {
+        if (date != null) {
             cal.setTime(date);
         }
         cal.add(Calendar.DAY_OF_YEAR, day);
@@ -493,8 +465,7 @@ public class DateUtil
      * @return
      * @author chenyz
      */
-    public static String nextDay(int day, String format)
-    {
+    public static String nextDay(int day, String format) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(new Date());
         cal.add(Calendar.DAY_OF_YEAR, day);
@@ -506,11 +477,9 @@ public class DateUtil
      *
      * @param date 日期 为null时表示当天
      */
-    public static Date nextWeek(Date date, int week)
-    {
+    public static Date nextWeek(Date date, int week) {
         Calendar cal = Calendar.getInstance();
-        if (date != null)
-        {
+        if (date != null) {
             cal.setTime(date);
         }
         cal.add(Calendar.WEEK_OF_MONTH, week);
@@ -520,18 +489,17 @@ public class DateUtil
     /**
      * 获取当前的日期(yyyy-MM-dd)
      */
-    public static String currDay()
-    {
+    public static String currDay() {
         return DateUtil.dateToString(new Date(), DateUtil.LONG_DATE_FORMAT);
     }
+
 
     /**
      * 获取昨天的日期
      *
      * @return
      */
-    public static String befoDay()
-    {
+    public static String befoDay() {
         return befoDay(DateUtil.LONG_DATE_FORMAT);
     }
 
@@ -542,16 +510,14 @@ public class DateUtil
      * @return
      * @author chenyz
      */
-    public static String befoDay(String format)
-    {
+    public static String befoDay(String format) {
         return DateUtil.dateToString(DateUtil.nextDay(new Date(), -1), format);
     }
 
     /**
      * 获取明天的日期
      */
-    public static String afterDay()
-    {
+    public static String afterDay() {
         return DateUtil.dateToString(DateUtil.nextDay(new Date(), 1),
                 DateUtil.LONG_DATE_FORMAT);
     }
@@ -561,8 +527,7 @@ public class DateUtil
      *
      * @return
      */
-    public static int getDayNum()
-    {
+    public static int getDayNum() {
         int daynum = 0;
         GregorianCalendar gd = new GregorianCalendar();
         Date dt = gd.getTime();
@@ -578,8 +543,7 @@ public class DateUtil
      * @param day
      * @return
      */
-    public static Date getDateByNum(int day)
-    {
+    public static Date getDateByNum(int day) {
         GregorianCalendar gd = new GregorianCalendar(1900, 1, 1);
         Date date = gd.getTime();
         date = nextDay(date, day);
@@ -589,8 +553,7 @@ public class DateUtil
     /**
      * 针对yyyy-MM-dd HH:mm:ss格式,显示yyyymmdd
      */
-    public static String getYmdDateCN(String datestr)
-    {
+    public static String getYmdDateCN(String datestr) {
         if (datestr == null)
             return "";
         if (datestr.length() < 10)
@@ -607,7 +570,7 @@ public class DateUtil
      * @param format
      * @return
      */
-    public static String getFirstDayOfMonth(Date date,String format) {
+    public static String getFirstDayOfMonth(Date date, String format) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         cal.set(Calendar.DAY_OF_MONTH, 1);
@@ -620,7 +583,7 @@ public class DateUtil
      * @param format
      * @return
      */
-    public static String getLastDayOfMonth(Date date,String format) {
+    public static String getLastDayOfMonth(Date date, String format) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         cal.set(Calendar.DATE, 1);
@@ -628,14 +591,14 @@ public class DateUtil
         cal.add(Calendar.DATE, -1);
         return dateToString(cal.getTime(), format);
     }
+
     /**
      * 获取本月第一天
      *
      * @param format
      * @return
      */
-    public static String getFirstDayOfCurrentMonth(String format)
-    {
+    public static String getFirstDayOfCurrentMonth(String format) {
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.DATE, 1);
         return dateToString(cal.getTime(), format);
@@ -647,8 +610,7 @@ public class DateUtil
      * @param format
      * @return
      */
-    public static String getLastDayOfCurrentMonth(String format)
-    {
+    public static String getLastDayOfCurrentMonth(String format) {
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.DATE, 1);
         cal.add(Calendar.MONTH, 1);
@@ -663,8 +625,7 @@ public class DateUtil
      * @param formatLength
      * @return 重组后的数据
      */
-    public static String addzero(int sourceDate, int formatLength)
-    {
+    public static String addzero(int sourceDate, int formatLength) {
      /*
       * 0 指前面补充零
       * formatLength 字符总长度为 formatLength
@@ -672,5 +633,55 @@ public class DateUtil
       */
         String newString = String.format("%0" + formatLength + "d", sourceDate);
         return newString;
+    }
+
+
+    /*
+    判断两个日期是否为同一天
+     */
+    private static boolean isSameDateByDay(Date date1, Date date2) {
+        Calendar cal1 = Calendar.getInstance();
+        cal1.setTime(date1);
+
+        Calendar cal2 = Calendar.getInstance();
+        cal2.setTime(date2);
+
+        boolean isSameYear = cal1.get(Calendar.YEAR) == cal2
+                .get(Calendar.YEAR);
+        boolean isSameMonth = isSameYear
+                && cal1.get(Calendar.MONTH) == cal2.get(Calendar.MONTH);
+        boolean isSameDate = isSameMonth
+                && cal1.get(Calendar.DAY_OF_MONTH) == cal2
+                .get(Calendar.DAY_OF_MONTH);
+
+        return isSameDate;
+    }
+
+    /*
+       根据秒获取时间，同一天，返回 time
+       不同天，返回day
+        */
+    public static String getTimeDiffDayCurrent(long seconds)
+    {
+        Date Current = new Date();
+        Date date = getDateBySeconds(seconds);
+        String time;
+        if(isSameDateByDay(date,Current)) {
+            time = dateToString(date,"HH:mm");
+        } else {
+            time = dateToString(date,LONG_DATE_FORMAT);
+        }
+        return time;
+    }
+
+    public static String getFullTimeDiffDayCurrent(long seconds)
+    {
+        Date date = getDateBySeconds(seconds);
+        return dateToString(date,FORMAT_TWO);
+    }
+    public static String getFullTimeDiffDayCurrent(long seconds,String formate) {
+        Date date = getDateBySeconds(seconds);
+        return dateToString(date,formate);
+
     }
 }

@@ -1,7 +1,9 @@
 package com.zhjydy_doc.model.net;
 
+import android.text.TextUtils;
+
 import com.alibaba.fastjson.JSON;
-import com.zhjydy_doc.util.Log;
+import com.alibaba.fastjson.JSONObject;
 import com.zhjydy_doc.util.Utils;
 
 import org.ksoap2.SoapEnvelope;
@@ -20,20 +22,31 @@ public class WebService
 {
     private HashMap<String, String> properties;
 
+    private int methodId;
     private String method;
 
-    public WebService(String method, HashMap<String, Object> params)
+    public WebService(int methodId, HashMap<String, Object> params)
     {
         this.properties = createProporties(params);
-        ;
-        this.method = method;
+        this.methodId = methodId;
     }
+
 
     public WebResponse call()
     {
         String namespace = WebKey.WEBKEY_NAMESPACE;
-        String methodName = method;
-        String url = WebKey.WEBKEY_URL;
+        String methodName;
+        String url;
+        if (WebKey.WEBKEY_FUNC_COMMON_MAP.containsKey(methodId))
+        {
+            methodName = WebKey.WEBKEY_FUNC_COMMON_MAP.get(methodId);
+            url = WebKey.WEBKEY_URL_COMMON;
+        } else
+        {
+            methodName = WebKey.WEBKEY_FUNC_HUAN_MAP.get(methodId);
+            url = WebKey.WEBKEY_URL_HUAN;
+        }
+        method = methodName;
         // 创建HttpTransportSE对象，传递WebService服务器地址
         final HttpTransportSE httpTransportSE = new HttpTransportSE(url);
         // 创建SoapObject对象
@@ -43,14 +56,16 @@ public class WebService
 
         if (this.properties != null)
         {
+            soapObject.addProperty("jsonData", mapToJson(this.properties));
+            JSONObject json = new JSONObject();
             for (Iterator<Map.Entry<String, String>> it = properties.entrySet().iterator(); it.hasNext(); )
             {
                 Map.Entry<String, String> entry = it.next();
-                soapObject.addProperty(entry.getKey(), entry.getValue());
+                json.put(entry.getKey(), entry.getValue());
             }
         }
         // 实例化SoapSerializationEnvelope，传入WebService的SOAP协议的版本号
-        final SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+        final SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER12);
         // 设置是否调用的是.Net开发的WebService
         soapEnvelope.setOutputSoapObject(soapObject);
         soapEnvelope.dotNet = false;
@@ -66,36 +81,36 @@ public class WebService
                 resultSoapObject = (SoapObject) soapEnvelope.bodyIn;
                 if (resultSoapObject != null && resultSoapObject.getProperty("return") != null)
                 {
-                    Object object =  resultSoapObject.getProperty("return");
+                    Object object = resultSoapObject.getProperty("return");
+                    response.setReturnData(Utils.toString(object));
                     boolean status = false;
-                    Map<String,Object> m = new HashMap<>();
+                    Map<String, Object> m = new HashMap<>();
                     if (object != null)
                     {
-                          m = Utils.parseObjectToMapString(object);
-                         status = Utils.toBoolean(m.get("status"));
+                        m = Utils.parseObjectToMapString(object);
+                        status = Utils.toBoolean(m.get("status"));
                     }
-                    if (status) {
-                        String data = Utils.toString(m.get("data"));
-                        response.setData(data);
-                        response.setError(0);
-                        response.setFuncName(method);
-                    } else {
-                        response.setData("");
-                        response.setError(1);
-                        response.setFuncName(method);
-                        response.setInfo("调用数据失败");
+
+                    String data = Utils.toString(m.get("data"));
+                    if (TextUtils.isEmpty(data))
+                    {
+                        data = Utils.toString(m.get("msg"));
                     }
+                    response.setData(data);
+                    response.setError(0);
+                    response.setFuncName(method);
                 }
             }
         } catch (Exception e)
         {
-            Log.e(WebService.class, "exception " + e);
+           // Log.e(WebService.class, "exception " + e);
             String info = "连接服务器失败";
             response.setInfo(info);
             response.setError(1);
         }
         return response;
     }
+
     private HashMap<String, String> createProporties(HashMap<String, Object> data)
     {
         HashMap<String, String> properties = new HashMap<>();
@@ -104,5 +119,25 @@ public class WebService
             properties.put(key, JSON.toJSONString(data.get(key)));
         }
         return properties;
+    }
+
+
+    private String mapToJson(Map<String, String> map)
+    {
+        String json = "{";
+        int size = map.size();
+        int i = 0;
+        for (Map.Entry<String, String> entry : map.entrySet())
+        {
+            i++;
+            String item = "\"" + entry.getKey() + "\":" + entry.getValue();
+            json += item;
+            if (i < size)
+            {
+                json += ",";
+            }
+        }
+        json += "}";
+        return json;
     }
 }

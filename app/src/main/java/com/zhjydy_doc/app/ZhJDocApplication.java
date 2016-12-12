@@ -3,6 +3,8 @@ package com.zhjydy_doc.app;
 import android.app.Application;
 import android.content.Context;
 
+import com.zhjydy_doc.util.ImageUtils;
+
 /**
  * Created by Administrator on 2016/11/10 0010.
  */
@@ -18,5 +20,23 @@ public class ZhJDocApplication extends Application {
         return this.getApplicationContext();
     }
 
+    @Override
+    public void onCreate()
+    {
+        super.onCreate();
+        init();
+
+    }
+    @Override
+    public void onTerminate()
+    {
+        super.onTerminate();
+    }
+
+    private void init()
+    {
+        instance = this;
+        ImageUtils.getInstance().initImageLoader();
+    }
 
 }

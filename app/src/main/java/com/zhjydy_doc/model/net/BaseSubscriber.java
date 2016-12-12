@@ -3,7 +3,6 @@ package com.zhjydy_doc.model.net;
 import android.app.Activity;
 import android.content.Context;
 
-
 import com.zhjydy_doc.util.NetworkUtil;
 import com.zhjydy_doc.view.zjview.CustomProgress;
 
@@ -67,14 +66,13 @@ public abstract class BaseSubscriber<T> extends Subscriber<T>
         {
             closeLoadingProgress();
         }
-
-
     }
 
     @Override
     public void onError(Throwable e)
     {
         closeLoadingProgress();
+       // zhToast.showToast(e.getMessage());
     }
 
     public void showLoadingProgress()

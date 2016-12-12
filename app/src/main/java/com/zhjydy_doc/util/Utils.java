@@ -15,11 +15,14 @@ import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
+import com.zhjydy_doc.app.ZhJDocApplication;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by liutao on 2016/6/20.
@@ -83,7 +86,23 @@ public class Utils
             }
         }
     }
+    public static Long toLong(Object ob)
+    {
 
+        if (ob == null)
+        {
+            return -1L;
+        } else
+        {
+            try
+            {
+                return Long.parseLong(toString(ob));
+            } catch (NumberFormatException e)
+            {
+                return -1L;
+            }
+        }
+    }
     public static String[] toStringArray(Object ob)
     {
 
@@ -139,6 +158,21 @@ public class Utils
         return str;
     }
 
+    public static String strListToString(List<String> list) {
+        String str = "";
+        if (list == null || list.size() < 1) {
+            return str;
+        }
+        for (int i = 0; i < list.size(); i++)
+        {
+            str += list.get(i);
+            if (i < list.size() - 1)
+            {
+                str += ",";
+            }
+        }
+        return str;
+    }
     public static List<String> mapListValueToList(Object ob, final String key)
     {
         List<Map<String, String>> list = toStringMapList(ob);
@@ -402,8 +436,8 @@ public class Utils
     }
 
     @SuppressLint("NewApi")
-    public static String getPath(final Context context, final Uri uri) {
-
+    public static String getPath( final Uri uri) {
+        final Context context = ZhJDocApplication.getInstance().getContext();
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
 
         // DocumentProvider
@@ -528,5 +562,58 @@ public class Utils
     public static boolean isMediaDocument(Uri uri) {
         return "com.android.providers.media.documents".equals(uri
                 .getAuthority());
+    }
+
+
+    public static Map<String,String> getMapByValue(String ids[],String values[]){
+        Map<String,String> map = new HashMap<>();
+        for (int i = 0 ; i < ids.length; i ++) {
+            String id = ids[i];
+            if (values.length <=i + 1){
+                map.put(id,values[i]);
+            } else {
+                map.put(id,"");
+            }
+        }
+        return map;
+    }
+
+    public static int getCountOfString(String str,String target) {
+        if (TextUtils.isEmpty(str)){
+            return 0;
+        }
+        int count = 0;
+        int index = 0;
+        while (true) {
+            index = str.indexOf(target, index + 1);
+            if (index > 0) {
+                count++;
+            } else {
+                break;
+            }
+        }
+        return count;
+    }
+
+    public static boolean isPhone(String inputText) {
+        Pattern p = Pattern.compile("^((14[0-9])|(13[0-9])|(15[0-9])|(18[0-9])|(17[0-9]))\\d{8}$");
+        Matcher m = p.matcher(inputText);
+        return m.matches();
+    }
+
+    public static String getListStrsAdd(List<Map<String,Object>> list,String key) {
+        String ids = "";
+        List<String> idList = new ArrayList<>();
+        for (Map<String,Object> l:list) {
+            idList.add(Utils.toString(l.get(key)));
+        }
+
+        for (int i = 0 ; i <idList.size(); i ++) {
+            ids += idList.get(i);
+            if (i < idList.size() -1) {
+                ids +=",";
+            }
+        }
+        return ids;
     }
 }
