@@ -36,6 +36,15 @@ public class WebCall
     }
 
 
+    public Observable<WebResponse> call(int methodId, HashMap<String, Object> params ,boolean needToast) {
+        if (!WebKey.WEBKEY_FUNC_COMMON_MAP.containsKey(methodId) && !WebKey.WEBKEY_FUNC_HUAN_MAP.containsKey(methodId))
+        {
+            WebResponse response = new WebResponse(1, "没有此接口", null);
+            return Observable.just(response);
+        }
+        return callWebService(new WebService(methodId,
+                params), null,needToast);
+    }
 
     public Observable<WebResponse> call(int methodId, HashMap<String, Object> params)
     {
@@ -45,7 +54,7 @@ public class WebCall
             return Observable.just(response);
         }
         return callWebService(new WebService(methodId,
-                params), null);
+                params), null,false);
     }
 
     public Observable<WebResponse> callCache(int methodId, HashMap<String, Object> params, final WebResponse cache)
@@ -60,7 +69,7 @@ public class WebCall
             }
         });
         Observable<WebResponse> netOb = (Observable<WebResponse>) callWebService(new WebService(methodId,
-                params), null);
+                params), null,false);
 
         return Observable
                 .concat(cacheOb, netOb)
@@ -104,7 +113,7 @@ public class WebCall
         });
 
         Observable<WebResponse> callNet = (Observable<WebResponse>) callWebService(new WebService(methodId,
-                params), null);
+                params), null,false);
 
         return Observable.concat(
                 callMemory,
@@ -121,7 +130,7 @@ public class WebCall
     }
 
 
-    public Observable<WebResponse> callWebService(final WebService webService, final String key)
+    public Observable<WebResponse> callWebService(final WebService webService, final String key,boolean needToast)
     {
         return Observable.create(new Observable.OnSubscribe<WebResponse>()
         {
@@ -143,6 +152,7 @@ public class WebCall
                     Map<String, Object> erroMap = new HashMap<>();
                     erroMap.put("code", result.getError());
                     erroMap.put("info", result.getInfo());
+
                     subscriber.onError(new Throwable(JSONObject.toJSONString(erroMap)));
                 }
                 subscriber.onCompleted();

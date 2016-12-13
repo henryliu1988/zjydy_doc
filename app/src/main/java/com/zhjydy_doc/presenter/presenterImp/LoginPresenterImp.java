@@ -65,6 +65,12 @@ public class LoginPresenterImp implements LoginContract.Presenter {
                     zhToast.showToast("登录失败\n" + msg);
                 }
             }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+                zhToast.showToast(e.getMessage());
+            }
         });
     }
 

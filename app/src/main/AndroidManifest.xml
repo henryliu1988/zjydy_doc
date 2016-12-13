@@ -46,6 +46,12 @@
 
             android:screenOrientation="portrait">
         </activity>
+        <activity android:name=".view.activity.ForgetPassWordActivity"
+            android:launchMode="singleTask"
+
+            android:screenOrientation="portrait">
+        </activity>
+
     </application>
 
 </manifest>

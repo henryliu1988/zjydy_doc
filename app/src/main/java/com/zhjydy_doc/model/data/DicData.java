@@ -340,6 +340,16 @@ public class DicData {
     }
 
 
+    public String getDistrictStrById (String id) {
+        List<District> dis = getDistrictById(id);
+        String distrcit = "";
+        if (dis.size() > 0){
+            for (int i = dis.size()-1;i>=0;i--) {
+                distrcit += dis.get(i).getName() + " ";
+            }
+        }
+        return distrcit;
+    }
 
     private ArrayList<DistricPickViewData> mProPickViewData;
     private ArrayList<ArrayList<DistricPickViewData>> mCityPickViewData;
