@@ -46,9 +46,8 @@
 
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".view.activity.ForgetPassWordActivity"
+        <activity android:name=".view.activity.PagerImpActivity"
             android:launchMode="singleTask"
-
             android:screenOrientation="portrait">
         </activity>
 

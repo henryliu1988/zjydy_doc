@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_bg">
+    <include layout="@layout/titlebar_layout_back"/>
+    <RelativeLayout
+        android:id="@+id/clear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/white_bg"
+        android:gravity="center_vertical"
+        android:padding="10dp">
+        <TextView
+            android:id="@+id/clear_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:text="清除缓存"
+            android:textSize="16sp"
+            android:textColor="@color/black_text" />
+        <ImageView
+            android:id="@+id/clear_flag"
+            android:layout_width="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/item_turn" />
+    </RelativeLayout>
+
+</LinearLayout>
