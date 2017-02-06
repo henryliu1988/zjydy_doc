@@ -10,6 +10,7 @@
     android:paddingTop="5dp"
     android:baselineAligned="false"
     android:gravity="center_vertical">
+
     <LinearLayout
         android:id="@+id/title_search_ly"
         android:layout_width="0dp"
@@ -28,6 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:src="@mipmap/titlebar_search_samall" />
+
         <TextView
             android:id="@+id/title_search_text"
             android:layout_width="match_parent"
@@ -47,13 +49,14 @@
             android:id="@+id/right_l_img"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:layout_centerVertical="true"/>
+            android:layout_centerVertical="true" />
+
         <com.zhjydy_doc.view.zjview.ImageTipsView
             android:id="@+id/right_img"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_marginRight="5dp"
-            android:layout_centerVertical="true"/>
+            android:layout_centerVertical="true" />
 
     </LinearLayout>
 

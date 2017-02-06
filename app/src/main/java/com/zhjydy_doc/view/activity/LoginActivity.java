@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-
 import com.zhjydy_doc.R;
 import com.zhjydy_doc.presenter.contract.LoginContract;
 import com.zhjydy_doc.presenter.presenterImp.LoginPresenterImp;

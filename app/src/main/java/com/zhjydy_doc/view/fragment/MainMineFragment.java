@@ -9,18 +9,17 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSONObject;
 import com.zhjydy_doc.R;
-import com.zhjydy_doc.model.data.AppData;
+import com.zhjydy_doc.model.data.UserData;
+import com.zhjydy_doc.model.entity.ExpertInfo;
 import com.zhjydy_doc.model.entity.TokenInfo;
 import com.zhjydy_doc.presenter.contract.MainMineContract;
 import com.zhjydy_doc.presenter.presenterImp.MainMinePresenterImp;
 import com.zhjydy_doc.util.ActivityUtils;
 import com.zhjydy_doc.util.ImageUtils;
+import com.zhjydy_doc.util.Utils;
 import com.zhjydy_doc.view.activity.PagerImpActivity;
 import com.zhjydy_doc.view.zjview.ImageTipsView;
-
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -49,8 +48,8 @@ public class MainMineFragment extends StatedFragment implements MainMineContract
     RelativeLayout accountSafeLayout;
     @BindView(R.id.mine_confirm_msg_layout)
     RelativeLayout mineConfirmMsgLayout;
-    @BindView(R.id.mine_history_layout)
-    RelativeLayout mineHistoryLayout;
+    @BindView(R.id.mine_star_layout)
+    RelativeLayout mineStarLayout;
     @BindView(R.id.mine_common_layout)
     RelativeLayout mineCommonLayout;
     @BindView(R.id.mine_about_layout)
@@ -85,19 +84,21 @@ public class MainMineFragment extends StatedFragment implements MainMineContract
     protected void afterViewCreate() {
         new MainMinePresenterImp(this);
         initMinePhotoView();
+        initIdentifyView();
     }
 
     private void initMinePhotoView() {
-        TokenInfo tokenInfo  = AppData.getInstance().getToken();
+        TokenInfo tokenInfo  = UserData.getInstance().getToken();
         if (TextUtils.isEmpty(tokenInfo.getId())){
             mineStatus.setText("请登录");
             return;
         }
         if (!TextUtils.isEmpty(tokenInfo.getPhotoUrl())) {
-            ImageUtils.getInstance().displayFromRemote(tokenInfo.getPhotoUrl(),mineImage);
+            ImageUtils.getInstance().displayFromRemoteOver(tokenInfo.getPhotoUrl(),mineImage);
         }
-        if (!TextUtils.isEmpty(tokenInfo.getNickname())) {
-            mineStatus.setText(tokenInfo.getNickname());
+        ExpertInfo info = tokenInfo.getmExpertInfo();
+        if (info != null && !TextUtils.isEmpty(info.getRealname())) {
+            mineStatus.setText(info.getRealname());
         }
 
     }
@@ -118,7 +119,7 @@ public class MainMineFragment extends StatedFragment implements MainMineContract
         return rootView;
     }
 
-    @OnClick({R.id.mine_info_layout, R.id.account_safe_layout, R.id.mine_confirm_msg_layout, R.id.mine_history_layout, R.id.mine_common_layout, R.id.mine_about_layout})
+    @OnClick({R.id.mine_info_layout, R.id.account_safe_layout, R.id.mine_confirm_msg_layout, R.id.mine_star_layout, R.id.mine_common_layout, R.id.mine_about_layout})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.mine_info_layout:
@@ -130,39 +131,38 @@ public class MainMineFragment extends StatedFragment implements MainMineContract
             case R.id.mine_confirm_msg_layout:
                 loadIdentifyInfo();
                 break;
-            case R.id.mine_history_layout:
-                ActivityUtils.transToFragPagerActivity(getActivity(), PagerImpActivity.class, FragKey.patient_case_fragment, null, false);
-
+            case R.id.mine_star_layout:
+                ActivityUtils.transToFragPagerActivity(getActivity(), PagerImpActivity.class, FragKey.mine_star_fragment, null, false);
                 break;
             case R.id.mine_common_layout:
                 ActivityUtils.transToFragPagerActivity(getActivity(), PagerImpActivity.class, FragKey.common_fragment, null, false);
-
                 break;
             case R.id.mine_about_layout:
-                //ActivityUtils.transToFragPagerActivity(getActivity(), PagerImpActivity.class,FragKey.common_fragment,null,false);
+                ActivityUtils.transToFragPagerActivity(getActivity(), PagerImpActivity.class,FragKey.about_app_main_fragment,null,false);
 
                 break;
         }
     }
 
-    @Override
-    public void updateIdentiFyStatus(int status,String msg) {
+    public void initIdentifyView() {
+        int status = Utils.toInteger(UserData.getInstance().getToken().getmExpertInfo().getStatus_z());
         mineConfirmMsgStatus.setVisibility(View.VISIBLE);
         String text = "";
         switch (status) {
-            case 0:
             case 1:
-                text = "未认证";
-                break;
-            case 2:
-                text="认证审核中";
-                break;
-            case 3:
-                text = "审核未通过";
-                break;
-            case 4:
                 text = "已认证";
                 break;
+            case 2:
+                text="未上传";
+                break;
+            case 3:
+                text = "认证未通过";
+                break;
+            case 4:
+                text = "认证中";
+                break;
+            default:
+                text = "未上传";
         }
         mineConfirmMsgStatus.setText(text);
     }
@@ -174,15 +174,13 @@ public class MainMineFragment extends StatedFragment implements MainMineContract
 
     private void loadIdentifyInfo() {
         if (mPresenter != null) {
-            Map<String, Object> map = mPresenter.getIdentifyInfo(getContext());
-            if (map == null) {
-                return;
-            }
-            if (map.size() < 1) {
+            int status = Utils.toInteger(UserData.getInstance().getToken().getmExpertInfo().getStatus_z());
+            if (status != 1 && status != 3 && status != 4) {
                 ActivityUtils.transToFragPagerActivity(getActivity(), PagerImpActivity.class, FragKey.identify_new_fragment, null, false);
             } else {
-                String info = JSONObject.toJSONString(map);
-                ActivityUtils.transToFragPagerActivity(getActivity(), PagerImpActivity.class, FragKey.identify_info_fragment, info, false);
+                ActivityUtils.transToFragPagerActivity(getActivity(), PagerImpActivity.class, FragKey.identify_info_fragment, null, false);
+               // ActivityUtils.transToFragPagerActivity(getActivity(), PagerImpActivity.class, FragKey.identify_new_fragment, null, false);
+
             }
         }
     }

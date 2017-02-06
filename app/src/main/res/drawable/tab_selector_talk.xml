@@ -7,11 +7,11 @@
     <!--&lt;!&ndash; Focused states &ndash;&gt;-->
     <!--<item android:drawable="@drawable/tab_icon_talk_pressed" android:state_focused="true" android:state_pressed="false" android:state_selected="false"/>-->
     <!--<item android:drawable="@drawable/tab_icon_talk_pressed" android:state_focused="true" android:state_pressed="false" android:state_selected="true"/>-->
-    <item android:drawable="@mipmap/icon_top_category_disable" android:state_pressed="true"/>
-    <item android:drawable="@mipmap/icon_top_category_pressed"/>
+    <item android:drawable="@mipmap/icon_top_category_disable" android:state_pressed="true" />
+    <item android:drawable="@mipmap/icon_top_category_pressed" />
 
     <!-- Pressed -->
     <!--<item android:drawable="@drawable/tab_icon_talk_pressed" android:state_pressed="true"/>-->
     <!--<item android:drawable="@drawable/tab_icon_talk_pressed" android:state_focused="false" android:state_pressed="false" android:state_selected="true"/>-->
-    
+
 </selector>

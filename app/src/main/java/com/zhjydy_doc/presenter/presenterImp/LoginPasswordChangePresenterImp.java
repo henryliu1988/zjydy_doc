@@ -1,7 +1,7 @@
 package com.zhjydy_doc.presenter.presenterImp;
 
 
-import com.zhjydy_doc.model.data.AppData;
+import com.zhjydy_doc.model.data.UserData;
 import com.zhjydy_doc.model.net.BaseSubscriber;
 import com.zhjydy_doc.model.net.WebCall;
 import com.zhjydy_doc.model.net.WebKey;
@@ -39,7 +39,7 @@ public class LoginPasswordChangePresenterImp implements LoginPasswordChangeContr
         HashMap<String,Object> params = new HashMap<>();
         params.put("password", MD5.GetMD5Code(oldPw));
         params.put("newpassword",MD5.GetMD5Code(newPw));
-        params.put("id", AppData.getInstance().getToken().getId());
+        params.put("id", UserData.getInstance().getToken().getId());
         WebCall.getInstance().call(WebKey.func_updatePassword,params).subscribe(new BaseSubscriber<WebResponse>(mView.getContext(),"正在提交数据") {
             @Override
             public void onNext(WebResponse webResponse) {

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:paddingTop="8dp"
@@ -26,7 +27,7 @@
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:textColor="@color/black_text" />
 
         <TextView
@@ -36,7 +37,7 @@
             android:layout_marginTop="5dp"
             android:singleLine="true"
             android:ellipsize="end"
-            android:textSize="15sp"
+            android:textSize="13sp"
             android:textColor="@color/black_text2" />
 
     </LinearLayout>
@@ -46,6 +47,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scaleType="fitCenter"
-        android:src="@mipmap/item_more"
-        />
+        android:src="@mipmap/item_more" />
 </LinearLayout>

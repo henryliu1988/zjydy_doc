@@ -7,6 +7,10 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+    <style name="Splash" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/splash_loader</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
     <style name="Custom_Progress" parent="@android:style/Theme.Dialog">
         <item name="android:windowFrame">@null</item>
         <item name="android:windowIsFloating">true</item>
@@ -74,6 +78,7 @@
         <item name="android:textSize">15sp</item>
         <item name="android:layout_gravity">center_vertical</item>
     </style>
+
     <style name="item_info_read_click_singleline_value">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
@@ -91,7 +96,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">5</item>
         <item name="android:textColor">@color/black_text2</item>
-        <item name="android:layout_marginRight">5dp </item>
+        <item name="android:layout_marginRight">5dp</item>
         <item name="android:textSize">15sp</item>
         <item name="android:background">@null</item>
         <item name="android:gravity">right|center_vertical</item>
@@ -115,6 +120,7 @@
         <item name="android:paddingRight">25dp</item>
         <item name="android:background">#FFF</item>
     </style>
+
     <style name="item_info_read_mutiline_title">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -141,6 +147,7 @@
         <item name="android:background">@null</item>
         <item name="android:textSize">15sp</item>
     </style>
+
     <style name="item_info_div_line">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>
@@ -149,18 +156,43 @@
     </style>
 
     <style name="button_title_color_style">
-    <item name="android:layout_width">match_parent</item>
-    <item name="android:layout_height">match_parent</item>
-    <item name="android:layout_marginLeft">15dp</item>
-    <item name="android:layout_marginRight">15dp</item>
-    <item name="android:layout_marginBottom">25dp</item>
-    <item name="android:paddingBottom">7dp</item>
-    <item name="android:paddingTop">7dp</item>
-    <item name="android:textColor">@color/white_text</item>
-    <item name="android:textSize">16sp</item>
-    <item name="android:gravity">center</item>
-    <item name="android:background">@drawable/login_confirm_btn_bg</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_marginLeft">15dp</item>
+        <item name="android:layout_marginRight">15dp</item>
+        <item name="android:layout_marginBottom">25dp</item>
+        <item name="android:paddingBottom">7dp</item>
+        <item name="android:paddingTop">7dp</item>
+        <item name="android:textColor">@color/white_text</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/login_confirm_btn_bg</item>
 
+        
     </style>
 
+    <style name="button_action_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">12dp</item>
+        <item name="android:layout_marginRight">12dp</item>
+        <item name="android:paddingBottom">9dp</item>
+        <item name="android:paddingTop">9dp</item>
+        <item name="android:textColor">@color/white_text</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="pull_list_list_view_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:cacheColorHint">#00000000</item>
+        <item name="android:divider">#00000000</item>
+        <item name="android:fadingEdge">none</item>
+        <item name="android:fastScrollEnabled">false</item>
+        <item name="android:footerDividersEnabled">false</item>
+        <item name="android:headerDividersEnabled">false</item>
+        <item name="android:smoothScrollbar">true</item>
+    </style>
 </resources>

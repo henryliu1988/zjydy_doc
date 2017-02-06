@@ -50,7 +50,16 @@ public class ScoreView extends LinearLayout {
     public void setScore(int score, int all) {
         this.removeAllViews();
         float startScore = all / 5;
+        if (score > all) {
+            score = all;
+        }
+        if (score < 0) {
+            score = 0;
+        }
         int starCount = (int) (score / startScore);
+        if (starCount < 1) {
+            starCount = 1;
+        }
         for (int i = 0; i < starCount; i++) {
             ImageView starImage = getStartImage();
             this.addView(starImage);

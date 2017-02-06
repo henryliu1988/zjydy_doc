@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSONObject;
 import com.zhjydy_doc.R;
 import com.zhjydy_doc.model.entity.IntentKey;
 import com.zhjydy_doc.presenter.contract.MsgAllListContract;
@@ -19,7 +18,6 @@ import com.zhjydy_doc.util.ImageUtils;
 import com.zhjydy_doc.util.Utils;
 import com.zhjydy_doc.view.zjview.ViewUtil;
 
-import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -33,11 +31,15 @@ public class MsgAllListFragment extends PageImpBaseFragment implements MsgAllLis
     ImageView titleBack;
     @BindView(R.id.title_center_tv)
     TextView titleCenterTv;
-    @BindView(R.id.msg_order_layout)
-    LinearLayout msgOrderLayout;
-    @BindView(R.id.msg_comment_layout)
-    LinearLayout msgCommentLayout;
+    @BindView(R.id.msg_all_layout)
+    LinearLayout msgAllLayout;
 
+
+    private View mOrderItemView;
+    private View mSysItemView;
+    private View mFansItemView;
+    private View mPatientCommentView;
+    private View mDocCommentView;
 
     private MsgAllListContract.Presenter mPresenter;
 
@@ -61,128 +63,145 @@ public class MsgAllListFragment extends PageImpBaseFragment implements MsgAllLis
                 back();
             }
         });
+        initMsgItemLayout();
         new MsgAllListPresenterImp(this);
     }
 
 
-    @Override
-    public void updateOrderList(List<Map<String, Object>> data) {
-        msgOrderLayout.removeAllViews();
-        for (int i = 0; i < data.size(); i++) {
-            final Map<String, Object> item = data.get(i);
-            View view = LayoutInflater.from(getContext()).inflate(R.layout.listview_msg_item_layout, null);
-            ImageView imagew = (ImageView) view.findViewById(R.id.image);
-            TextView title = (TextView) view.findViewById(R.id.msg_title);
-            TextView content = (TextView) view.findViewById(R.id.msg_content);
-            TextView timeTv = (TextView) view.findViewById(R.id.msg_time);
+    private void initMsgItemLayout() {
+        msgAllLayout.removeAllViews();
+        mOrderItemView =  LayoutInflater.from(getContext()).inflate(R.layout.listview_msg_item_layout, null);
+        mSysItemView =  LayoutInflater.from(getContext()).inflate(R.layout.listview_msg_item_layout, null);
+        mFansItemView =  LayoutInflater.from(getContext()).inflate(R.layout.listview_msg_item_layout, null);
+        mPatientCommentView =  LayoutInflater.from(getContext()).inflate(R.layout.listview_msg_item_layout, null);
+        mDocCommentView =  LayoutInflater.from(getContext()).inflate(R.layout.listview_msg_item_layout, null);
 
-            ImageUtils.getInstance().displayFromDrawable(Utils.toInteger(data.get(i).get("image")), imagew);
-            title.setText(Utils.toString(data.get(i).get("title")));
-            content.setText(Utils.toString(data.get(i).get("content")));
-            if (!TextUtils.isEmpty(Utils.toString(data.get(i).get("time")))) {
-                timeTv.setText(DateUtil.getTimeDiffDayCurrent(Utils.toLong(data.get(i).get("time"))));
+        mFansItemView.findViewById(R.id.msg_content).setVisibility(View.GONE);
+        mPatientCommentView.findViewById(R.id.msg_content).setVisibility(View.GONE);
+        mDocCommentView.findViewById(R.id.msg_content).setVisibility(View.GONE);
+        mFansItemView.findViewById(R.id.msg_time).setVisibility(View.GONE);
+        mPatientCommentView.findViewById(R.id.msg_time).setVisibility(View.GONE);
+        mDocCommentView.findViewById(R.id.msg_time).setVisibility(View.GONE);
+
+        ImageUtils.getInstance().displayFromDrawable( R.mipmap.msg_order_img,(ImageView)mOrderItemView.findViewById(R.id.image));
+        ImageUtils.getInstance().displayFromDrawable( R.mipmap.msg_system_img,(ImageView)mSysItemView.findViewById(R.id.image));
+        ImageUtils.getInstance().displayFromDrawable( R.mipmap.msg_fans,(ImageView)mFansItemView.findViewById(R.id.image));
+        ImageUtils.getInstance().displayFromDrawable( R.mipmap.msg_huan,(ImageView)mPatientCommentView.findViewById(R.id.image));
+        ImageUtils.getInstance().displayFromDrawable( R.mipmap.msg_zhuan,(ImageView)mDocCommentView.findViewById(R.id.image));
+
+
+        ((TextView)mOrderItemView.findViewById(R.id.msg_title)).setText("订单");
+        ((TextView)mSysItemView.findViewById(R.id.msg_title)).setText("系统消息");
+        ((TextView)mFansItemView.findViewById(R.id.msg_title)).setText("我的粉丝");
+        ((TextView)mPatientCommentView.findViewById(R.id.msg_title)).setText("患者留言信息");
+        ((TextView)mDocCommentView.findViewById(R.id.msg_title)).setText("专家留言信息");
+
+        mSysItemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gotoFragment(FragKey.system_order_list_fragment);
             }
-            view.setTag(Utils.toInteger(data.get(i).get("type")));
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int type = Utils.toInteger(v.getTag());
-                    if (type == 0) {
-                        String orderId = Utils.toString(item.get("orderid"));
-                        int status = Utils.toInteger(item.get("status"));
-                        if (mPresenter != null && status == 0) {
-                            mPresenter.readOrder(orderId);
-                        }
-                        gotoFragment(FragKey.msg_order_list_fragment);
-                     //   ActivityUtils.transActivity(getActivity(), PagerImpActivity.class, bundle, false);
-                    } else if (type == 1) {
-                        Bundle bundle = new Bundle();
-                        //bundle.putInt("key", FragKey.system_order_list_fragment);
-                        gotoFragment(FragKey.system_order_list_fragment);
-                      //  ActivityUtils.transActivity(getActivity(), PagerImpActivity.class, bundle, false);
+        });
+        mPatientCommentView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putInt(IntentKey.FRAG_INFO, 1);
+                gotoFragment(FragKey.comment_list_fragment,bundle);
+            }
+        });
+        mDocCommentView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putInt(IntentKey.FRAG_INFO, 2);
+                gotoFragment(FragKey.comment_list_fragment,bundle);
+            }
+        });
+        mFansItemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gotoFragment(FragKey.fans_list_fragment);
+            }
+        });
+        msgAllLayout.addView(mOrderItemView);
+        msgAllLayout.addView(mSysItemView);
+        msgAllLayout.addView(mFansItemView);
+        msgAllLayout.addView(mPatientCommentView);
+        msgAllLayout.addView(mDocCommentView);
+    }
+
+    @Override
+    public void updateOrderList(final Map<String, Object> order) {
+        TextView title = (TextView) mOrderItemView.findViewById(R.id.msg_title);
+        TextView content = (TextView) mOrderItemView.findViewById(R.id.msg_content);
+        TextView timeTv = (TextView) mOrderItemView.findViewById(R.id.msg_time);
+        title.setText(Utils.toString(order.get("title")));
+        content.setText(Utils.toString(order.get("content")));
+        if (!TextUtils.isEmpty(Utils.toString(order.get("time")))) {
+            timeTv.setText(DateUtil.getTimeDiffDayCurrent(Utils.toLong(order.get("time")),DateUtil.LONG_DATE_FORMAT_1));
+        }
+        mOrderItemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    String orderId = Utils.toString(order.get("orderid"));
+                    int status = Utils.toInteger(order.get("status"));
+                    if (mPresenter != null && status == 0) {
+                        mPresenter.readOrder(orderId);
                     }
-                }
-            });
-            boolean isUnread = Utils.toBoolean(data.get(i).get("status"));
-            if (isUnread) {
-                View unReadFlag = view.findViewById(R.id.unread_flag);
-                ViewUtil.setOverViewDrawbleBg(unReadFlag, "#FF0000");
-                unReadFlag.setVisibility(View.VISIBLE);
-            } else {
-                View unReadFlag = view.findViewById(R.id.unread_flag);
-                unReadFlag.setVisibility(View.GONE);
+                    gotoFragment(FragKey.msg_order_list_fragment);
             }
-            msgOrderLayout.addView(view);
+        });
+        boolean isUnread = Utils.toBoolean(order.get("status"));
+        if (isUnread) {
+           // View unReadFlag = mOrderItemView.findViewById(R.id.unread_flag);
+            //ViewUtil.setOverViewDrawbleBg(unReadFlag, "#FF0000");
+            //unReadFlag.setVisibility(View.VISIBLE);
+        } else {
+            View unReadFlag = mOrderItemView.findViewById(R.id.unread_flag);
+            unReadFlag.setVisibility(View.GONE);
+        }
+
+    }
+
+    @Override
+    public void updateSystemList(final Map<String, Object> order) {
+        TextView title = (TextView) mOrderItemView.findViewById(R.id.msg_title);
+        TextView content = (TextView) mOrderItemView.findViewById(R.id.msg_content);
+        TextView timeTv = (TextView) mOrderItemView.findViewById(R.id.msg_time);
+        title.setText(Utils.toString(order.get("title")));
+        content.setText(Utils.toString(order.get("content")));
+        if (!TextUtils.isEmpty(Utils.toString(order.get("time")))) {
+            timeTv.setText(DateUtil.getTimeDiffDayCurrent(Utils.toLong(order.get("time"))));
         }
     }
 
 
-    @Override
-    public void updateChatList(List<Map<String, Object>> data) {
-        msgCommentLayout.removeAllViews();
-        for (int i = 0; i < data.size(); i++) {
-            View view = LayoutInflater.from(getContext()).inflate(R.layout.listview_msg_item_layout, null);
-            ImageView imagew = (ImageView) view.findViewById(R.id.image);
-            TextView title = (TextView) view.findViewById(R.id.msg_title);
-            TextView content = (TextView) view.findViewById(R.id.msg_content);
-            TextView timeTv = (TextView) view.findViewById(R.id.msg_time);
-            String photoUrl = Utils.toString(data.get(i).get("path"));
-            if (!TextUtils.isEmpty(photoUrl)) {
-                ImageUtils.getInstance().displayFromRemote(photoUrl, imagew);
-            } else {
-                ImageUtils.getInstance().displayFromDrawable(R.mipmap.photo, imagew);
-            }
-
-            String expertId = Utils.toString(data.get(i).get("expertid"));
-            String getId = Utils.toString(data.get(i).get("getid"));
-            String sendId = Utils.toString(data.get(i).get("sendid"));
-            String titleName;
-
-            if (!TextUtils.isEmpty(expertId) && expertId.equals(getId)) {
-                titleName = Utils.toString(data.get(i).get("getname"));
-            } else {
-                titleName = Utils.toString(data.get(i).get("sendname"));
-            }
-            title.setText(titleName);
-            content.setText(Utils.toString(data.get(i).get("content")));
-            if (!TextUtils.isEmpty(Utils.toString(data.get(i).get("addtime")))) {
-                timeTv.setText(DateUtil.getTimeDiffDayCurrent(Utils.toLong(data.get(i).get("addtime"))));
-            }
-            view.setTag(data.get(i));
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Object tag = v.getTag();
-                    if (tag != null && tag instanceof Map) {
-
-                        Map<String, Object> data = (Map<String, Object>) tag;
-                        String id = Utils.toString(data.get("id"));
-                        int status = Utils.toInteger(data.get("status"));
-                        if (!TextUtils.isEmpty(id) && status == 0) {
-                            mPresenter.readComment(id);
-                        }
-                        Bundle bundle = new Bundle();
-                        String info = JSONObject.toJSONString(data);
-                        bundle.putString(IntentKey.FRAG_INFO, info);
-                       // bundle.putInt("key", FragKey.doc_chat_record_fragment);
-                       // ActivityUtils.transActivity(getActivity(), PagerImpActivity.class, bundle, false);
-
-                        gotoFragment(FragKey.doc_chat_record_fragment,bundle);
-                    }
-                }
-            });
-            boolean isUnread = Utils.toInteger(data.get(i).get("status")) == 0;
-            if (isUnread) {
-                View unReadFlag = view.findViewById(R.id.unread_flag);
-                ViewUtil.setOverViewDrawbleBg(unReadFlag, "#FF0000");
-                unReadFlag.setVisibility(View.VISIBLE);
-            } else {
-                View unReadFlag = view.findViewById(R.id.unread_flag);
-                unReadFlag.setVisibility(View.GONE);
-            }
-            msgCommentLayout.addView(view);
+    private void updateUnreadFlag(View view,boolean isUnread) {
+        if (isUnread) {
+            View unReadFlag = view.findViewById(R.id.unread_flag);
+            ViewUtil.setOverViewDrawbleBg(unReadFlag, "#FF0000");
+            unReadFlag.setVisibility(View.VISIBLE);
+        } else {
+            View unReadFlag = view.findViewById(R.id.unread_flag);
+            unReadFlag.setVisibility(View.GONE);
         }
     }
+    @Override
+    public void updateFans(boolean isUnread) {
+        updateUnreadFlag(mFansItemView,isUnread);
+    }
+
+    @Override
+    public void updatePatientComment(boolean isUnread) {
+        updateUnreadFlag(mPatientCommentView,isUnread);
+    }
+
+    @Override
+    public void updateDocComment(boolean isUnread) {
+        updateUnreadFlag(mDocCommentView,isUnread);
+    }
+
 
     @Override
     public void setPresenter(MsgAllListContract.Presenter presenter) {

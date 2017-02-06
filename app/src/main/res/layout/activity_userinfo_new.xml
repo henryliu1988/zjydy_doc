@@ -17,16 +17,20 @@
             android:orientation="vertical"
             android:paddingBottom="15dp"
             android:paddingTop="10dp">
+
             <LinearLayout style="@style/item_info_read_singleline">
+
                 <TextView
                     android:id="@+id/photo_title"
                     android:text="头像"
                     style="@style/item_info_read_singleline_title" />
+
                 <RelativeLayout
                     android:id="@+id/photo_image_layout"
                     android:layout_width="0dp"
                     android:layout_weight="5"
                     android:layout_height="wrap_content">
+
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -34,6 +38,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:src="@mipmap/item_turn" />
+
                     <ImageView
                         android:layout_width="60dp"
                         android:layout_height="60dp"
@@ -45,34 +50,44 @@
                         android:scaleType="fitCenter" />
                 </RelativeLayout>
             </LinearLayout>
-            <LinearLayout style="@style/item_info_read_singleline"
+
+            <LinearLayout
+                style="@style/item_info_read_singleline"
                 android:layout_marginTop="10dp">
+
                 <TextView
                     android:id="@+id/name_title"
                     android:text="真实姓名"
                     style="@style/item_info_read_singleline_title" />
+
                 <EditText
                     android:id="@+id/name_value"
                     style="@style/item_info_edit_singleline_value" />
             </LinearLayout>
+
             <View style="@style/item_info_div_line" />
 
             <LinearLayout style="@style/item_info_read_singleline">
+
                 <TextView
                     android:id="@+id/domain_title"
                     android:text="地区"
                     style="@style/item_info_read_singleline_title" />
+
                 <com.zhjydy_doc.view.zjview.MapTextView
                     android:id="@+id/domain_value"
                     style="@style/item_info_read_click_singleline_value" />
             </LinearLayout>
+
             <View style="@style/item_info_div_line" />
 
             <LinearLayout style="@style/item_info_read_singleline">
+
                 <TextView
                     android:id="@+id/hospital_title"
                     android:text="所属医院"
                     style="@style/item_info_read_singleline_title" />
+
                 <com.zhjydy_doc.view.zjview.MapTextView
                     android:id="@+id/hospital_value"
                     style="@style/item_info_read_click_singleline_value" />
@@ -81,10 +96,12 @@
             <View style="@style/item_info_div_line" />
 
             <LinearLayout style="@style/item_info_read_singleline">
+
                 <TextView
                     android:id="@+id/depart_title"
                     android:text="科室"
                     style="@style/item_info_read_singleline_title" />
+
                 <com.zhjydy_doc.view.zjview.MapTextView
                     android:id="@+id/depart_value"
                     style="@style/item_info_read_click_singleline_value" />
@@ -94,10 +111,12 @@
 
 
             <LinearLayout style="@style/item_info_read_singleline">
+
                 <TextView
                     android:id="@+id/business_title"
                     android:text="职称"
                     style="@style/item_info_read_singleline_title" />
+
                 <com.zhjydy_doc.view.zjview.MapTextView
                     android:id="@+id/business_value"
                     style="@style/item_info_read_click_singleline_value" />
@@ -107,26 +126,54 @@
 
 
             <LinearLayout style="@style/item_info_read_singleline">
+
                 <TextView
                     android:id="@+id/tel_title"
                     android:text="联系电话"
                     style="@style/item_info_read_singleline_title" />
+
                 <EditText
                     android:id="@+id/tel_value"
                     android:inputType="phone"
                     style="@style/item_info_edit_singleline_value" />
             </LinearLayout>
+            <View style="@style/item_info_div_line" />
 
 
+            <LinearLayout style="@style/item_info_read_mutiline">
+
+                <TextView
+                    android:id="@+id/job_title"
+                    android:text="社会任职"
+                    style="@style/item_info_read_mutiline_title" />
+
+                <EditText
+                    android:id="@+id/job_value"
+                    style="@style/item_info_edit_mutiline_value"
+                    android:minLines="3" />
+            </LinearLayout>
+            <LinearLayout style="@style/item_info_read_mutiline">
+
+                <TextView
+                    android:id="@+id/zhuanchang_title"
+                    android:text="专业擅长"
+                    style="@style/item_info_read_mutiline_title" />
+
+                <EditText
+                    android:id="@+id/zhuanchang_value"
+                    style="@style/item_info_edit_mutiline_value"
+                    android:minLines="2" />
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/next_station"
+                android:id="@+id/confirm"
                 style="@style/button_title_color_style"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
                 android:text="完成"
                 android:layout_marginTop="30dp" />
 
         </LinearLayout>
-
 
 
     </ScrollView>

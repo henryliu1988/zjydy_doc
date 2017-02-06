@@ -10,87 +10,89 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingLeft="10dp">
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:paddingRight="10dp"
-        android:paddingBottom="3dp"
-        android:paddingTop="3dp">
 
-        <ImageView
-            android:id="@+id/photo"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_centerVertical="true"
-            android:layout_alignParentLeft="true"
-            android:src="@mipmap/photo" />
-
-        <TextView
-            android:id="@+id/doc_name"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/photo"
-            android:layout_marginLeft="10dp"
-            android:layout_centerVertical="true"
-            android:textColor="@color/black_text"
-            android:textSize="15sp" />
+            android:gravity="center_vertical"
+            android:paddingRight="10dp"
+            android:paddingBottom="3dp"
+            android:paddingTop="3dp">
 
-        <TextView
-            android:id="@+id/status"
-            android:layout_width="wrap_content"
+            <ImageView
+                android:id="@+id/photo"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:src="@mipmap/photo" />
+
+            <TextView
+                android:id="@+id/patient_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/photo"
+                android:layout_marginLeft="10dp"
+                android:layout_centerVertical="true"
+                android:textColor="@color/black_text"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:textSize="13sp" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/div_line" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:textSize="13sp" />
-    </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/div_line" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="left"
-        android:orientation="vertical"
-        android:padding="5dp">
+            android:gravity="left"
+            android:orientation="vertical"
+            android:padding="5dp">
 
 
-        <TextView
-            android:id="@+id/serialNum"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="1dp"
-            android:textColor="@color/black_text2"
-            android:textSize="13sp" />
+            <TextView
+                android:id="@+id/serialNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="1dp"
+                android:textColor="@color/black_text2"
+                android:textSize="13sp" />
 
-        <TextView
-            android:id="@+id/time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="1dp"
-            android:textColor="@color/black_text2"
-            android:textSize="13sp" />
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="1dp"
+                android:textColor="@color/black_text2"
+                android:textSize="13sp" />
 
-        <TextView
-            android:id="@+id/patientName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="1dp"
-            android:textColor="@color/black_text2"
-            android:textSize="13sp" />
+            <TextView
+                android:id="@+id/patientName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="1dp"
+                android:textColor="@color/black_text2"
+                android:textSize="13sp" />
 
-        <TextView
-            android:id="@+id/patientHospital"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="1dp"
-            android:textColor="@color/black_text2"
-            android:textSize="13sp" />
+            <TextView
+                android:id="@+id/patientHospital"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="1dp"
+                android:textColor="@color/black_text2"
+                android:textSize="13sp" />
+        </LinearLayout>
     </LinearLayout>
-    </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
@@ -103,6 +105,7 @@
         android:paddingRight="10dp"
         android:paddingTop="4dp"
         android:id="@+id/operate_layout">
+
         <TextView
             android:id="@+id/operate"
             android:layout_width="wrap_content"
@@ -120,5 +123,5 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="8dp"
-        android:background="@color/gray_bg"/>
+        android:background="@color/gray_bg" />
 </LinearLayout>

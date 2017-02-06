@@ -1,1 +1,1 @@
-include ':app',':lib:pulltorefresh',':lib:calendarcomponent',':lib:dropdownmenu','lib:FlycoTabLayout_Lib'
+include ':app', ':lib:pulltorefresh', ':lib:calendarcomponent', ':lib:dropdownmenu', 'lib:FlycoTabLayout_Lib', 'lib:photoView'

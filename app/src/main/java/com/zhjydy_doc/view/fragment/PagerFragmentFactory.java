@@ -25,9 +25,9 @@ public class PagerFragmentFactory
             case FragKey.common_fragment:
                 return new CommonFragment();
             case FragKey.identify_info_fragment:
-                //return new IdentityInfoFragment();
+                return new IdentityInfoFragment();
             case FragKey.identify_new_fragment:
-               // return new IdentityInfoNewFragment();
+                return new IdentityInfoNewFragment();
             case FragKey.mine_info_fragment:
                 return new MineInfoFragment();
             case FragKey.account_safe_fragment:
@@ -52,7 +52,34 @@ public class PagerFragmentFactory
                 return new PayPasswordAddFragment();
             case FragKey.mine_name_change_fragment:
                 return new MineNameChangeFragment();
-
+            case FragKey.mine_star_fragment:
+                return new MineStarFragment();
+            case FragKey.comment_list_fragment:
+                return new CommentListFragment();
+            case FragKey.fans_list_fragment:
+                return new FansListFragment();
+            case FragKey.order_subsribe_detail_fragment:
+                return new OrderSubsribeDetailFragment();
+            case FragKey.patient_case_detail_fragment:
+                return new PatientCaseDetailFragment();
+            case FragKey.order_accept_fragment:
+                return new OrderAcceptFragment();
+            case FragKey.order_detail_fragment:
+                return new OrderDetailFragment();
+            case FragKey.order_reject_reason_fragment:
+                return new BackRejectReasonFragment();
+            case FragKey.expert_office_filter_list_fragment:
+                return new ExpertOfficeListFragment();
+            case FragKey.order_reject_fragment:
+                return new OrderRejectFragment();
+            case FragKey.order_money_reject_fragment:
+                return new OrderMoneyRejectFragment();
+            case FragKey.about_app_main_fragment:
+                return new AboutFragment();
+            case FragKey.about_app_kefu_fragment:
+                return new AboutKefuFragment();
+            case FragKey.about_app_advice_fragment:
+                return new AboutAdviceFragment();
 
         }
       return null;

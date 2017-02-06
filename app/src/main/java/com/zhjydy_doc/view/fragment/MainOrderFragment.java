@@ -1,6 +1,5 @@
 package com.zhjydy_doc.view.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +16,7 @@ import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.zhjydy_doc.R;
+import com.zhjydy_doc.model.data.OrderData;
 import com.zhjydy_doc.presenter.contract.MainOrderContract;
 import com.zhjydy_doc.presenter.presenterImp.MainOrderPresenterImp;
 import com.zhjydy_doc.util.ActivityUtils;
@@ -124,41 +124,60 @@ public class MainOrderFragment extends StatedFragment implements MainOrderContra
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
             {
                 Map<String, Object> item = (Map<String, Object>) adapterView.getAdapter().getItem(i);
-                if (item != null && item.size() > 0)
-                {
-                    String id = Utils.toString(item.get("orderid"));
-                    //   ActivityUtils.transToFragPagerActivity(getActivity(),PagerImpActivity.class,FragKey.detail_order_fragment,id,false);
-                }
+                onOperateDetail(item);
             }
         });
         mAdapter.setOperateListener(new OrderListAdapter.OperateListener()
         {
             @Override
-            public void onOperate(Map<String, Object> item, int operate)
+            public void onOperate(Map<String, Object> item)
             {
-                String id = Utils.toString(item.get("id"));
-                switch (operate)
-                {
-                    case OrderListAdapter.OPERATE_DETAIL:
-                        ActivityUtils.transToFragPagerActivity(getActivity(), PagerImpActivity.class, FragKey.detail_order_fragment, id, false);
-                        break;
-                    case OrderListAdapter.OPERATE_CANCEL:
-                        ActivityUtils.transToFragPagerActivity(getActivity(), PagerImpActivity.class, FragKey.order_cancel_fragment, id, false);
-                        break;
-
-                    case OrderListAdapter.OPERATE_PAY:
-                        break;
-
-                }
+                onOperateDetail(item);
             }
         });
     }
 
 
-    private void onOperateClick()
-    {
+    private void onOperateDetail(Map<String, Object> item) {
+        int operate = OrderData.getInstance().getOrderOperateByItem(item);
+        String id = Utils.toString(item.get("id"));
+        int fragkey = -1;
+        switch (operate) {
+            case OrderData.OPERATE_SUBRIBE_DETAIL:
+                fragkey = FragKey.order_detail_fragment;
+                break;
+            case OrderData.OPERATE_TOPAY_DETAIL:
+                fragkey = FragKey.order_detail_fragment;
+                break;
+            case OrderData.OPERATE_PAYOK_DETAIL:
+                fragkey = FragKey.order_detail_fragment;
+                break;
+            case OrderData.OPERATE_BACKPAY_DETAIL:
+                fragkey = FragKey.order_detail_fragment;
+                break;
+            case OrderData.OPERATE_ORDER_FINISH:
+                fragkey = FragKey.order_detail_fragment;
+                break;
+            case OrderData.OPERATE_ORDER_CLOSE:
+                fragkey = FragKey.order_detail_fragment;
 
+                break;
+            case OrderData.OPERATE_ORDER_BACKING:
+                fragkey = FragKey.order_detail_fragment;
+                break;
+            case OrderData.OPERATE_ORDER_HUIZHEN:
+                fragkey = FragKey.order_detail_fragment;
+                break;
+            case OrderData.OPERATE_ORDER_ZHILIAO:
+                fragkey = FragKey.order_detail_fragment;
+
+                break;
+        }
+        if (fragkey > 0) {
+            ActivityUtils.transToFragPagerActivity(getActivity(), PagerImpActivity.class, fragkey, id, false);
+        }
     }
+
     public void updateUnReadMsgCount(int count) {
         String text = "";
         if (count != 0) {
@@ -200,6 +219,7 @@ public class MainOrderFragment extends StatedFragment implements MainOrderContra
                 case 3:
                 case 11:
                 case 12:
+                case 13:
                     mOnGoOrderList.add(order);
                     break;
                 case 5:
@@ -245,7 +265,7 @@ public class MainOrderFragment extends StatedFragment implements MainOrderContra
             default:
                 break;
         }
-        if (list == null || list.size() < 1) {
+        if (list.size() < 1) {
             nullDataLayout.setVisibility(View.VISIBLE);
             mList.setVisibility(View.GONE);
             nullDataRetrye.setOnClickListener(new View.OnClickListener()
@@ -284,16 +304,6 @@ public class MainOrderFragment extends StatedFragment implements MainOrderContra
         return rootView;
     }
 
-    class OrderListView extends ListView
-    {
-
-        public OrderListView(Context context)
-        {
-            super(context);
-        }
-
-
-    }
 
     public class TabEntity implements CustomTabEntity
     {

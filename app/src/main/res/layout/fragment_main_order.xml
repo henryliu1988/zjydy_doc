@@ -6,8 +6,7 @@
 
     <include layout="@layout/titlebar_layout_main" />
 
-    <com.flyco.tablayout.CommonTabLayout
-        xmlns:tl="http://schemas.android.com/apk/res-auto"
+    <com.flyco.tablayout.CommonTabLayout xmlns:tl="http://schemas.android.com/apk/res-auto"
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -19,7 +18,8 @@
         tl:tl_indicator_color="@color/title_bg"
         tl:tl_textSelectColor="@color/title_bg"
         tl:tl_textUnselectColor="@color/black_text1"
-        tl:tl_textsize="14sp"/>
+        tl:tl_textsize="14sp" />
+
     <com.handmark.pulltorefresh.library.PullToRefreshListView
         android:id="@+id/m_list"
         android:layout_width="match_parent"
@@ -32,5 +32,5 @@
         android:headerDividersEnabled="false"
         android:smoothScrollbar="true" />
 
-    <include layout="@layout/null_data_layout"/>
+    <include layout="@layout/null_data_layout" />
 </LinearLayout>

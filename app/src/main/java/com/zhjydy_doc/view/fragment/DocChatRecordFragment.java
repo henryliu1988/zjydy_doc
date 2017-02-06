@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zhjydy_doc.R;
-import com.zhjydy_doc.model.data.AppData;
+import com.zhjydy_doc.model.data.UserData;
 import com.zhjydy_doc.model.entity.IntentKey;
 import com.zhjydy_doc.presenter.contract.ChatRecordContract;
 import com.zhjydy_doc.presenter.presenterImp.ChatRecordPresenterImp;
@@ -91,13 +91,13 @@ public class DocChatRecordFragment extends PageImpBaseFragment implements ChatRe
     public void setChatMsgs(List<Map<String, Object>> msg,String expertPhoto) {
         for (Map<String, Object> item : msg) {
             String sendId = Utils.toString(item.get("sendid"));
-            String userId = AppData.getInstance().getToken().getId();
+            String userId = UserData.getInstance().getToken().getId();
             boolean isUser = (!TextUtils.isEmpty(userId) && userId.equals(sendId));
             View view;
             String photoUrl;
             if (isUser) {
                 view =  LayoutInflater.from(getContext()).inflate(R.layout.chat_record_right, null);
-                photoUrl = AppData.getInstance().getToken().getPhotoUrl();
+                photoUrl = UserData.getInstance().getToken().getPhotoUrl();
             } else {
                 view =  LayoutInflater.from(getContext()).inflate(R.layout.chat_record_left, null);
                 photoUrl = expertPhoto;
@@ -109,7 +109,7 @@ public class DocChatRecordFragment extends PageImpBaseFragment implements ChatRe
             if (TextUtils.isEmpty(photoUrl)) {
                 ImageUtils.getInstance().displayFromDrawable(R.mipmap.photo,photImage);
             } else {
-                ImageUtils.getInstance().displayFromRemote(photoUrl,photImage);
+                ImageUtils.getInstance().displayFromRemoteOver(photoUrl,photImage);
             }
             timeTv.setText(DateUtil.getTimeDiffDayCurrent(Utils.toLong(item.get("addtime"))));
             contentTv.setText(Utils.toString(item.get("content")));

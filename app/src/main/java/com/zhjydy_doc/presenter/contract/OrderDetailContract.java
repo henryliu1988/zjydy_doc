@@ -18,6 +18,9 @@ public interface OrderDetailContract {
 
     interface Presenter extends BasePresenter
     {
-        String getExpertId();
+        void confirmHuizhen();
+        void confirmZhiliaoFinish();
+        void confirmFinishHuizhen();
+        void acceptBack();
     }
 }

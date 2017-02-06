@@ -1,6 +1,6 @@
 package com.zhjydy_doc.presenter.presenterImp;
 
-import com.zhjydy_doc.model.data.AppData;
+import com.zhjydy_doc.model.data.UserData;
 import com.zhjydy_doc.model.net.BaseSubscriber;
 import com.zhjydy_doc.model.net.WebCall;
 import com.zhjydy_doc.model.net.WebKey;
@@ -47,7 +47,7 @@ public class PayPasswordAddPresenterImp implements PayPasswordAddContract.Presen
             public void onNext(WebResponse webResponse) {
                 if (WebUtils.getWebStatus(webResponse)) {
                     mView.confirmResult(true,"修改支付密码成功");
-                    AppData.getInstance().getToken().setPaypass(newPw);
+                    UserData.getInstance().getToken().setPaypass(newPw);
                 } else {
                     mView.confirmResult(false,"修改支付密码失败");
                 }

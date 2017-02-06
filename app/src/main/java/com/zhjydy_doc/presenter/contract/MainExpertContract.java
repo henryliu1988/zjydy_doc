@@ -13,18 +13,31 @@ import java.util.Map;
  */
 public interface MainExpertContract {
 
-    interface MainExpertView extends BaseView<MainExpertPresenter>
-    {
+    interface MainExpertView extends BaseView<MainExpertPresenter> {
         void updateDistrict(Map<String, ArrayList> distrctData);
+
         void updateOffice(ArrayList<NormalPickViewData> officeData);
+
         void updateBusiness(ArrayList<NormalPickViewData> officeData);
-        Map<String,Object> getFilterConditions();
-        void updateFavExpertCount(int count);
+
+        void updateCityAndHos(Map<String, ArrayList> data);
+        void reloadData();
+    }
+
+    interface MainExpertPresenter extends BasePresenter {
+    }
+
+    interface TabView extends BaseView<TabPresenter> {
+
+        Map<String, Object> getFilterConditions();
+        void onGuanzhuChange();
 
     }
 
-    interface MainExpertPresenter extends BasePresenter
-    {
+    interface TabPresenter extends BasePresenter {
         void reloadExperts();
+        void guanExpert(Map<String,Object> item);
+        void cancelGuanExpert(Map<String,Object> item);
     }
+
 }

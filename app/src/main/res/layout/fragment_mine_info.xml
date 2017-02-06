@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/gray_bg">
 
-    <include layout="@layout/titlebar_layout_back"/>
+    <include layout="@layout/titlebar_layout_back" />
 
     <RelativeLayout
         android:id="@+id/user_layout"
@@ -14,6 +15,7 @@
         android:background="@color/white_bg"
         android:gravity="center_vertical"
         android:padding="10dp">
+
         <TextView
             android:id="@+id/real_name"
             android:layout_width="wrap_content"
@@ -50,7 +52,7 @@
         android:background="@color/white_bg"
         android:paddingLeft="10dp"
         android:layout_marginTop="10dp">
-        
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -58,6 +60,7 @@
             android:paddingBottom="10dp"
             android:paddingRight="10dp"
             android:gravity="center_vertical">
+
             <TextView
                 android:id="@+id/user_name_title"
                 android:layout_width="wrap_content"
@@ -67,6 +70,7 @@
                 android:layout_alignParentLeft="true"
                 android:textSize="15dp"
                 android:layout_centerVertical="true" />
+
             <TextView
                 android:id="@+id/user_name_value"
                 android:layout_width="wrap_content"
@@ -78,19 +82,20 @@
                 android:textSize="15dp"
                 android:layout_centerVertical="true" />
         </RelativeLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="@color/div_line"/>
+            android:background="@color/div_line" />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:paddingRight="10dp"
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
+            android:gravity="center_vertical">
 
-            android:gravity="center_vertical"
-            >
             <TextView
                 android:id="@+id/user_sex_title"
                 android:layout_width="wrap_content"
@@ -100,7 +105,8 @@
                 android:layout_alignParentLeft="true"
                 android:textSize="15dp"
                 android:layout_centerVertical="true" />
-            <com.zhjydy.view.zhview.MapTextView
+
+            <com.zhjydy_doc.view.zjview.MapTextView
                 android:id="@+id/user_sex_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -113,6 +119,176 @@
                 android:layout_centerVertical="true" />
         </RelativeLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/div_line" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingRight="10dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tel_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="联系方式"
+                android:textColor="@color/black_text"
+                android:layout_alignParentLeft="true"
+                android:textSize="15dp"
+                android:layout_centerVertical="true" />
+
+            <TextView
+                android:id="@+id/tel_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black_text2"
+                android:layout_alignParentRight="true"
+                android:drawableRight="@mipmap/item_turn"
+                android:drawablePadding="15dp"
+                android:textSize="15dp"
+                android:layout_centerVertical="true" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/div_line" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/mine_info_value"
+        android:textSize="12sp"
+        android:layout_marginTop="4dp"
+        android:text="*专家相互关注后会公开您的联系方式"
+        android:layout_marginLeft="12dp" />
+
+
+    <LinearLayout style="@style/item_info_read_singleline"
+        android:layout_marginTop="10dp"
+        >
+
+        <TextView
+            android:id="@+id/domain_title"
+            android:text="地区"
+            style="@style/item_info_read_singleline_title" />
+
+        <com.zhjydy_doc.view.zjview.MapTextView
+            android:id="@+id/domain_value"
+            style="@style/item_info_read_click_singleline_value" />
+    </LinearLayout>
+
+    <View style="@style/item_info_div_line" />
+
+    <LinearLayout style="@style/item_info_read_singleline">
+
+        <TextView
+            android:id="@+id/hospital_title"
+            android:text="所属医院"
+            style="@style/item_info_read_singleline_title" />
+
+        <com.zhjydy_doc.view.zjview.MapTextView
+            android:id="@+id/hospital_value"
+            style="@style/item_info_read_click_singleline_value" />
+    </LinearLayout>
+
+    <View style="@style/item_info_div_line" />
+
+    <LinearLayout style="@style/item_info_read_singleline">
+
+        <TextView
+            android:id="@+id/depart_title"
+            android:text="科室"
+            style="@style/item_info_read_singleline_title" />
+
+        <com.zhjydy_doc.view.zjview.MapTextView
+            android:id="@+id/depart_value"
+            style="@style/item_info_read_click_singleline_value" />
+    </LinearLayout>
+
+    <View style="@style/item_info_div_line" />
+
+
+    <LinearLayout style="@style/item_info_read_singleline">
+
+        <TextView
+            android:id="@+id/business_title"
+            android:text="职称"
+            style="@style/item_info_read_singleline_title" />
+
+        <com.zhjydy_doc.view.zjview.MapTextView
+            android:id="@+id/business_value"
+            style="@style/item_info_read_click_singleline_value" />
+    </LinearLayout>
+
+    <View style="@style/item_info_div_line" />
+
+
+    <LinearLayout
+        android:id="@+id/job_layout"
+        android:layout_marginTop="10dp"
+        style="@style/item_info_read_mutiline">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/job_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="社会任职"
+                android:textColor="@color/black_text"
+                android:layout_alignParentLeft="true"
+                android:textSize="15dp"
+                android:layout_centerVertical="true" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/item_turn"
+                android:layout_alignParentRight="true" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/job_value"
+            style="@style/item_info_edit_mutiline_value"
+            android:lines="2" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/zhuangchang_layout"
+        style="@style/item_info_read_mutiline">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/zhuanchang_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="专业擅长"
+                android:textColor="@color/black_text"
+                android:layout_alignParentLeft="true"
+                android:textSize="15dp"
+                android:layout_centerVertical="true" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/item_turn"
+                android:layout_alignParentRight="true" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/zhuanchang_value"
+            style="@style/item_info_edit_mutiline_value"
+            android:line="2" />
     </LinearLayout>
 
     <TextView
@@ -122,12 +298,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:layout_marginLeft = "12dp"
-        android:layout_marginRight = "12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
         android:textColor="@color/white_text"
         android:textSize="16sp"
         android:gravity="center"
         android:background="@drawable/bg_red_corner"
-        android:text="退出登录"
-        />
+        android:text="退出登录" />
 </LinearLayout>

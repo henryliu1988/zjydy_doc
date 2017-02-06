@@ -2,7 +2,6 @@ package com.zhjydy_doc.presenter.presenterImp;
 
 import android.content.Intent;
 
-
 import com.zhjydy_doc.presenter.contract.PageImpContract;
 import com.zhjydy_doc.view.zjview.ActivityResultView;
 

@@ -1,7 +1,8 @@
 package com.zhjydy_doc.presenter.presenterImp;
 
 
-import com.zhjydy_doc.model.data.AppData;
+import com.zhjydy_doc.model.data.UserData;
+import com.zhjydy_doc.model.entity.ExpertInfo;
 import com.zhjydy_doc.model.entity.PickViewData;
 import com.zhjydy_doc.model.net.BaseSubscriber;
 import com.zhjydy_doc.model.net.FileUpLoad;
@@ -35,10 +36,7 @@ public class MineInfoPresenterImp implements MineInfoContract.Presenter,RefreshW
     public MineInfoPresenterImp(MineInfoContract.View view) {
         this.mView = view;
         view.setPresenter(this);
-        RefreshManager.getInstance().addNewListener(RefreshKey.TOKEN_MSG_NICK_NAME,this);
-        RefreshManager.getInstance().addNewListener(RefreshKey.TOKEN_MSG_PHOTO,this);
-        RefreshManager.getInstance().addNewListener(RefreshKey.TOKEN_MSG_SEX,this);
-
+        RefreshManager.getInstance().addNewListener(RefreshKey.EXPERT_INFO_CHANGE,this);
         start();
     }
 
@@ -57,7 +55,7 @@ public class MineInfoPresenterImp implements MineInfoContract.Presenter,RefreshW
 
     private void loadPersonInfo() {
         if (mView !=null){
-            mView.updateInfo( AppData.getInstance().getToken());
+            mView.updateInfo( UserData.getInstance().getToken());
         }
     }
 
@@ -79,22 +77,21 @@ public class MineInfoPresenterImp implements MineInfoContract.Presenter,RefreshW
             @Override
             public Observable<WebResponse> call(List<Map<String,Object>> files) {
                 HashMap<String,Object> params = new HashMap<>();
-                params.put("nickname",AppData.getInstance().getToken().getNickname());
-                params.put("sex",AppData.getInstance().getToken().getSex());
+               // params.put("nickname",UserData.getInstance().getToken().getNickname());
+                params.put("memberid",UserData.getInstance().getToken().getId());
                 String imageIds = Utils.getListStrsAdd(files,"id");
-                params.put("head_img",imageIds);
-                params.put("id",AppData.getInstance().getToken().getId());
+                params.put("img",imageIds);
                 if (files.size() >0) {
                     photoUrl = Utils.toString(files.get(0).get("url"));
                 }
-                return WebCall.getInstance().call(WebKey.func_updateMember,params);
+                return WebCall.getInstance().call(WebKey.func_updateExpertInformation,params);
             }
         }).subscribe(new BaseSubscriber<WebResponse>(mView.getContext(),"正在上传头像") {
             @Override
             public void onNext(WebResponse webResponse) {
                 boolean status = WebUtils.getWebStatus(webResponse);
                 if (status) {
-                    AppData.getInstance().getToken().setPhotoUrl(photoUrl);
+                    UserData.getInstance().getToken().setPhotoUrl(photoUrl);
                 } else {
                     zhToast.showToast("上传失败");
                     photoUrl = null;
@@ -106,34 +103,40 @@ public class MineInfoPresenterImp implements MineInfoContract.Presenter,RefreshW
     @Override
     public void updateMemberSex(final int sex) {
         HashMap<String,Object> params = new HashMap<>();
-        params.put("nickname",AppData.getInstance().getToken().getNickname());
+       // params.put("nickname",UserData.getInstance().getToken().getNickname());
         params.put("sex",sex);
-        params.put("head_img",AppData.getInstance().getToken().getPhotoId());
-        params.put("id",AppData.getInstance().getToken().getId());
-        WebCall.getInstance().call(WebKey.func_updateMember,params).subscribe(new BaseSubscriber<WebResponse>() {
+        params.put("memberid",UserData.getInstance().getToken().getId());
+        WebCall.getInstance().call(WebKey.func_updateExpertInformation,params).subscribe(new BaseSubscriber<WebResponse>() {
             @Override
             public void onNext(WebResponse webResponse) {
                 boolean status = WebUtils.getWebStatus(webResponse);
                 if (status) {
-                    AppData.getInstance().getToken().setSex(sex + "");
+                  //  UserData.getInstance().getToken().setSex(sex + "");
+                    ExpertInfo info=  UserData.getInstance().getToken().getmExpertInfo();
+                    info.setSex(sex + "");
+                    UserData.getInstance().getToken().setmExpertInfo(info);
+
                 }
-                zhToast.showToast(WebUtils.getWebMsg(webResponse));
+              //  zhToast.showToast(WebUtils.getWebMsg(webResponse));
             }
         });
     }
 
     @Override
-    public void updateMemberName(String name) {
+    public void updateMemberName(final String name) {
         HashMap<String,Object> params = new HashMap<>();
-        params.put("nickname",name);
-        params.put("sex",AppData.getInstance().getToken().getSex());
-        params.put("head_img",AppData.getInstance().getToken().getPhotoId());
-        params.put("id",AppData.getInstance().getToken().getId());
-        WebCall.getInstance().call(WebKey.func_updateMember,params).subscribe(new BaseSubscriber<WebResponse>() {
+        params.put("realname",name);
+        params.put("memberid",UserData.getInstance().getToken().getId());
+        WebCall.getInstance().call(WebKey.func_updateExpertInformation,params).subscribe(new BaseSubscriber<WebResponse>() {
             @Override
             public void onNext(WebResponse webResponse) {
                 boolean status = WebUtils.getWebStatus(webResponse);
                 zhToast.showToast(WebUtils.getWebMsg(webResponse));
+                if(status) {
+                    ExpertInfo info=  UserData.getInstance().getToken().getmExpertInfo();
+                    info.setRealname(name + "");
+                    UserData.getInstance().getToken().setmExpertInfo(info);
+                }
             }
         });
     }
@@ -145,7 +148,7 @@ public class MineInfoPresenterImp implements MineInfoContract.Presenter,RefreshW
 
     @Override
     public void onRefreshWithKey(int key) {
-        if (key == RefreshKey.TOKEN_MSG_NICK_NAME || key == RefreshKey.TOKEN_MSG_SEX ||key == RefreshKey.TOKEN_MSG_PHOTO) {
+        if (key == RefreshKey.EXPERT_INFO_CHANGE) {
             loadPersonInfo();
         }
     }

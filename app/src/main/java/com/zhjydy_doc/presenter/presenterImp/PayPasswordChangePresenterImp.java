@@ -1,7 +1,7 @@
 package com.zhjydy_doc.presenter.presenterImp;
 
 
-import com.zhjydy_doc.model.data.AppData;
+import com.zhjydy_doc.model.data.UserData;
 import com.zhjydy_doc.model.net.BaseSubscriber;
 import com.zhjydy_doc.model.net.WebCall;
 import com.zhjydy_doc.model.net.WebKey;
@@ -39,7 +39,7 @@ public class PayPasswordChangePresenterImp implements PayPasswordChangContract.P
 
     @Override
     public void confirm(String oldPw, final String newPw) {
-        String tokenPass = AppData.getInstance().getToken().getPaypass();
+        String tokenPass = UserData.getInstance().getToken().getPaypass();
         if (!oldPw.equals(tokenPass)) {
             mView.confirmResult(false,"原密码不正确！");
             return;
@@ -50,7 +50,7 @@ public class PayPasswordChangePresenterImp implements PayPasswordChangContract.P
             @Override
             public void onNext(WebResponse webResponse) {
                 if(WebUtils.getWebStatus(webResponse)) {
-                    AppData.getInstance().getToken().setPaypass(newPw);
+                    UserData.getInstance().getToken().setPaypass(newPw);
                     mView.confirmResult(true,"修改支付密码成功");
                 } else {
                     mView.confirmResult(false,"修改支付密码失败");

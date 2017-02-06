@@ -32,7 +32,16 @@ public class ViewUtil {
         gd.setStroke(strokeWidth, strokeColorInt);
         view.setBackgroundDrawable(gd);
     }
-
+    public static void setCornerViewDrawbleBg(View view,String fillCorlor,int roundRadius) {
+        GradientDrawable gd = new GradientDrawable();//创建drawable
+        int strokeWidth = 1;     // 1dp 边框宽度
+        int strokeColorInt = Color.parseColor(fillCorlor);//边框颜色
+        int fillColorInt = Color.parseColor(fillCorlor); //内部填充颜色
+        gd.setColor(fillColorInt);
+        gd.setCornerRadius(roundRadius);
+        gd.setStroke(strokeWidth, strokeColorInt);
+        view.setBackgroundDrawable(gd);
+    }
     public static void setOverViewDrawbleBg(View view,String fillColor,String strokColor,int strokWidth) {
         GradientDrawable gd = new GradientDrawable();//创建drawable
         gd.setShape(GradientDrawable.OVAL);

@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <include layout="@layout/titlebar_layout_back_search"/>
+
+    <include layout="@layout/titlebar_layout_back_search" />
 
     <RelativeLayout
         android:id="@+id/list_layout"
@@ -24,7 +26,8 @@
             android:smoothScrollbar="true" />
 
     </RelativeLayout>
-    <include layout="@layout/null_data_layout"/>
+
+    <include layout="@layout/null_data_layout" />
 
 
 </LinearLayout>

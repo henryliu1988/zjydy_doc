@@ -2,16 +2,19 @@ package com.zhjydy_doc.presenter.presenterImp;
 
 
 import com.zhjydy_doc.R;
+import com.zhjydy_doc.model.data.ExpertData;
 import com.zhjydy_doc.model.data.MsgData;
 import com.zhjydy_doc.model.net.BaseSubscriber;
 import com.zhjydy_doc.model.net.WebCall;
 import com.zhjydy_doc.model.net.WebKey;
 import com.zhjydy_doc.model.net.WebResponse;
+import com.zhjydy_doc.model.refresh.RefreshKey;
+import com.zhjydy_doc.model.refresh.RefreshManager;
+import com.zhjydy_doc.model.refresh.RefreshWithKey;
 import com.zhjydy_doc.presenter.contract.MsgAllListContract;
 import com.zhjydy_doc.util.ListMapComparator;
 import com.zhjydy_doc.util.Utils;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -19,48 +22,88 @@ import java.util.Map;
 
 import rx.Observable;
 import rx.functions.Func1;
-import rx.functions.Func2;
 
 /**
  * Created by Administrator on 2016/9/20 0020.
  */
-public class MsgAllListPresenterImp implements MsgAllListContract.Presenter {
+public class MsgAllListPresenterImp implements MsgAllListContract.Presenter,RefreshWithKey{
 
     private MsgAllListContract.View mView;
 
     public MsgAllListPresenterImp(MsgAllListContract.View view) {
         this.mView = view;
         view.setPresenter(this);
+        RefreshManager.getInstance().addNewListener(RefreshKey.FANS_LSIT_CHANGE,this);
         start();
     }
 
     @Override
     public void start() {
         initOrderList();
+        initSystemList();
         initCommentList();
+        initFansList();
     }
 
-    private void initCommentList() {
-        MsgData.getInstance().getAllCommentNewList().subscribe(new BaseSubscriber<List<Map<String, Object>>>() {
+
+    private void initFansList() {
+        ExpertData.getInstance().getUnreadFans().subscribe(new BaseSubscriber<List<Map<String, Object>>>() {
             @Override
             public void onNext(List<Map<String, Object>> maps) {
-                mView.updateChatList(maps);
+                mView.updateFans(maps.size() > 0);
+            }
+        });
+    }
+    private void initCommentList() {
+        MsgData.getInstance().getAllCommentPatientNewList().subscribe(new BaseSubscriber<List<Map<String, Object>>>() {
+            @Override
+            public void onNext(List<Map<String, Object>> maps) {
+                boolean isUnread = false;
+
+                for (Map<String, Object> m: maps) {
+                    if( Utils.toInteger(m.get("status")) == 0) {
+                        isUnread = true;
+                        break;
+                    }
+                }
+                mView.updatePatientComment(isUnread);
+            }
+        });
+
+        MsgData.getInstance().getAllCommentExpertNewList().subscribe(new BaseSubscriber<List<Map<String, Object>>>() {
+            @Override
+            public void onNext(List<Map<String, Object>> maps) {
+                boolean isUnread = false;
+
+                for (Map<String, Object> m: maps) {
+                    if( Utils.toInteger(m.get("status")) == 0) {
+                        isUnread = true;
+                        break;
+                    }
+                }
+                mView.updateDocComment(isUnread);
+            }
+        });
+    }
+
+    private void initSystemList() {
+        getOrderItemData().subscribe(new BaseSubscriber<Map<String, Object>>() {
+            @Override
+            public void onNext(Map<String, Object> map) {
+                if (mView != null) {
+                    mView.updateSystemList(map);
+                }
             }
         });
     }
     private void initOrderList() {
-        Observable.zip(getOrderItemData(), getSystemItemData(), new Func2<Map<String,Object>, Map<String,Object>, List<Map<String,Object>>>() {
+
+        getOrderItemData().subscribe(new BaseSubscriber<Map<String, Object>>() {
             @Override
-            public List<Map<String, Object>> call(Map<String, Object> order, Map<String, Object> sys) {
-                List<Map<String,Object>> list = new ArrayList<Map<String, Object>>();
-                list.add(order);
-                list.add(sys);
-                return  list;
-            }
-        }).subscribe(new BaseSubscriber<List<Map<String, Object>>>() {
-            @Override
-            public void onNext(List<Map<String, Object>> list) {
-                mView.updateOrderList(list);
+            public void onNext(Map<String, Object> map) {
+                if (mView != null) {
+                    mView.updateOrderList(map);
+                }
             }
         });
 
@@ -76,8 +119,6 @@ public class MsgAllListPresenterImp implements MsgAllListContract.Presenter {
                 orderData.put("content", "暂无新消息");
                 orderData.put("count", "0");
                 if (orderList != null && orderList.size() > 0) {
-                    ListMapComparator comp = new ListMapComparator("addtime",0);
-                    Collections.sort(orderList,comp);
                     Map<String, Object> order = orderList.get(0);
                     orderData.put("content", order.get("introduction"));
                     orderData.put("count", orderList.size());
@@ -125,13 +166,13 @@ public class MsgAllListPresenterImp implements MsgAllListContract.Presenter {
     }
 
     @Override
-    public void readComment(String id) {
+    public void readComment(final int type,String id) {
         HashMap<String,Object> params = new HashMap<>();
         params.put("id",id);
         WebCall.getInstance().call(WebKey.func_updateCommentStatus,params).subscribe(new BaseSubscriber<WebResponse>() {
             @Override
             public void onNext(WebResponse webResponse) {
-                MsgData.getInstance().loadNewCommentList();
+                MsgData.getInstance().loadNewCommentList(type);
             }
         });
 
@@ -140,5 +181,14 @@ public class MsgAllListPresenterImp implements MsgAllListContract.Presenter {
     @Override
     public void finish() {
 
+    }
+
+    @Override
+    public void onRefreshWithKey(int key) {
+        switch (key) {
+            case RefreshKey.FANS_LSIT_CHANGE:
+                initFansList();
+                break;
+        }
     }
 }

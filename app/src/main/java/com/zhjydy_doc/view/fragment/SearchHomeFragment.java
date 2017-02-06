@@ -220,7 +220,7 @@ public class SearchHomeFragment extends PageImpBaseFragment implements SearchHom
                 score = 0;
             }
             starView.setScore(score, 100);
-            ImageUtils.getInstance().displayFromRemote(Utils.toString(expert.get("path")), (ImageView) holder.getView(R.id.photo));
+            ImageUtils.getInstance().displayFromRemoteOver(Utils.toString(expert.get("path")), (ImageView) holder.getView(R.id.photo));
             holder.getConvertView().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

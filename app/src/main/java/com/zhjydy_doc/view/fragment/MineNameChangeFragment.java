@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zhjydy_doc.R;
+import com.zhjydy_doc.model.entity.IntentKey;
 import com.zhjydy_doc.presenter.contract.MineNameChangContract;
 import com.zhjydy_doc.presenter.presenterImp.MineNamePresenterIml;
 import com.zhjydy_doc.view.zjview.zhToast;
@@ -31,7 +32,13 @@ public class MineNameChangeFragment extends PageImpBaseFragment implements MineN
     ImageView titleBack;
     @BindView(R.id.title_center_tv)
     TextView titleCenterTv;
+    @BindView(R.id.edit_title)
+    TextView editTitle;
     private MineNameChangContract.Presenter mPresenter;
+
+
+    String valueText = "";
+    private String changeKey = "";
 
     @Override
     public void setPresenter(MineNameChangContract.Presenter presenter) {
@@ -50,7 +57,24 @@ public class MineNameChangeFragment extends PageImpBaseFragment implements MineN
 
     @Override
     protected void afterViewCreate() {
-        titleCenterTv.setText("修改用户名");
+
+        if (TextUtils.isEmpty(getArguments().getString(IntentKey.FRAG_INFO))) {
+            return;
+        }
+        changeKey = getArguments().getString(IntentKey.FRAG_INFO);
+        if ("phone".equals(changeKey)) {
+            valueText = "联系电话";
+        } else if ("realname".equals(changeKey)) {
+            valueText = "用户姓名";
+        } else if ("adept".equals(changeKey)){
+            valueText = "专业擅长";
+            editName.setLines(4);
+        } else if ("sofunc".equals(changeKey)) {
+            valueText = "社会任职";
+            editName.setLines(4);
+        }
+        titleCenterTv.setText("修改" + valueText);
+        editTitle.setText("请输入" + valueText);
         titleBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,11 +86,14 @@ public class MineNameChangeFragment extends PageImpBaseFragment implements MineN
             public void onClick(View v) {
                 String name = editName.getText().toString();
                 if (TextUtils.isEmpty(name)) {
-                    zhToast.showToast("请输入用户名");
+                    zhToast.showToast("请输入" + valueText);
                 }
-                mPresenter.submitChangeConfirm(name);
+
+                mPresenter.submitChangeConfirm(changeKey,name);
             }
         });
+
+
         new MineNamePresenterIml(this);
     }
 
@@ -74,7 +101,6 @@ public class MineNameChangeFragment extends PageImpBaseFragment implements MineN
     public void refreshView() {
 
     }
-
 
 
     @Override

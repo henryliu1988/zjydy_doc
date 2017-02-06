@@ -27,131 +27,100 @@ import java.util.regex.Pattern;
 /**
  * Created by liutao on 2016/6/20.
  */
-public class Utils
-{
+public class Utils {
 
-    public static String toString(Object ob)
-    {
+    public static String toString(Object ob) {
 
-        if (ob == null)
-        {
+        if (ob == null) {
             return "";
-        } else
-        {
+        } else {
             return ob.toString();
         }
     }
 
-    public static Boolean toBoolean(Object ob)
-    {
+    public static Boolean toBoolean(Object ob) {
 
-        if (ob == null)
-        {
+        if (ob == null) {
             return false;
-        } else
-        {
+        } else {
             if (ob instanceof String) {
-                String s = (String )ob;
+                String s = (String) ob;
                 return "true".equals(s) || "True".equals(s) || "TRUE".equals(s) || "ture".equals(s);
             }
             if (ob instanceof Integer) {
-                int i = (int)ob;
+                int i = (int) ob;
                 return i > 0;
             }
-            try
-            {
+            try {
                 return (Boolean) ob;
-            } catch (Exception e)
-            {
+            } catch (Exception e) {
                 return false;
             }
         }
 
     }
 
-    public static int toInteger(Object ob)
-    {
+    public static int toInteger(Object ob) {
 
-        if (ob == null)
-        {
+        if (ob == null) {
             return -1;
-        } else
-        {
-            try
-            {
+        } else {
+            try {
                 return Integer.parseInt(toString(ob));
-            } catch (NumberFormatException e)
-            {
+            } catch (NumberFormatException e) {
                 return -1;
             }
         }
     }
-    public static Long toLong(Object ob)
-    {
 
-        if (ob == null)
-        {
+    public static Long toLong(Object ob) {
+
+        if (ob == null) {
             return -1L;
-        } else
-        {
-            try
-            {
+        } else {
+            try {
                 return Long.parseLong(toString(ob));
-            } catch (NumberFormatException e)
-            {
+            } catch (NumberFormatException e) {
                 return -1L;
             }
         }
     }
-    public static String[] toStringArray(Object ob)
-    {
 
-        if (ob == null)
-        {
+    public static String[] toStringArray(Object ob) {
+
+        if (ob == null) {
             return null;
-        } else
-        {
-            try
-            {
+        } else {
+            try {
                 return (String[]) ob;
-            } catch (Exception e)
-            {
+            } catch (Exception e) {
                 return null;
             }
         }
     }
 
 
-    public static List<Map<String, String>> toStringMapList(Object ob)
-    {
-        if (ob == null)
-        {
+    public static List<Map<String, String>> toStringMapList(Object ob) {
+        if (ob == null) {
             return null;
-        } else
-        {
-            try
-            {
+        } else {
+            try {
                 return (List<Map<String, String>>) ob;
-            } catch (Exception e)
-            {
+            } catch (Exception e) {
                 return null;
             }
         }
     }
 
-    public static String mapListValueToString(Object ob, final String key)
-    {
+    public static String mapListValueToString(Object ob, final String key) {
         List<Map<String, String>> list = toStringMapList(ob);
         String str = "";
-        if (list == null)
-        {
+        if (list == null) {
             return str;
         }
-        for (int i = 0; i < list.size(); i++)
-        {
+        for (int i = 0; i < list.size(); i++) {
             str += list.get(i).get(key);
-            if (i < list.size() - 1)
-            {
+            if (i < list.size() - 1) {
                 str += ",";
             }
         }
@@ -163,128 +132,111 @@ public class Utils
         if (list == null || list.size() < 1) {
             return str;
         }
-        for (int i = 0; i < list.size(); i++)
-        {
+        for (int i = 0; i < list.size(); i++) {
             str += list.get(i);
-            if (i < list.size() - 1)
-            {
+            if (i < list.size() - 1) {
                 str += ",";
             }
         }
         return str;
     }
-    public static List<String> mapListValueToList(Object ob, final String key)
-    {
+
+    public static List<String> mapListValueToList(Object ob, final String key) {
         List<Map<String, String>> list = toStringMapList(ob);
         List<String> idList = new ArrayList<>();
         String str = "";
-        if (list == null)
-        {
+        if (list == null) {
             return idList;
         }
-        for (int i = 0; i < list.size(); i++)
-        {
+        for (int i = 0; i < list.size(); i++) {
             idList.add(list.get(i).get(key));
         }
         return idList;
     }
 
-    public static String mapValue(Object ob, final String key)
-    {
+    public static String mapValue(Object ob, final String key) {
         String value = "";
-        if (ob != null && ob instanceof Map)
-        {
+        if (ob != null && ob instanceof Map) {
             Map map = (Map) ob;
             value = Utils.toString(map.get(key));
         }
         return value;
     }
 
-    public static boolean isEmptyObject(Object ob)
-    {
-        if (ob == null)
-        {
+    public static boolean isEmptyObject(Object ob) {
+        if (ob == null) {
             return true;
         }
-        if (ob instanceof List)
-        {
+        if (ob instanceof List) {
             List l = (List) ob;
             return l.size() <= 0;
         }
-        if (ob instanceof Map)
-        {
+        if (ob instanceof Map) {
             Map m = (Map) ob;
             return m.size() <= 0;
         }
         return TextUtils.isEmpty(toString(ob));
     }
 
-    public static List<String> parseObjectToListString(Object object)
-    {
+    public static List<String> parseObjectToListString(Object object) {
         List<String> list = new ArrayList<>();
-        if (object == null)
-        {
+        if (object == null) {
             return list;
         }
-        try
-        {
-            list = JSON.parseObject(Utils.toString(object), new TypeReference<List<String>>()
-            {
+        try {
+            list = JSON.parseObject(Utils.toString(object), new TypeReference<List<String>>() {
             });
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
 
         }
         return list;
     }
 
-    public static List<Map<String, Object>> parseObjectToListMapString(Object object)
-    {
+    public static List<Map<String, Object>> parseObjectToListMapString(Object object) {
         List<Map<String, Object>> list = new ArrayList<>();
-        if (object == null)
-        {
+        if (object == null) {
             return list;
         }
-        try
-        {
-            list = JSON.parseObject(Utils.toString(object), new TypeReference<List<Map<String, Object>>>()
-            {
+        try {
+            list = JSON.parseObject(Utils.toString(object), new TypeReference<List<Map<String, Object>>>() {
             });
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
 
         }
         return list;
     }
 
-    public static Map<String, Object> parseObjectToMapString(Object object)
-    {
+
+
+    public static Map<String, Object> parseObjectToMapString(Object object) {
         Map<String, Object> map = new HashMap<>();
-        if (object == null)
-        {
+        if (object == null) {
             return map;
         }
-        try
-        {
-            map = JSON.parseObject(Utils.toString(object), new TypeReference<Map<String, Object>>()
-            {
+        if (object instanceof  Map) {
+            try {
+                map = ( Map<String, Object> ) object;
+            }catch (Exception e) {
+
+            }finally {
+                return map;
+            }
+        }
+        try {
+            map = JSON.parseObject(Utils.toString(object), new TypeReference<Map<String, Object>>() {
             });
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
 
         }
         return map;
     }
 
-    public List<Map<String, Object>> transDataToItems(Map<String, Object> data, List<Map<String, String>> formats)
-    {
+    public List<Map<String, Object>> transDataToItems(Map<String, Object> data, List<Map<String, String>> formats) {
         List<Map<String, Object>> map = new ArrayList<>();
-        for (int i = 0; i < formats.size(); i++)
-        {
+        for (int i = 0; i < formats.size(); i++) {
             Map<String, String> formate = formats.get(i);
             Map<String, Object> item = new HashMap<>();
-            for (Map.Entry<String, String> entry : formate.entrySet())
-            {
+            for (Map.Entry<String, String> entry : formate.entrySet()) {
                 Object value = data.get(entry.getValue());
                 item.put(entry.getKey(), value);
             }
@@ -294,60 +246,45 @@ public class Utils
     }
 
 
-
-    public static String getItemValue(Object ob)
-    {
+    public static String getItemValue(Object ob) {
         String data = "";
-        if (ob instanceof String)
-        {
+        if (ob instanceof String) {
             data = Utils.toString(ob);
-        } else if (ob instanceof List)
-        {
+        } else if (ob instanceof List) {
             List list = (List) ob;
-            if (list.size() > 0 && list.get(0) instanceof Map)
-            {
+            if (list.size() > 0 && list.get(0) instanceof Map) {
                 data = Utils.mapListValueToString(ob, "name");
             }
-        } else if (ob instanceof Map)
-        {
+        } else if (ob instanceof Map) {
             Map map = (Map) ob;
             data = Utils.toString(map.get("name"));
         }
         return data;
     }
 
-    public static List<String> getItemValueList(Object ob)
-    {
+    public static List<String> getItemValueList(Object ob) {
         List<String> data = new ArrayList<>();
-        if (ob instanceof String)
-        {
+        if (ob instanceof String) {
             data.add((String) ob);
-        } else if (ob instanceof List)
-        {
+        } else if (ob instanceof List) {
             List list = (List) ob;
-            if (list.size() > 0 && list.get(0) instanceof Map)
-            {
+            if (list.size() > 0 && list.get(0) instanceof Map) {
                 data = Utils.mapListValueToList(ob, "id");
             }
         }
         return data;
     }
 
-    public static String getItemId(Object ob)
-    {
+    public static String getItemId(Object ob) {
         String data = "";
-        if (ob instanceof String)
-        {
+        if (ob instanceof String) {
             data = Utils.toString(ob);
-        } else if (ob instanceof List)
-        {
+        } else if (ob instanceof List) {
             List list = (List) ob;
-            if (list.size() > 0 && list.get(0) instanceof Map)
-            {
+            if (list.size() > 0 && list.get(0) instanceof Map) {
                 data = Utils.mapListValueToString(ob, "id");
             }
-        } else if (ob instanceof Map)
-        {
+        } else if (ob instanceof Map) {
             Map map = (Map) ob;
             data = Utils.toString(map.get("id"));
         }
@@ -357,7 +294,8 @@ public class Utils
 
     /**
      * 根据图片的Uri获取图片的绝对路径(已经适配多种API)
-     * @return 如果Uri对应的图片存在,那么返回该图片的绝对路径,否则返回null
+     *
+     * @return 如果Uri对应的图片存在, 那么返回该图片的绝对路径, 否则返回null
      */
     public static String getRealPathFromUri(Context context, Uri uri) {
         int sdkVersion = Build.VERSION.SDK_INT;
@@ -384,9 +322,9 @@ public class Utils
         // 使用':'分割
         String id = wholeID.split(":")[1];
 
-        String[] projection = { MediaStore.Images.Media.DATA };
+        String[] projection = {MediaStore.Images.Media.DATA};
         String selection = MediaStore.Images.Media._ID + "=?";
-        String[] selectionArgs = { id };
+        String[] selectionArgs = {id};
 
         Cursor cursor = context.getContentResolver().query(
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI, projection,
@@ -405,7 +343,7 @@ public class Utils
      */
     private static String getRealPathFromUri_Api11To18(Context context, Uri uri) {
         String filePath = null;
-        String[] projection = { MediaStore.Images.Media.DATA };
+        String[] projection = {MediaStore.Images.Media.DATA};
 
         CursorLoader loader = new CursorLoader(context, uri, projection, null,
                 null, null);
@@ -424,7 +362,7 @@ public class Utils
      */
     private static String getRealPathFromUri_BelowApi11(Context context, Uri uri) {
         String filePath = null;
-        String[] projection = { MediaStore.Images.Media.DATA };
+        String[] projection = {MediaStore.Images.Media.DATA};
         Cursor cursor = context.getContentResolver().query(uri, projection,
                 null, null, null);
         if (cursor != null) {
@@ -436,7 +374,7 @@ public class Utils
     }
 
     @SuppressLint("NewApi")
-    public static String getPath( final Uri uri) {
+    public static String getPath(final Uri uri) {
         final Context context = ZhJDocApplication.getInstance().getContext();
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
 
@@ -481,7 +419,7 @@ public class Utils
                 }
 
                 final String selection = "_id=?";
-                final String[] selectionArgs = new String[] { split[1] };
+                final String[] selectionArgs = new String[]{split[1]};
 
                 return getDataColumn(context, contentUri, selection,
                         selectionArgs);
@@ -503,14 +441,10 @@ public class Utils
      * Get the value of the data column for this Uri. This is useful for
      * MediaStore Uris, and other file-based ContentProviders.
      *
-     * @param context
-     *            The context.
-     * @param uri
-     *            The Uri to query.
-     * @param selection
-     *            (Optional) Filter used in the query.
-     * @param selectionArgs
-     *            (Optional) Selection arguments used in the query.
+     * @param context       The context.
+     * @param uri           The Uri to query.
+     * @param selection     (Optional) Filter used in the query.
+     * @param selectionArgs (Optional) Selection arguments used in the query.
      * @return The value of the _data column, which is typically a file path.
      */
     public static String getDataColumn(Context context, Uri uri,
@@ -518,7 +452,7 @@ public class Utils
 
         Cursor cursor = null;
         final String column = "_data";
-        final String[] projection = { column };
+        final String[] projection = {column};
 
         try {
             cursor = context.getContentResolver().query(uri, projection,
@@ -535,8 +469,7 @@ public class Utils
     }
 
     /**
-     * @param uri
-     *            The Uri to check.
+     * @param uri The Uri to check.
      * @return Whether the Uri authority is ExternalStorageProvider.
      */
     public static boolean isExternalStorageDocument(Uri uri) {
@@ -545,8 +478,7 @@ public class Utils
     }
 
     /**
-     * @param uri
-     *            The Uri to check.
+     * @param uri The Uri to check.
      * @return Whether the Uri authority is DownloadsProvider.
      */
     public static boolean isDownloadsDocument(Uri uri) {
@@ -555,8 +487,7 @@ public class Utils
     }
 
     /**
-     * @param uri
-     *            The Uri to check.
+     * @param uri The Uri to check.
      * @return Whether the Uri authority is MediaProvider.
      */
     public static boolean isMediaDocument(Uri uri) {
@@ -565,21 +496,21 @@ public class Utils
     }
 
 
-    public static Map<String,String> getMapByValue(String ids[],String values[]){
-        Map<String,String> map = new HashMap<>();
-        for (int i = 0 ; i < ids.length; i ++) {
+    public static Map<String, String> getMapByValue(String ids[], String values[]) {
+        Map<String, String> map = new HashMap<>();
+        for (int i = 0; i < ids.length; i++) {
             String id = ids[i];
-            if (values.length <=i + 1){
-                map.put(id,values[i]);
+            if (values.length <= i + 1) {
+                map.put(id, values[i]);
             } else {
-                map.put(id,"");
+                map.put(id, "");
             }
         }
         return map;
     }
 
-    public static int getCountOfString(String str,String target) {
-        if (TextUtils.isEmpty(str)){
+    public static int getCountOfString(String str, String target) {
+        if (TextUtils.isEmpty(str)) {
             return 0;
         }
         int count = 0;
@@ -601,19 +532,29 @@ public class Utils
         return m.matches();
     }
 
-    public static String getListStrsAdd(List<Map<String,Object>> list,String key) {
+    public static String getListStrsAdd(List<Map<String, Object>> list, String key) {
         String ids = "";
         List<String> idList = new ArrayList<>();
-        for (Map<String,Object> l:list) {
+        for (Map<String, Object> l : list) {
             idList.add(Utils.toString(l.get(key)));
         }
 
-        for (int i = 0 ; i <idList.size(); i ++) {
+        for (int i = 0; i < idList.size(); i++) {
             ids += idList.get(i);
-            if (i < idList.size() -1) {
-                ids +=",";
+            if (i < idList.size() - 1) {
             }
+            ids += ",";
         }
         return ids;
     }
+
+    public static List<String> getListFromMapList(List<Map<String, Object>> list, String key) {
+        List<String> idList = new ArrayList<>();
+        for (Map<String, Object> l : list) {
+            idList.add(Utils.toString(l.get(key)));
+        }
+        return idList;
+    }
+
+
 }

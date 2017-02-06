@@ -26,8 +26,8 @@ public class OrderListAdapter extends  ListViewAdapter<Map<String,Object>> {
 
 
     public static final int OPERATE_DETAIL = 0;
-    public static final int OPERATE_CANCEL = 1;
-    public static final int OPERATE_PAY = 2;
+    public static final int OPERATE_REPLY = 1;
+    public static final int OPERATE_ZHILIAO = 2;
 
     public OrderListAdapter(Context context, List<Map<String, Object>> datas) {
         super(context, datas, R.layout.order_list_item);
@@ -42,15 +42,15 @@ public class OrderListAdapter extends  ListViewAdapter<Map<String,Object>> {
         this.mOperateListener = listener;
     }
     public interface OperateListener{
-        void onOperate(Map<String, Object> item, int operate);
+        void onOperate(Map<String, Object> item);
     }
     @Override
     public void convert(ViewHolder holder, final Map<String, Object> map) {
-        String photoUrl = Utils.toString(map.get("experturl"));
+        String photoUrl = Utils.toString(map.get("path"));
         if (!TextUtils.isEmpty(photoUrl)){
-            ImageUtils.getInstance().displayFromRemote(photoUrl,(ImageView)holder.getView(R.id.photo));
+            ImageUtils.getInstance().displayFromRemoteOver(photoUrl,(ImageView)holder.getView(R.id.photo));
         }
-        ( (TextView)holder.getView(R.id.doc_name)).setText(Utils.toString(map.get("expertname")));
+        ( (TextView)holder.getView(R.id.patient_name)).setText(Utils.toString(map.get("nickname")));
         ( (TextView)holder.getView(R.id.serialNum)).setText("预约单号：" +Utils.toString(map.get("orderid")));
         ( (TextView)holder.getView(R.id.time)).setText("预约时间：" + DateUtil.getFullTimeDiffDayCurrent(Utils.toLong(map.get("showtime"))));
 
@@ -70,62 +70,81 @@ public class OrderListAdapter extends  ListViewAdapter<Map<String,Object>> {
         switch (status){
             case 1: //预约中，操作为取消预约
                 isOperateVisible = true;
-                operateText = "取消预约";
+                operateText = "查看详情";
                 backGroudColor = "#F8B500";
                 statusColor = "#F8B500";
-                statusText = "预约中";
-                operateType = OPERATE_CANCEL;
+                statusText = "预约申请";
+                operateType = OPERATE_DETAIL;
                 break;
             case 2:  //专家确认状态，可以马上支付
                 isOperateVisible = true;
-                operateText = "马上支付";
-                backGroudColor = "#60D700";
-                statusColor = "#60D700";
-                statusText = "待支付";
-                operateType = OPERATE_PAY;
+                operateText = "查看详情";
+                backGroudColor = "#F8B500";
+                statusColor = "#F8B500";
+                statusText = "患者待支付";
+                operateType = OPERATE_DETAIL;
                 break;
 
             case 3:
-            case 11: //
-                isOperateVisible = false;
-                statusColor = "#527EFA";
-                statusText = "会诊中";
+                isOperateVisible = true;
+                operateText = "马上回复";
+                backGroudColor = "#60D701";
+                statusColor = "#60D701";
+                statusText = "患者已支付";
+                operateType = OPERATE_REPLY;
                 break;
 
             case 4:
                 isOperateVisible = true;
-                backGroudColor = "#FF2500";
-                statusColor = "#FF2500";
-                statusText = "退款中";
+                operateText = "查看详情";
+                backGroudColor = "#60D701";
+                statusColor = "#60D701";
+                statusText = "患者申请退单";
                 operateType = OPERATE_DETAIL;
                 break;
             case 5:
-                isOperateVisible = false;
-                statusColor = "#6C00BF";
+                isOperateVisible = true;
+                operateText = "查看详情";
+                backGroudColor = "#6D00BE";
+                statusColor = "#6D00BE";
                 statusText = "已完成";
+                operateType = OPERATE_DETAIL;
                 break;
             case 6:
-                statusText = "预约取消";
-                operateType = OPERATE_DETAIL;
-                break;
             case 7:
-                statusText = "预约取消";
+            case 9:
+            case 10:
+                isOperateVisible = true;
+                operateText = "查看详情";
+                backGroudColor = "#527Ef9";
+                statusColor = "#383838";
+                statusText = "订单关闭";
                 operateType = OPERATE_DETAIL;
                 break;
-            case 9:
-                isOperateVisible = false;
-                statusColor = "#383838";
-                statusText = "订单退款失败";
+            case 8:
+                isOperateVisible = true;
+                operateText = "查看详情";
+                backGroudColor = "#FF2501";
+                statusColor = "#FF2501";
+                statusText = "退款中";
+                operateType = OPERATE_DETAIL;
                 break;
-            case 10:
-                isOperateVisible = false;
-                statusColor = "#60D700";
-                statusText = "订单退款成功";
+
+            case 11: //
+                isOperateVisible = true;
+                operateText = "马上治疗";
+                backGroudColor = "#60D701";
+                statusColor = "#60D701";
+                statusText = "会诊中";
+                operateType = OPERATE_ZHILIAO;
                 break;
             case 12:
-                isOperateVisible = false;
-                statusColor = "#527EFA";
+                isOperateVisible = true;
+                operateText = "查看详情";
+                backGroudColor = "#60D701";
+                statusColor = "#60D701";
                 statusText = "治疗中";
+                operateType = OPERATE_DETAIL;
                 break;
         }
         statusTv.setText(statusText);
@@ -144,7 +163,7 @@ public class OrderListAdapter extends  ListViewAdapter<Map<String,Object>> {
             @Override
             public void onClick(View view) {
                 if (mOperateListener != null) {
-                    mOperateListener.onOperate(map,Utils.toInteger(view.getTag()));
+                    mOperateListener.onOperate(map);
                 }
             }
         });

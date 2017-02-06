@@ -12,12 +12,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bigkoo.pickerview.OptionsPickerView;
+import com.soundcloud.android.crop.Crop;
 import com.zhjydy_doc.R;
 import com.zhjydy_doc.model.data.DicData;
+import com.zhjydy_doc.model.entity.IntentKey;
 import com.zhjydy_doc.model.entity.NormalItem;
 import com.zhjydy_doc.model.entity.PickViewData;
 import com.zhjydy_doc.model.entity.TokenInfo;
@@ -29,7 +32,9 @@ import com.zhjydy_doc.util.ScreenUtils;
 import com.zhjydy_doc.util.Utils;
 import com.zhjydy_doc.view.zjview.ActivityResultView;
 import com.zhjydy_doc.view.zjview.MapTextView;
+import com.zhjydy_doc.view.zjview.zhToast;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -41,7 +46,7 @@ import butterknife.OnClick;
 /**
  * Created by Administrator on 2016/9/26 0026.
  */
-public class MineInfoFragment extends PageImpBaseFragment implements MineInfoContract.View , ActivityResultView {
+public class MineInfoFragment extends PageImpBaseFragment implements MineInfoContract.View, ActivityResultView {
 
 
     @BindView(R.id.title_back)
@@ -66,6 +71,38 @@ public class MineInfoFragment extends PageImpBaseFragment implements MineInfoCon
     MapTextView userSexValue;
     @BindView(R.id.logout)
     TextView logout;
+    @BindView(R.id.tel_title)
+    TextView telTitle;
+    @BindView(R.id.tel_value)
+    TextView telValue;
+    @BindView(R.id.domain_title)
+    TextView domainTitle;
+    @BindView(R.id.domain_value)
+    MapTextView domainValue;
+    @BindView(R.id.hospital_title)
+    TextView hospitalTitle;
+    @BindView(R.id.hospital_value)
+    MapTextView hospitalValue;
+    @BindView(R.id.depart_title)
+    TextView departTitle;
+    @BindView(R.id.depart_value)
+    MapTextView departValue;
+    @BindView(R.id.business_title)
+    TextView businessTitle;
+    @BindView(R.id.business_value)
+    MapTextView businessValue;
+    @BindView(R.id.job_title)
+    TextView jobTitle;
+    @BindView(R.id.job_value)
+    TextView jobValue;
+    @BindView(R.id.job_layout)
+    LinearLayout jobLayout;
+    @BindView(R.id.zhuanchang_title)
+    TextView zhuanchangTitle;
+    @BindView(R.id.zhuanchang_value)
+    TextView zhuanchangValue;
+    @BindView(R.id.zhuangchang_layout)
+    LinearLayout zhuangchangLayout;
     private MineInfoContract.Presenter mPresenter;
     private OptionsPickerView<PickViewData> mSexPicker;
     private ArrayList<PickViewData> mSexPickViewData = new ArrayList<>();
@@ -83,7 +120,7 @@ public class MineInfoFragment extends PageImpBaseFragment implements MineInfoCon
     @Override
     public void onResume() {
         super.onResume();
-        if(mPresenter != null) {
+        if (mPresenter != null) {
             mPresenter.refreshView();
         }
     }
@@ -94,6 +131,7 @@ public class MineInfoFragment extends PageImpBaseFragment implements MineInfoCon
         addOnActivityResultView(this);
         titleCenterTv.setText("个人信息");
     }
+
     @Override
     public void updateSexPick(ArrayList<PickViewData> sexData) {
         mSexPickViewData = sexData;
@@ -110,7 +148,7 @@ public class MineInfoFragment extends PageImpBaseFragment implements MineInfoCon
             public void onOptionsSelect(int options1, int option2, int options3) {
                 String sexName = mSexPickViewData.get(options1).getName();
                 String sexId = mSexPickViewData.get(options1).getId();
-                userSexValue.setMap(sexId,sexName);
+                userSexValue.setMap(sexId, sexName);
                 mPresenter.updateMemberSex(Utils.toInteger(sexId));
             }
         });
@@ -140,22 +178,22 @@ public class MineInfoFragment extends PageImpBaseFragment implements MineInfoCon
 
     @Override
     public void updateInfo(TokenInfo info) {
-        String realNameText = info.getNickname();
-        //realName.setText(realNameText);
+        String realNameText = info.getmExpertInfo().getRealname();
         userNameValue.setText(realNameText);
-        int sex = Utils.toInteger(info.getSex());
+        int sex = Utils.toInteger(info.getmExpertInfo().getSex());
         if (sex > 0) {
             NormalItem item = DicData.getInstance().getSexById(sex + "");
-            userSexValue.setMap(item.getId(),item.getName());
+            userSexValue.setMap(item.getId(), item.getName());
         }
 
         String photoPath = info.getPhotoUrl();
         if (!TextUtils.isEmpty(photoPath)) {
-            ImageUtils.getInstance().displayFromRemote(photoPath,userPhoto);
+            ImageUtils.getInstance().displayFromRemoteOver(photoPath, userPhoto);
         }
+        telValue.setText(info.getmExpertInfo().getPhone());
     }
 
-    @OnClick({R.id.title_back, R.id.item_more_flag, R.id.user_photo, R.id.user_name_value, R.id.user_sex_value, R.id.logout})
+    @OnClick({R.id.title_back, R.id.item_more_flag, R.id.user_photo, R.id.user_name_value, R.id.user_sex_value, R.id.logout, R.id.tel_value})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.title_back:
@@ -167,12 +205,18 @@ public class MineInfoFragment extends PageImpBaseFragment implements MineInfoCon
                 break;
             case R.id.user_name_value:
                 Bundle bundle = new Bundle();
-                gotoFragment(FragKey.mine_name_change_fragment,bundle);
+                bundle.putString(IntentKey.FRAG_INFO, "realname");
+                gotoFragment(FragKey.mine_name_change_fragment, bundle);
                 break;
             case R.id.user_sex_value:
                 if (mSexPickViewData.size() > 0) {
                     mSexPicker.show();
                 }
+                break;
+            case R.id.tel_value:
+                Bundle bundle1 = new Bundle();
+                bundle1.putString(IntentKey.FRAG_INFO, "phone");
+                gotoFragment(FragKey.mine_name_change_fragment, bundle1);
                 break;
             case R.id.logout:
                 final AlertDialog dialog = new AlertDialog.Builder(getContext()).create();
@@ -200,40 +244,53 @@ public class MineInfoFragment extends PageImpBaseFragment implements MineInfoCon
 
     @Override
     public void onActivityResult1(int requestCode, int resultCode, Intent data) {
-        switch (requestCode)
-        {
+        switch (requestCode) {
             //从相册选择
             case SELECT_PICTURE:
                 if (data != null) {
                     Uri uri = data.getData();
                     String path = Utils.getPath(uri);
-                 //   ImageUtils.getInstance().displayFromRemote(path,userPhoto);
-                    mPresenter.updateMemberPhoto(path);
+                    beginCrop(uri);
+
                 }
                 break;
             //拍照添加图片
             case SELECT_CAMER:
-                if (mCameraPath != null)
-                {
+                if (mCameraPath != null) {
                     String p = mCameraPath.toString();
-                 //   ImageUtils.getInstance().displayFromRemote(p,userPhoto);
-                    mPresenter.updateMemberPhoto(p);
-                    mCameraPath = null;
+                    Uri uri = Uri.fromFile(new File(p));
+                    beginCrop(uri);
                 }
                 break;
+            case Crop.REQUEST_CROP:
+                handleCrop(resultCode, data);
+
             default:
                 break;
+        }
+    }
+
+    private void beginCrop(Uri source) {
+        Uri destination = Uri.fromFile(new File(getActivity().getCacheDir(), "cropped"));
+        Crop.of(source, destination).asSquare().start(getActivity());
+    }
+
+    private void handleCrop(int resultCode, Intent result) {
+        if (resultCode == getActivity().RESULT_OK) {
+            Uri uri = Crop.getOutput(result);
+            String path = Utils.getPath(uri);
+            mPresenter.updateMemberPhoto(path);
+        } else if (resultCode == Crop.RESULT_ERROR) {
+            zhToast.showToast(Crop.getError(result).getMessage());
         }
     }
 
     @Override
     public void onPermissionResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         List<String> permissionList = Arrays.asList(permissions);
-        if (permissionList.contains(Manifest.permission.CAMERA))
-        {
+        if (permissionList.contains(Manifest.permission.CAMERA)) {
             toGetCameraImage();
-        } else if (permissionList.contains(Manifest.permission.WRITE_EXTERNAL_STORAGE))
-        {
+        } else if (permissionList.contains(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
             toGetLocalImage();
         }
 

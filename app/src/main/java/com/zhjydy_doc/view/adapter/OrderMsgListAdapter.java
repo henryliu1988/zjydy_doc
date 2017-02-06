@@ -20,7 +20,7 @@ import java.util.Map;
 /**
  * Created by Administrator on 2016/9/22 0022.
  */
-public class OrderMsgListAdapter extends PageLoadListAdapter {
+public class OrderMsgListAdapter extends ListViewAdapter<Map<String,Object>> {
 
 
     public OrderMsgListAdapter(Context context, List<Map<String, Object>> datas) {
@@ -40,9 +40,9 @@ public class OrderMsgListAdapter extends PageLoadListAdapter {
         String statusName = "";
         String textCorlor = "#FFFFFFFF";
         switch (orderStatus) {
-            case 2:
+            case 1:
                 imageRecId = R.mipmap.order_confirm;
-                statusName = "已确认预约";
+                statusName = "患者提交订单";
                 textCorlor = "#60D700";
                 break;
             case 3:

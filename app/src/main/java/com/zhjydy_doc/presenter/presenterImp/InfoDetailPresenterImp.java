@@ -2,7 +2,7 @@ package com.zhjydy_doc.presenter.presenterImp;
 
 import android.text.TextUtils;
 
-import com.zhjydy_doc.model.data.AppData;
+import com.zhjydy_doc.model.data.UserData;
 import com.zhjydy_doc.model.net.BaseSubscriber;
 import com.zhjydy_doc.model.net.WebCall;
 import com.zhjydy_doc.model.net.WebKey;
@@ -44,7 +44,7 @@ public class InfoDetailPresenterImp implements InfoDetailContract.Presenter {
         loadFavStatus();
     }
     private void loadFavStatus() {
-        List<String> collecs = AppData.getInstance().getToken().getCollectNewsList();
+        List<String> collecs = UserData.getInstance().getToken().getCollectNewsList();
         mView.updateFavStatus(collecs.contains(infoId));
     }
     private void loadInfoContent() {
@@ -55,7 +55,7 @@ public class InfoDetailPresenterImp implements InfoDetailContract.Presenter {
             public Map<String, Object> call(WebResponse webResponse) {
                 String data = webResponse.getData();
                 Map<String, Object> map =  Utils.parseObjectToMapString(data);
-                String collect = AppData.getInstance().getToken().getCollectNews();
+                String collect = UserData.getInstance().getToken().getCollectNews();
                 map.put("collect", collect);
                 return map;
             }
@@ -75,17 +75,19 @@ public class InfoDetailPresenterImp implements InfoDetailContract.Presenter {
     public void saveInfo() {
         HashMap<String, Object> params = new HashMap<>();
         params.put("newsid", infoId);
-        params.put("userid", AppData.getInstance().getToken().getId());
+        params.put("userid", UserData.getInstance().getToken().getId());
         WebCall.getInstance().call(WebKey.func_collectNews, params).subscribe(new BaseSubscriber<WebResponse>(mView.getContext(),"") {
             @Override
             public void onNext(WebResponse webResponse) {
                 boolean status = WebUtils.getWebStatus(webResponse);
                 if (status) {
-                    List<String> collect = AppData.getInstance().getToken().getCollectNewsList();
-                    if (!collect.contains(infoId)) {
-                        collect.add(infoId);
+                    List<String> collect = UserData.getInstance().getToken().getCollectNewsList();
+                    List<String> newS = new ArrayList<String>();
+                    newS.addAll(collect);
+                    if (!newS.contains(infoId)) {
+                        newS.add(infoId);
                     }
-                    AppData.getInstance().getToken().setCollectNewAsList(collect);
+                    UserData.getInstance().getToken().setCollectNewAsList(newS);
                     loadFavStatus();
                 } else {
                     zhToast.showToast("收藏失败");
@@ -98,23 +100,23 @@ public class InfoDetailPresenterImp implements InfoDetailContract.Presenter {
     public void cancelSaveInfo() {
         HashMap<String, Object> params = new HashMap<>();
         List<String> collect = new ArrayList<>();
-        collect.addAll(AppData.getInstance().getToken().getCollectNewsList());
+        collect.addAll(UserData.getInstance().getToken().getCollectNewsList());
         if (collect.contains(infoId)) {
             collect.remove(infoId);
         }
         params.put("collectnews",Utils.strListToString(collect));
-        params.put("userid", AppData.getInstance().getToken().getId());
+        params.put("userid", UserData.getInstance().getToken().getId());
         WebCall.getInstance().call(WebKey.func_cancelCollectNews, params).subscribe(new BaseSubscriber<WebResponse>(mView.getContext(), "取消收藏") {
             @Override
             public void onNext(WebResponse webResponse) {
                 boolean status = WebUtils.getWebStatus(webResponse);
                 if (status) {
                     ArrayList<String> collect = new ArrayList<String>();
-                    collect.addAll(AppData.getInstance().getToken().getCollectNewsList());
+                    collect.addAll(UserData.getInstance().getToken().getCollectNewsList());
                     if (collect.contains(infoId)) {
                         collect.remove(infoId);
                     }
-                    AppData.getInstance().getToken().setCollectNewAsList(collect);
+                    UserData.getInstance().getToken().setCollectNewAsList(collect);
                     loadFavStatus();
                 } else {
                     zhToast.showToast("取消收藏失败！");

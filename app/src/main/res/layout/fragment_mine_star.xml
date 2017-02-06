@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_bg">
+
+    <include layout="@layout/titlebar_layout_back" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#4370EF"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#244191"
+                android:textSize="15sp"
+                android:text="推荐分数：" />
+            <TextView
+            android:id="@+id/score_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white_text"
+            android:textSize="18sp"
+            android:text="0"
+            />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#244191"
+                android:textSize="15sp"
+                android:text="分" />
+
+        </LinearLayout>
+        <com.zhjydy_doc.view.zjview.ScoreView
+            android:id="@+id/score_star"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/score_diff"
+            android:textSize="13sp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/mine_start_text" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="12dp"
+        android:textColor="@color/black_text1"
+        android:text="如何赚取分数？"
+        android:textSize="14sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/white_bg"
+        android:paddingLeft="12dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingRight="10dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/mine_info_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="个人资料完整度"
+                android:textColor="@color/black_text"
+                android:layout_alignParentLeft="true"
+                android:textSize="14sp"
+                android:layout_centerVertical="true" />
+
+            <TextView
+                android:id="@+id/mine_info_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/mine_info_value"
+                android:layout_alignParentRight="true"
+                android:drawableRight="@mipmap/item_turn"
+                android:drawablePadding="15dp"
+                android:textSize="14sp"
+                android:layout_centerVertical="true" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/div_line" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingRight="10dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/identify_complete_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="完成认证"
+                android:textColor="@color/black_text"
+                android:layout_alignParentLeft="true"
+                android:textSize="14sp"
+                android:layout_centerVertical="true" />
+
+            <TextView
+                android:id="@+id/identify_complete_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/mine_info_value"
+                android:layout_alignParentRight="true"
+                android:drawableRight="@mipmap/item_turn"
+                android:drawablePadding="15dp"
+                android:textSize="14sp"
+                android:layout_centerVertical="true" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/div_line" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingRight="10dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/alipay_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="绑定支付宝"
+                android:textColor="@color/black_text"
+                android:layout_alignParentLeft="true"
+                android:textSize="14sp"
+                android:layout_centerVertical="true" />
+
+            <TextView
+                android:id="@+id/alipay_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/mine_info_value"
+                android:layout_alignParentRight="true"
+                android:drawableRight="@mipmap/item_turn"
+                android:drawablePadding="15dp"
+                android:textSize="14sp"
+                android:layout_centerVertical="true" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/div_line" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingRight="10dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/weixin_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="绑定微信"
+                android:textColor="@color/black_text"
+                android:layout_alignParentLeft="true"
+                android:textSize="14sp"
+                android:layout_centerVertical="true" />
+
+            <TextView
+                android:id="@+id/weixin_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/mine_info_value"
+                android:layout_alignParentRight="true"
+                android:drawableRight="@mipmap/item_turn"
+                android:drawablePadding="15dp"
+                android:textSize="14sp"
+                android:layout_centerVertical="true" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/div_line" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingRight="10dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/patient_score_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="完成订单患者评分"
+                android:textColor="@color/black_text"
+                android:layout_alignParentLeft="true"
+                android:textSize="14sp"
+                android:layout_centerVertical="true" />
+
+            <TextView
+                android:id="@+id/patient_score_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/mine_info_value"
+                android:layout_alignParentRight="true"
+                android:drawableRight="@mipmap/item_turn"
+                android:drawablePadding="15dp"
+                android:textSize="14sp"
+                android:layout_centerVertical="true" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/div_line" />
+
+    </LinearLayout>
+</LinearLayout>

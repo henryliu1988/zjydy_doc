@@ -79,6 +79,51 @@
         android:background="@color/div_line" />
 
     <RelativeLayout
+        android:id="@+id/mine_star_layout"
+        style="@style/mine_item_layout">
+
+        <ImageView
+            android:id="@+id/mine_star_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:scaleType="fitCenter"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/mine_case" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/mine_star_image"
+            android:layout_centerVertical="true"
+            android:text="我的星级"
+            android:textColor="@color/black_text"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:id="@+id/mine_star_turn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/item_turn" />
+
+        <com.zhjydy_doc.view.zjview.ScoreView
+            android:id="@+id/mine_star_stars"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/mine_star_turn"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="6dp" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="15dp"
+        android:background="@color/div_line" />
+
+    <RelativeLayout
         android:id="@+id/mine_confirm_msg_layout"
         style="@style/mine_item_layout">
 
@@ -99,6 +144,7 @@
             android:text="认证信息"
             android:textColor="@color/black_text"
             android:textSize="15sp" />
+
         <ImageView
             android:id="@+id/mine_confirm_msg_turn"
             android:layout_width="wrap_content"
@@ -126,40 +172,6 @@
         android:layout_marginLeft="15dp"
         android:background="@color/div_line" />
 
-    <RelativeLayout
-        android:id="@+id/mine_history_layout"
-        style="@style/mine_item_layout">
-        <ImageView
-            android:id="@+id/mine_history_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:scaleType="fitCenter"
-            android:layout_centerVertical="true"
-            android:src="@mipmap/mine_case" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/mine_history_image"
-            android:layout_centerVertical="true"
-            android:text="患者病例"
-            android:textColor="@color/black_text"
-            android:textSize="15sp" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:src="@mipmap/item_turn" />
-    </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:layout_marginLeft="15dp"
-        android:background="@color/div_line" />
 
     <RelativeLayout
         android:id="@+id/mine_common_layout"

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_bg">
+
+    <include layout="@layout/titlebar_layout_back" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/white_bg"
+        android:paddingLeft="10dp">
+
+        <RelativeLayout
+            android:id="@+id/layout_kefu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="12dp"
+            android:gravity="center_vertical"
+            android:paddingBottom="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:layout_centerVertical="true"
+                android:textColor="@color/black_text"
+                android:text="客服电话"
+                android:layout_alignParentLeft="true" />
+
+            <TextView
+                android:id="@+id/phoneNum_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="@color/black_text2"
+                android:layout_marginRight="8dp"
+                android:drawablePadding="8dp"
+                android:drawableRight="@mipmap/item_turn"
+                android:layout_alignParentRight="true" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/div_line" />
+
+        <RelativeLayout
+            android:id="@+id/advice_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="12dp"
+            android:gravity="center_vertical"
+            android:paddingBottom="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:layout_centerVertical="true"
+                android:textColor="@color/black_text"
+                android:text="意见反馈"
+                android:layout_alignParentLeft="true" />
+
+            <TextView
+                android:id="@+id/adivce_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:layout_marginRight="8dp"
+                android:drawablePadding="8dp"
+                android:drawableRight="@mipmap/item_turn"
+                android:layout_alignParentRight="true" />
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+</LinearLayout>

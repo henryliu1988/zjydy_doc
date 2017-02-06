@@ -10,16 +10,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zhjydy_doc.R;
-import com.zhjydy_doc.model.data.DicData;
 import com.zhjydy_doc.model.entity.IntentKey;
 import com.zhjydy_doc.presenter.contract.OrderDetailContract;
 import com.zhjydy_doc.presenter.presenterImp.OrderDetailPresenterImp;
-import com.zhjydy_doc.util.DateUtil;
-import com.zhjydy_doc.util.ImageUtils;
 import com.zhjydy_doc.util.Utils;
+import com.zhjydy_doc.view.zjview.OrderHuizhenInfoView;
+import com.zhjydy_doc.view.zjview.OrderPatientInfoView;
+import com.zhjydy_doc.view.zjview.OrderTuikuanInfoView;
 import com.zhjydy_doc.view.zjview.ViewUtil;
-import com.zhjydy_doc.view.zjview.zhToast;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -37,27 +37,17 @@ public class OrderDetailFragment extends PageImpBaseFragment implements OrderDet
     TextView titleCenterTv;
     @BindView(R.id.status)
     TextView status;
-    @BindView(R.id.patient_name)
-    TextView patientName;
-    @BindView(R.id.patient_hospital)
-    TextView patientHospital;
-    @BindView(R.id.patient_serialNum)
-    TextView patientSerialNum;
-    @BindView(R.id.patient_time)
-    TextView patientTime;
-    @BindView(R.id.doc_name)
-    TextView docName;
-    @BindView(R.id.doc_hospital)
-    TextView docHospital;
-    @BindView(R.id.doc_depart)
-    TextView docDepart;
-    @BindView(R.id.doc_profession)
-    TextView docProfession;
-    @BindView(R.id.dic_photo)
-    ImageView dicPhoto;
-    @BindView(R.id.expert_info_layout)
-    LinearLayout expertInfoLayout;
+    @BindView(R.id.patient_info)
+    OrderPatientInfoView patientInfo;
+    @BindView(R.id.huizhen_info)
+    OrderHuizhenInfoView huizhenInfo;
+    @BindView(R.id.operate_id)
+    LinearLayout operateId;
+    @BindView(R.id.tuikuan_info)
+    OrderTuikuanInfoView tuikuanInfo;
     private OrderDetailContract.Presenter mPresenter;
+
+    String orderId = "";
 
     @Override
     public void setPresenter(OrderDetailContract.Presenter presenter) {
@@ -88,49 +78,53 @@ public class OrderDetailFragment extends PageImpBaseFragment implements OrderDet
             }
         });
         titleCenterTv.setText("订单详情");
-        String orderId = "";
         if (getArguments() != null && !TextUtils.isEmpty(getArguments().getString(IntentKey.FRAG_INFO))) {
             orderId = getArguments().getString(IntentKey.FRAG_INFO);
         }
         new OrderDetailPresenterImp(this, orderId);
-        expertInfoLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String expertId = mPresenter.getExpertId();
-                if (TextUtils.isEmpty(expertId)) {
-                    zhToast.showToast("查找专家详情失败");
-                    return;
-                }
-                Bundle bundle = new Bundle();
-                bundle.putString(IntentKey.FRAG_INFO,expertId);
-                gotoFragment(FragKey.detail_expert_fragment,bundle);
-            }
-        });
     }
 
     @Override
     public void update(Map<String, Object> info) {
         int status = Utils.toInteger(info.get("status"));
-        patientName.setText("患者：" + Utils.toString(info.get("patientname")));
-        patientHospital.setText("患者所在医院：" + Utils.toString(info.get("patienthospital")));
+        patientInfo.setPatientInfo(info);
+        patientInfo.setToPatientDetailLisenter(new OrderPatientInfoView.PatientDetailLisenter() {
+            @Override
+            public void onPatientDetail(String patientId) {
+                gotoFragment(FragKey.patient_case_detail_fragment, patientId);
+            }
+        });
+        Map<String, Object> huizhenData = Utils.parseObjectToMapString(info.get("hui_comment"));
 
-        patientSerialNum.setText("预约单号：" + Utils.toString(info.get("orderid")));
-        patientTime.setText("预约时间：" + DateUtil.getFullTimeDiffDayCurrent(Utils.toLong(info.get("showtime"))));
-
-        String experturl = Utils.toString(info.get("experturl"));
-        if (TextUtils.isEmpty(experturl)) {
-            ImageUtils.getInstance().displayFromDrawable(R.mipmap.photo, dicPhoto);
+        if (huizhenData != null && huizhenData.size() > 0) {
+            huizhenInfo.setHuiZhenInfo(huizhenData);
+            if (status == 2 || status == 3) {
+                huizhenInfo.setEditAble(true);
+                huizhenInfo.setHuizhenEditListener(new OrderHuizhenInfoView.HuizhenEditListener() {
+                    @Override
+                    public void onHuiZhenEdit() {
+                        Bundle bundle = new Bundle();
+                        bundle.putString(IntentKey.FRAG_INFO, orderId);
+                        bundle.putString(IntentKey.FRAG_OPERATE, "edit");
+                        gotoFragment(FragKey.order_accept_fragment, bundle);
+                    }
+                });
+            } else {
+                huizhenInfo.setEditAble(false);
+            }
+            if (status == 4) {
+                Map<String, Object> backInfo = new HashMap<>();
+                backInfo.put("reback_reason", info.get("reback_reason"));
+                backInfo.put("money", huizhenData.get("money"));
+                tuikuanInfo.setVisibility(View.VISIBLE);
+                tuikuanInfo.setRebackReson(backInfo);
+            }
         } else {
-            ImageUtils.getInstance().displayFromRemote(experturl, dicPhoto);
+            huizhenInfo.setVisibility(View.GONE);
         }
-        docName.setText(Utils.toString(info.get("expertname")));
-        String docHosId = Utils.toString(info.get("hospital"));
-        String docOfficeId = Utils.toString(info.get("office"));
-        String docBusId = Utils.toString(info.get("business"));
 
-        docHospital.setText(DicData.getInstance().getHospitalById(docHosId).getHospital());
-        docDepart.setText(Utils.toString(DicData.getInstance().getOfficeById(docOfficeId).getName()));
-        docProfession.setText(Utils.toString(DicData.getInstance().getBusinessById(docBusId).getName()));
+
+        initOperateLayout(status);
         String statuText = "";
         String textColorBg = "#FFFFFF";
         switch (status) {
@@ -139,15 +133,15 @@ public class OrderDetailFragment extends PageImpBaseFragment implements OrderDet
                 textColorBg = "#FFB81F";
                 break;
             case 2:
-                statuText = "专家已经确认";
+                statuText = "等待患者支付";
                 textColorBg = "#FFB81F";
                 break;
             case 3:
-                statuText = "订单已支付，进行中";
-                textColorBg = "#FFB81F";
+                statuText = "订单已支付完成，请再次确认会诊信息";
+                textColorBg = "#30D701";
                 break;
             case 4:
-                statuText = "退款中";
+                statuText = "患者申请退款";
                 textColorBg = "#FFB81F";
                 break;
             case 5:
@@ -164,7 +158,7 @@ public class OrderDetailFragment extends PageImpBaseFragment implements OrderDet
                 break;
 
             case 9:
-                statuText = "退款失败，请重新申请";
+                statuText = "专家拒绝退款";
                 textColorBg = "#FFB81F";
                 break;
 
@@ -182,7 +176,10 @@ public class OrderDetailFragment extends PageImpBaseFragment implements OrderDet
                 statuText = "治疗中";
                 textColorBg = "#FFB81F";
                 break;
-
+            case 13:
+                statuText = "治疗已结束";
+                textColorBg = "#FFB81F";
+                break;
         }
         this.status.setText(statuText);
         ViewUtil.setCornerViewDrawbleBg(this.status, textColorBg);
@@ -194,5 +191,104 @@ public class OrderDetailFragment extends PageImpBaseFragment implements OrderDet
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         ButterKnife.bind(this, rootView);
         return rootView;
+    }
+
+    private void initOperateLayout(int status) {
+        operateId.removeAllViews();
+        switch (status) {
+            case 1:
+                View acceptView = LayoutInflater.from(getContext()).inflate(R.layout.operate_button, null);
+                TextView acceptButton = (TextView) acceptView.findViewById(R.id.operate);
+                acceptButton.setText("接受预约");
+                ViewUtil.setCornerViewDrawbleBg(acceptButton, "#537FFa", 10);
+                acceptButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        gotoFragment(FragKey.order_accept_fragment,orderId);
+                    }
+                });
+
+                View cancelView = LayoutInflater.from(getContext()).inflate(R.layout.operate_button, null);
+                TextView cancelButton = (TextView) cancelView.findViewById(R.id.operate);
+                cancelButton.setText("拒绝预约");
+                ViewUtil.setCornerViewDrawbleBg(cancelButton, "#F16A19", 10);
+                cancelButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        gotoFragment(FragKey.order_reject_fragment,orderId);
+                    }
+                });
+                operateId.addView(acceptView);
+                operateId.addView(cancelView);
+                break;
+
+            case 3:
+                View confirmView = LayoutInflater.from(getContext()).inflate(R.layout.operate_button, null);
+                TextView confirmHuizhen = (TextView) confirmView.findViewById(R.id.operate);
+                confirmHuizhen.setText("确认");
+                ViewUtil.setCornerViewDrawbleBg(confirmHuizhen, "#537FFa", 10);
+                confirmHuizhen.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mPresenter.confirmHuizhen();
+                    }
+                });
+                operateId.addView(confirmView);
+                break;
+            case 4:
+                View acceptBackView = LayoutInflater.from(getContext()).inflate(R.layout.operate_button, null);
+                TextView acceptBack = (TextView) acceptBackView.findViewById(R.id.operate);
+                acceptBack.setText("接受");
+                ViewUtil.setCornerViewDrawbleBg(acceptBack, "#537FFa", 10);
+                acceptBack.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mPresenter.acceptBack();
+                    }
+                });
+
+                View rejectBackView = LayoutInflater.from(getContext()).inflate(R.layout.operate_button, null);
+                TextView rejectBack = (TextView) rejectBackView.findViewById(R.id.operate);
+                rejectBack.setText("拒绝");
+                ViewUtil.setCornerViewDrawbleBg(rejectBack, "#F16A19", 10);
+                rejectBack.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //mPresenter.rejectBack();
+                        gotoFragment(FragKey.order_money_reject_fragment,orderId);
+                    }
+                });
+                operateId.addView(acceptBackView);
+                operateId.addView(rejectBackView);
+                break;
+            case 11:
+                View confirmHuizhenView = LayoutInflater.from(getContext()).inflate(R.layout.operate_button, null);
+                TextView confirmtoHuizhen = (TextView) confirmHuizhenView.findViewById(R.id.operate);
+                confirmtoHuizhen.setText("会诊完成");
+                ViewUtil.setCornerViewDrawbleBg(confirmtoHuizhen, "#537FFa", 10);
+                confirmtoHuizhen.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mPresenter.confirmFinishHuizhen();
+                    }
+                });
+                operateId.addView(confirmHuizhenView);
+                break;
+
+            case 12:
+                View confirmZhiliaoView = LayoutInflater.from(getContext()).inflate(R.layout.operate_button, null);
+                TextView confirmToZhiliao = (TextView) confirmZhiliaoView.findViewById(R.id.operate);
+                confirmToZhiliao.setText("治疗完成");
+                ViewUtil.setCornerViewDrawbleBg(confirmToZhiliao, "#537FFa", 10);
+                confirmToZhiliao.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mPresenter.confirmZhiliaoFinish();
+                    }
+                });
+                operateId.addView(confirmZhiliaoView);
+                break;
+
+        }
     }
 }

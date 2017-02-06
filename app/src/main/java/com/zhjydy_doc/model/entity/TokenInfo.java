@@ -2,7 +2,6 @@ package com.zhjydy_doc.model.entity;
 
 import android.text.TextUtils;
 
-
 import com.zhjydy_doc.model.refresh.RefreshKey;
 import com.zhjydy_doc.model.refresh.RefreshManager;
 
@@ -16,8 +15,7 @@ import java.util.List;
 public class TokenInfo {
     String id;
     String mobile;
-    String nickname;
-    String collectExperts;
+    String login_time;
     String collectNews;
     String paypass;
     String idcard;
@@ -26,6 +24,7 @@ public class TokenInfo {
     String sex;
     String photoId;
     String photoUrl;
+    ExpertInfo mExpertInfo;
     public String getPassoword() {
         return passoword;
     }
@@ -50,23 +49,6 @@ public class TokenInfo {
         this.mobile = mobile;
     }
 
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-        RefreshManager.getInstance().refreshData(RefreshKey.TOKEN_MSG_NICK_NAME);
-    }
-
-    public String getCollectExperts() {
-        return collectExperts;
-    }
-
-    public void setCollectExperts(String collectExperts) {
-        this.collectExperts = collectExperts;
-        RefreshManager.getInstance().refreshData(RefreshKey.KEY_FAV_EXPERT);
-    }
 
     public String getCollectNews() {
         return collectNews;
@@ -107,7 +89,7 @@ public class TokenInfo {
 
     public void setSex(String sex) {
         this.sex = sex;
-        RefreshManager.getInstance().refreshData(RefreshKey.TOKEN_MSG_SEX);
+      //  RefreshManager.getInstance().refreshData(RefreshKey.TOKEN_MSG_SEX);
 
     }
 
@@ -125,17 +107,9 @@ public class TokenInfo {
 
     public void setPhotoUrl(String photoUrl) {
         this.photoUrl = photoUrl;
-        RefreshManager.getInstance().refreshData(RefreshKey.TOKEN_MSG_PHOTO);
+       RefreshManager.getInstance().refreshData(RefreshKey.EXPERT_INFO_CHANGE);
     }
 
-    public List<String> getCollectExpertList(){
-        String collect = getCollectExperts();
-        List<String> coList = new ArrayList<String>();
-        if (!TextUtils.isEmpty(collect)) {
-            coList = Arrays.asList(collect.split(","));
-        }
-        return coList;
-    }
     public List<String> getCollectNewsList(){
         String news = getCollectNews();
         List<String> list = new ArrayList<String>();
@@ -145,17 +119,6 @@ public class TokenInfo {
         return list;
     }
 
-    public void setCollectExpertAsList(List<String> collect) {
-        String str = "";
-        if (collect != null && collect.size() > 0) {
-            for (int i = 0 ; i < collect.size() ; i ++) {
-                str += collect.get(i);
-                if (i < collect.size() -1)
-                str +=",";
-            }
-        }
-        setCollectExperts(str);
-    }
 
     public void setCollectNewAsList(List<String> news) {
         String str = "";
@@ -168,4 +131,25 @@ public class TokenInfo {
         }
         setCollectNews(str);
     }
+
+    public String getLogin_time() {
+        return login_time;
+    }
+
+    public void setLogin_time(String login_time) {
+        this.login_time = login_time;
+    }
+
+    public ExpertInfo getmExpertInfo() {
+        if (mExpertInfo == null) {
+            mExpertInfo  = new ExpertInfo();
+        }
+        return mExpertInfo;
+    }
+
+    public void setmExpertInfo(ExpertInfo mExpertInfo) {
+        this.mExpertInfo = mExpertInfo;
+        RefreshManager.getInstance().refreshData(RefreshKey.EXPERT_INFO_CHANGE);
+    }
+
 }

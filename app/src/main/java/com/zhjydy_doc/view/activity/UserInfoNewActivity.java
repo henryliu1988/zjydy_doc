@@ -19,10 +19,11 @@ import android.widget.TextView;
 
 import com.bigkoo.pickerview.OptionsPickerView;
 import com.zhjydy_doc.R;
-import com.zhjydy_doc.model.data.AppData;
 import com.zhjydy_doc.model.data.DicData;
+import com.zhjydy_doc.model.data.UserData;
 import com.zhjydy_doc.model.entity.DistricPickViewData;
 import com.zhjydy_doc.model.entity.District;
+import com.zhjydy_doc.model.entity.ExpertInfo;
 import com.zhjydy_doc.model.entity.HosipitalPickViewData;
 import com.zhjydy_doc.model.entity.HospitalDicItem;
 import com.zhjydy_doc.model.entity.NormalDicItem;
@@ -30,10 +31,10 @@ import com.zhjydy_doc.model.entity.NormalPickViewData;
 import com.zhjydy_doc.model.entity.TokenInfo;
 import com.zhjydy_doc.presenter.contract.UserInfoNewContract;
 import com.zhjydy_doc.presenter.presenterImp.UserInfoNewPresenterImp;
+import com.zhjydy_doc.util.ActivityUtils;
 import com.zhjydy_doc.util.DateUtil;
 import com.zhjydy_doc.util.ImageUtils;
 import com.zhjydy_doc.util.Utils;
-import com.zhjydy_doc.view.zjview.ActivityResultView;
 import com.zhjydy_doc.view.zjview.MapTextView;
 import com.zhjydy_doc.view.zjview.zhToast;
 
@@ -51,7 +52,7 @@ import butterknife.OnClick;
 /**
  * Created by Administrator on 2016/12/13 0013.
  */
-public class UserInfoNewActivity extends BaseActivity implements UserInfoNewContract.View, ActivityResultView {
+public class UserInfoNewActivity extends BaseActivity implements UserInfoNewContract.View {
 
     @BindView(R.id.title_back)
     ImageView titleBack;
@@ -89,8 +90,16 @@ public class UserInfoNewActivity extends BaseActivity implements UserInfoNewCont
     TextView telTitle;
     @BindView(R.id.tel_value)
     EditText telValue;
-    @BindView(R.id.next_station)
-    TextView nextStation;
+    @BindView(R.id.confirm)
+    TextView confirm;
+    @BindView(R.id.job_title)
+    TextView jobTitle;
+    @BindView(R.id.job_value)
+    EditText jobValue;
+    @BindView(R.id.zhuanchang_title)
+    TextView zhuanchangTitle;
+    @BindView(R.id.zhuanchang_value)
+    EditText zhuanchangValue;
 
 
     private UserInfoNewContract.Presenter mPresenter;
@@ -120,36 +129,41 @@ public class UserInfoNewActivity extends BaseActivity implements UserInfoNewCont
             }
         });
         titleCenterTv.setText("专家信息");
-        TokenInfo info = AppData.getInstance().getToken();
-        if (info == null || TextUtils.isEmpty(info.getId())) {
+        TokenInfo token = UserData.getInstance().getToken();
+
+        if (token == null || TextUtils.isEmpty(token.getId())) {
             finish();
             return;
         }
-        String id = info.getId();
-        new UserInfoNewPresenterImp(this, id);
+        ExpertInfo info = token.getmExpertInfo();
+        String id = token.getId();
         mDistricePicker = new OptionsPickerView<DistricPickViewData>(getContext());
         mHospitalPicker = new OptionsPickerView<HosipitalPickViewData>(getContext());
         mOfficePicker = new OptionsPickerView<NormalDicItem>(getContext());
         mBusinessPicker = new OptionsPickerView<NormalDicItem>(getContext());
         initDatas(info);
+        new UserInfoNewPresenterImp(this, id);
     }
 
-    private void initDatas(TokenInfo info) {
-        String name = info.getNickname();
-        String photoUrl = info.getPhotoUrl();
-        String addressId = info.getNickname();
-        String officeId = info.getNickname();
-        String hospitalid = info.getNickname();
-        String businessId = info.getNickname();
-        String phoneNum = info.getMobile();
-
+    private void initDatas(ExpertInfo info) {
+        String name = info.getRealname();
+        String photoUrl = UserData.getInstance().getToken().getPhotoUrl();
+        String addressId = info.getAddress();
+        String officeId = info.getOffice();
+        String hospitalid = info.getHospital();
+        String businessId = info.getBusiness();
+        String phoneNum = info.getPhone();
+        String soFunc = info.getSofunc();
+        String adpter = info.getAdept();
         nameValue.setText(name);
-        ImageUtils.getInstance().displayFromRemote(photoUrl, photoImage);
-        if (TextUtils.isEmpty(addressId)) {
+        if (!TextUtils.isEmpty(photoUrl)) {
+            ImageUtils.getInstance().displayFromRemoteOver(photoUrl, photoImage);
+        }
+        if (!TextUtils.isEmpty(addressId)) {
             String addressName = DicData.getInstance().getDistrictStrById(addressId);
             domainValue.setMap(addressId, addressName);
         }
-        if (TextUtils.isEmpty(hospitalid)) {
+        if (!TextUtils.isEmpty(hospitalid)) {
             HospitalDicItem item = DicData.getInstance().getHospitalById(hospitalid);
             if (item != null) {
                 hospitalValue.setMap(item.getId(), item.getHospital());
@@ -170,6 +184,12 @@ public class UserInfoNewActivity extends BaseActivity implements UserInfoNewCont
         if (!TextUtils.isEmpty(phoneNum)) {
             telValue.setText(phoneNum);
         }
+        if (!TextUtils.isEmpty(soFunc)) {
+            jobValue.setText(soFunc);
+        }
+        if (!TextUtils.isEmpty(adpter)) {
+            zhuanchangValue.setText(adpter);
+        }
     }
 
     @Override
@@ -181,6 +201,7 @@ public class UserInfoNewActivity extends BaseActivity implements UserInfoNewCont
         initDistricePicker();
 
     }
+
     private void initDistricePicker() {
         mDistricePicker.setCyclic(false);
         mDistricePicker.setCancelable(true);
@@ -196,16 +217,16 @@ public class UserInfoNewActivity extends BaseActivity implements UserInfoNewCont
                 if (mCityPickViewData.size() > options1 && mCityPickViewData.get(options1).size() > option2) {
                     city = mCityPickViewData.get(options1).get(option2).getDistrict();
                 }
-                if (mQuPickViewData.size() > options1 && mQuPickViewData.get(options1).size() > option2 && mQuPickViewData.get(options1).get(option2).size() > options3){
+                if (mQuPickViewData.size() > options1 && mQuPickViewData.get(options1).size() > option2 && mQuPickViewData.get(options1).get(option2).size() > options3) {
                     qu = mQuPickViewData.get(options1).get(option2).get(options3).getDistrict();
                 }
                 if (pro == null) {
                     return;
                 } else if (city == null) {
-                    domainValue.setMap(pro.getId(),pro.getName());
-                } else if (qu == null ) {
-                    domainValue.setMap(city.getId(),pro.getName() + " " + city.getName());
-                } else{
+                    domainValue.setMap(pro.getId(), pro.getName());
+                } else if (qu == null) {
+                    domainValue.setMap(city.getId(), pro.getName() + " " + city.getName());
+                } else {
                     domainValue.setMap(qu.getId(), pro.getName() + " " + city.getName() + " " + qu.getName());
                 }
                 mHospitalPickViewData.clear();
@@ -235,16 +256,16 @@ public class UserInfoNewActivity extends BaseActivity implements UserInfoNewCont
     @Override
     public void updateBusiness(ArrayList<NormalPickViewData> business) {
         mBusinessPickViewData = business;
-        mBusinessPicker.setPicker(mDepartPickViewData);
+        mBusinessPicker.setPicker(mBusinessPickViewData);
         mBusinessPicker.setCyclic(false);
         mBusinessPicker.setSelectOptions(0);
         mBusinessPicker.setCancelable(true);
         mBusinessPicker.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {
-                String officeName = mBusinessPickViewData.get(options1).getmItem().getName();
-                String officeId = mBusinessPickViewData.get(options1).getmItem().getId();
-                departValue.setMap(officeId, officeName);
+                String busName = mBusinessPickViewData.get(options1).getmItem().getName();
+                String busId = mBusinessPickViewData.get(options1).getmItem().getId();
+                businessValue.setMap(busId, busName);
             }
         });
 
@@ -279,7 +300,7 @@ public class UserInfoNewActivity extends BaseActivity implements UserInfoNewCont
         return this;
     }
 
-    @OnClick({R.id.title_back, R.id.photo_image_layout, R.id.domain_value, R.id.hospital_value, R.id.depart_value, R.id.business_value, R.id.next_station})
+    @OnClick({R.id.title_back, R.id.photo_image_layout, R.id.domain_value, R.id.hospital_value, R.id.depart_value, R.id.business_value, R.id.confirm})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.title_back:
@@ -308,7 +329,7 @@ public class UserInfoNewActivity extends BaseActivity implements UserInfoNewCont
                     mBusinessPicker.show();
                 }
                 break;
-            case R.id.next_station:
+            case R.id.confirm:
                 checkMsg();
                 break;
         }
@@ -322,7 +343,8 @@ public class UserInfoNewActivity extends BaseActivity implements UserInfoNewCont
         String officeId = departValue.getTextId();
         String businessId = businessValue.getTextId();
         String photoUrl = mPhotoPath;
-
+        String socialFunc = jobValue.getText().toString();
+        String adept = zhuanchangValue.getText().toString();
         if (TextUtils.isEmpty(name)) {
             zhToast.showToast("真实姓名不能为空");
             return;
@@ -342,7 +364,20 @@ public class UserInfoNewActivity extends BaseActivity implements UserInfoNewCont
             return;
         }
 
-        Map<String,Object> info = new HashMap<>();
+        Map<String, Object> info = new HashMap<>();
+
+        info.put("photo", photoUrl);
+        info.put("realname", name);
+        info.put("phone", phone);
+        info.put("address", districtId);
+        info.put("hospital", hosId);
+        info.put("office", officeId);
+        info.put("business", businessId);
+        info.put("memberid", UserData.getInstance().getToken().getId());
+        info.put("business", businessId);
+        info.put("sofunc", socialFunc);
+        info.put("adept", adept);
+
         mPresenter.submitUserInfo(info);
     }
 
@@ -350,27 +385,26 @@ public class UserInfoNewActivity extends BaseActivity implements UserInfoNewCont
     public static final int SELECT_CAMER = 0;
     protected File mCameraPath = null;
     private String mPhotoPath;
+
     @Override
-    public void onActivityResult1(int requestCode, int resultCode, Intent data) {
-        switch (requestCode)
-        {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
             //从相册选择
             case SELECT_PICTURE:
                 if (data != null) {
                     Uri uri = data.getData();
                     String path = Utils.getPath(uri);
                     //   ImageUtils.getInstance().displayFromRemote(path,userPhoto);
-                    ImageUtils.getInstance().displayFromSDCard(path,photoImage);
+                    ImageUtils.getInstance().displayFromSDCard(path, photoImage);
                     mPhotoPath = path;
                 }
                 break;
             //拍照添加图片
             case SELECT_CAMER:
-                if (mCameraPath != null)
-                {
+                if (mCameraPath != null) {
                     String p = mCameraPath.toString();
                     //   ImageUtils.getInstance().displayFromRemote(p,userPhoto);
-                    ImageUtils.getInstance().displayFromSDCard(p,photoImage);
+                    ImageUtils.getInstance().displayFromSDCard(p, photoImage);
                     mPhotoPath = p;
                     mCameraPath = null;
                 }
@@ -381,13 +415,11 @@ public class UserInfoNewActivity extends BaseActivity implements UserInfoNewCont
     }
 
     @Override
-    public void onPermissionResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         List<String> permissionList = Arrays.asList(permissions);
-        if (permissionList.contains(Manifest.permission.CAMERA))
-        {
+        if (permissionList.contains(Manifest.permission.CAMERA)) {
             toGetCameraImage();
-        } else if (permissionList.contains(Manifest.permission.WRITE_EXTERNAL_STORAGE))
-        {
+        } else if (permissionList.contains(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
             toGetLocalImage();
         }
 
@@ -396,13 +428,11 @@ public class UserInfoNewActivity extends BaseActivity implements UserInfoNewCont
     /**
      * 照相选择图片
      */
-    public void toGetCameraImage()
-    {
+    public void toGetCameraImage() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE, null);
         String time = DateUtil.getCurrent();
         File path = ImageUtils.getInstance().getAppImageFilePath(time + ".jpg");
-        if (path == null)
-        {
+        if (path == null) {
             zhToast.showToast("创建路径失败");
         }
         mCameraPath = path;
@@ -416,43 +446,43 @@ public class UserInfoNewActivity extends BaseActivity implements UserInfoNewCont
     /**
      * 选择本地图片
      */
-    public void toGetLocalImage()
-    {
+    public void toGetLocalImage() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent, SELECT_PICTURE);
     }
 
-    protected void selectImg()
-    {
+    protected void selectImg() {
         final CharSequence[] items = {"拍照上传", "从相册选择"};
         new AlertDialog.Builder(getContext()).setTitle("选择图片来源")
-                .setItems(items, new DialogInterface.OnClickListener()
-                {
-                    public void onClick(DialogInterface dialog, int which)
-                    {
-                        if (which == SELECT_PICTURE)
-                        {
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-                            {
+                .setItems(items, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (which == SELECT_PICTURE) {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                                 requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, SELECT_PICTURE);
-                            } else
-                            {
+                            } else {
                                 toGetLocalImage();
                             }
-                        } else
-                        {
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-                            {
+                        } else {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                                 requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, SELECT_CAMER);
-                            } else
-                            {
+                            } else {
                                 toGetCameraImage();
                             }
                             //
                         }
                     }
                 }).create().show();
+    }
+
+    @Override
+    public void onSubmitSuc() {
+        ActivityUtils.showHome(this, true);
+    }
+
+    @Override
+    public void gotoMainTabs() {
+        ActivityUtils.showHome(this, true);
     }
 }

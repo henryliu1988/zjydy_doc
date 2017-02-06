@@ -18,7 +18,8 @@ public interface UserInfoNewContract  {
         void updateOffice(ArrayList<NormalPickViewData> officeData);
         void updateBusiness(ArrayList<NormalPickViewData> business);
         void updateHospitalByAddress(ArrayList<HosipitalPickViewData> hosData);
-
+        void onSubmitSuc();
+        void gotoMainTabs();
     }
 
     interface Presenter extends BasePresenter

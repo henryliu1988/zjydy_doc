@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zhjydy_doc.R;
-import com.zhjydy_doc.model.data.AppData;
+import com.zhjydy_doc.model.data.UserData;
 import com.zhjydy_doc.model.net.BaseSubscriber;
 import com.zhjydy_doc.model.net.WebResponse;
 import com.zhjydy_doc.presenter.contract.PhoneNumChangContract;
@@ -180,7 +180,7 @@ public class PhoneNumChangeFragment extends PageImpBaseFragment implements Phone
             return;
         }
         String inputMd5 = MD5.GetMD5Code(inputPs);
-        String password = AppData.getInstance().getToken().getPassoword();
+        String password = UserData.getInstance().getToken().getPassoword();
         if (inputMd5.equals(password)) {
             switchStep(1);
         } else{
@@ -246,7 +246,7 @@ public class PhoneNumChangeFragment extends PageImpBaseFragment implements Phone
     public void submitResult(boolean result, String msg,String phoneNum)
     {
         if (result) {
-            AppData.getInstance().getToken().setMobile(phoneNum);
+            UserData.getInstance().getToken().setMobile(phoneNum);
             int key[] = {FragKey.account_safe_fragment};
             back(key);
         }

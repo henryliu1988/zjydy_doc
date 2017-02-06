@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_bg"
+    >
+    <include layout="@layout/titlebar_layout_back" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white_bg"
+        android:layout_marginTop="12dp"
+        android:textSize="14sp"
+        android:padding="10dp"
+        android:textColor="@color/black_text1"
+        android:id="@+id/num"
+        android:gravity="left" />
+
+    <TextView
+        android:id="@+id/confirm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/login_confirm_btn_bg"
+        android:text="拨打"
+        android:gravity="center"
+        android:textColor="@color/white_text"
+        android:textSize="16sp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp" />
+
+</LinearLayout>

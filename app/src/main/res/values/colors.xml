@@ -28,5 +28,8 @@
     <color name="btn_bg_pressed_color">#ffacac</color>
     <color name="btn_bg_color">#ff5959</color>
     <color name="div_line">#E3E3E3</color>
+    <color name="mine_start_text">#244191</color>
+    <color name="mine_info_value">#4171EF</color>
+
 
 </resources>

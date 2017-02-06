@@ -5,7 +5,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.telephony.TelephonyManager;
 
-
 import com.zhjydy_doc.app.ZhJDocApplication;
 
 import java.io.IOException;

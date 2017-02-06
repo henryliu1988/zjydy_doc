@@ -6,13 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.zhjydy_doc.R;
-import com.zhjydy_doc.model.entity.IntentKey;
 import com.zhjydy_doc.presenter.contract.OrderMsgListContract;
 import com.zhjydy_doc.presenter.presenterImp.OrderMsgListPresenterImp;
 import com.zhjydy_doc.util.Utils;
@@ -69,25 +66,19 @@ public class OrderMsgListFragment extends PageImpBaseFragment implements OrderMs
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Map<String,Object> order = (Map<String,Object>)parent.getAdapter().getItem(position);
                 if (order != null) {
+                    String msgId = Utils.toString(order.get("id"));
 
-                    String orderId = Utils.toString(order.get("orderid"));
                     int status = Utils.toInteger(order.get("status"));
                     if (mPresenter != null && status ==0) {
-                        mPresenter.readOrder(orderId);
+                        mPresenter.readOrder(msgId);
                     }
-                    Bundle bundle = new Bundle();
-                    bundle.putString(IntentKey.FRAG_INFO,orderId);
-                    bundle.putInt("key", FragKey.detail_order_fragment);
-                    gotoFragment(FragKey.detail_order_fragment,bundle);
+                    String orderId = Utils.toString(order.get("orderid"));
+
+                    gotoFragment(FragKey.detail_order_fragment,orderId);
                 }
             }
         });
-        mList.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
-            @Override
-            public void onRefresh(PullToRefreshBase<ListView> refreshView) {
-                mPresenter.reLoadData();
-            }
-        });
+
     }
 
     @Override
@@ -110,7 +101,6 @@ public class OrderMsgListFragment extends PageImpBaseFragment implements OrderMs
 
     @Override
     public void updateOrderList(List<Map<String, Object>> list) {
-        mList.onRefreshComplete();
         mAdapter.refreshData(list);
     }
 }

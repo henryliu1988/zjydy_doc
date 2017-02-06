@@ -1,6 +1,8 @@
 package com.zhjydy_doc.presenter.presenterImp;
 
 
+import com.zhjydy_doc.model.data.DicData;
+import com.zhjydy_doc.model.entity.NormalDicItem;
 import com.zhjydy_doc.model.net.BaseSubscriber;
 import com.zhjydy_doc.model.net.WebCall;
 import com.zhjydy_doc.model.net.WebKey;
@@ -14,7 +16,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import rx.Observable;
 import rx.functions.Func1;
 
 /**
@@ -36,26 +37,24 @@ public class MainHomePresenterImp implements MainHomeContract.MainHomePresenter 
         loadExpert();
         loadNewMsg();
         loadInfomation();
+        loadOfficeDicItem();
     }
+
+
+
 
     private void loadBanner() {
 
-        WebCall.getInstance().call(WebKey.func_banner, new HashMap<String, Object>()).flatMap(new Func1<WebResponse, Observable<List<String>>>() {
+        WebCall.getInstance().call(WebKey.func_banner, new HashMap<String, Object>()).map(new Func1<WebResponse, List<Map<String,Object>>>() {
             @Override
-            public Observable<List<String>> call(WebResponse webResponse) {
+            public List<Map<String,Object>> call(WebResponse webResponse) {
                 String data = webResponse.getData();
                 List<Map<String, Object>> list = Utils.parseObjectToListMapString(data);
-                return Observable.from(list).map(new Func1<Map<String, Object>, String>() {
-                    @Override
-                    public String call(Map<String, Object> map) {
-                        String image = Utils.toString(map.get("path"));
-                        return image;
-                    }
-                }).buffer(list.size());
+                return list;
             }
-        }).subscribe(new BaseSubscriber<List<String>>() {
+        }).subscribe(new BaseSubscriber<List<Map<String,Object>>>() {
             @Override
-            public void onNext(List<String> strings) {
+            public void onNext(List<Map<String,Object>> strings) {
                 if (mView != null) {
                     mView.updateBanner(strings);
                 }
@@ -64,7 +63,7 @@ public class MainHomePresenterImp implements MainHomeContract.MainHomePresenter 
     }
 
     private void loadNewMsg() {
-        WebCall.getInstance().call(WebKey.func_getRecommend,new HashMap<String, Object>()).subscribe(new BaseSubscriber<WebResponse>() {
+        WebCall.getInstance().call(WebKey.func_getRecommend, new HashMap<String, Object>()).subscribe(new BaseSubscriber<WebResponse>() {
             @Override
             public void onNext(WebResponse webResponse) {
                 boolean status = WebUtils.getWebStatus(webResponse);
@@ -125,6 +124,17 @@ public class MainHomePresenterImp implements MainHomeContract.MainHomePresenter 
         });
     }
 
+
+
+    private void loadOfficeDicItem() {
+        DicData.getInstance().getOfficeObserver().subscribe(new BaseSubscriber<List<NormalDicItem>>() {
+            @Override
+            public void onNext(List<NormalDicItem> normalDicItems) {
+
+                mView.updateOfficeList(normalDicItems);
+            }
+        });
+    }
     @Override
     public void finish() {
 

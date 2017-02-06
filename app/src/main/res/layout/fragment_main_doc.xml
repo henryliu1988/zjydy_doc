@@ -5,121 +5,22 @@
     android:orientation="vertical">
 
     <include layout="@layout/titlebar_layout_main_search" />
-
-    <LinearLayout
+    <com.flyco.tablayout.CommonTabLayout xmlns:tl="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/tab_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="40dp"
+        android:background="@drawable/unline_shape"
+        tl:tl_iconVisible="false"
+        tl:tl_indicator_corner_radius="1.5dp"
+        tl:tl_indicator_height="2dp"
+        tl:tl_indicator_width="30dp"
+        tl:tl_indicator_color="@color/title_bg"
+        tl:tl_textSelectColor="@color/title_bg"
+        tl:tl_textUnselectColor="@color/black_text1"
+        tl:tl_textsize="14sp" />
 
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingBottom="6dp"
-            android:paddingTop="6dp">
-
-            <com.zhjydy_doc.view.zjview.MapTextView
-                android:id="@+id/filter_dis_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:drawablePadding="5dp"
-                android:drawableRight="@mipmap/dropmenu_down"
-                android:gravity="center"
-                android:lines="1"
-                android:maxLines="1"
-                android:paddingBottom="7dp"
-                android:paddingTop="7dp"
-                android:text="全部地区"
-                android:textColor="@color/black_text" />
-
-        </RelativeLayout>
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@color/div_line" />
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingBottom="8dp"
-            android:paddingTop="8dp">
-
-            <com.zhjydy_doc.view.zjview.MapTextView
-                android:id="@+id/filter_office_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:drawablePadding="5dp"
-                android:drawableRight="@mipmap/dropmenu_down"
-                android:gravity="center"
-                android:lines="1"
-                android:maxLines="1"
-                android:paddingBottom="7dp"
-                android:paddingTop="7dp"
-                android:text="科室"
-                android:textColor="@color/black_text" />
-        </RelativeLayout>
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@color/div_line" />
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingBottom="8dp"
-            android:paddingTop="8dp">
-
-            <com.zhjydy_doc.view.zjview.MapTextView
-                android:id="@+id/filter_business_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:drawablePadding="5dp"
-                android:drawableRight="@mipmap/dropmenu_down"
-                android:gravity="center"
-                android:lines="1"
-                android:maxLines="1"
-                android:paddingBottom="7dp"
-                android:paddingTop="7dp"
-                android:text="职称"
-                android:textColor="@color/black_text" />
-        </RelativeLayout>
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@color/div_line" />
-    </LinearLayout>
-
-    <View
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpage"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/div_line" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/gray_bg">
-
-        <com.handmark.pulltorefresh.library.PullToRefreshListView
-            android:id="@+id/m_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:cacheColorHint="#00000000"
-            android:divider="#00000000"
-            android:dividerHeight="10dp"
-            android:fadingEdge="none"
-            android:fastScrollEnabled="false"
-            android:footerDividersEnabled="false"
-            android:headerDividersEnabled="false"
-            android:smoothScrollbar="true" />
-
-    </RelativeLayout>
-
+        android:layout_height="match_parent"/>
 </LinearLayout>

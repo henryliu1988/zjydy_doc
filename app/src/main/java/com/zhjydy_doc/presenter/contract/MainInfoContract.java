@@ -17,5 +17,6 @@ public interface MainInfoContract {
 
     interface MainInfoPresenter extends BasePresenter
     {
+        void loadFavMsgCount();
     }
 }

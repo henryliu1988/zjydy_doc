@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_bg"
+    >
+
+    <include layout="@layout/titlebar_layout_back"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="15dp"
+            android:paddingTop="10dp">
+
+            <LinearLayout
+                style="@style/item_info_read_singleline"
+                android:layout_marginTop="10dp">
+                <TextView
+                    android:id="@+id/count_title"
+                    android:text="会诊次数"
+                    style="@style/item_info_read_singleline_title" />
+                <EditText
+                    android:id="@+id/count_value"
+                    style="@style/item_info_edit_singleline_value"
+                    android:inputType="number" />
+            </LinearLayout>
+
+            <View style="@style/item_info_div_line" />
+
+            <LinearLayout
+                style="@style/item_info_read_singleline">
+
+                <TextView
+                    android:id="@+id/money_title"
+                    android:text="项目费用"
+                    style="@style/item_info_read_singleline_title" />
+
+                <EditText
+                    android:id="@+id/money_value"
+                    style="@style/item_info_edit_singleline_value"
+                    android:inputType="numberDecimal"
+                    android:numeric="decimal"
+                    android:hint="0.00"
+                    />
+            </LinearLayout>
+
+            <View style="@style/item_info_div_line" />
+
+            <LinearLayout style="@style/item_info_read_singleline">
+
+                <TextView
+                    android:id="@+id/date_title"
+                    android:text="会诊时间"
+                    style="@style/item_info_read_singleline_title" />
+
+                <com.zhjydy_doc.view.zjview.MapTextView
+                    android:id="@+id/date_value"
+                    style="@style/item_info_read_click_singleline_value" />
+            </LinearLayout>
+
+            <View style="@style/item_info_div_line" />
+
+            <LinearLayout style="@style/item_info_read_singleline"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/address_title"
+                    android:text="会诊地点"
+                    style="@style/item_info_read_singleline_title" />
+
+                <com.zhjydy_doc.view.zjview.MapTextView
+                    android:id="@+id/address_value"
+                    style="@style/item_info_read_click_singleline_value" />
+            </LinearLayout>
+
+            <View style="@style/item_info_div_line"
+                android:visibility="gone" />
+            <LinearLayout
+                style="@style/item_info_read_singleline">
+
+                <TextView
+                    android:id="@+id/expert_title"
+                    android:text="参与专家"
+                    style="@style/item_info_read_singleline_title" />
+
+                <EditText
+                    android:id="@+id/expert_value"
+                    style="@style/item_info_edit_singleline_value" />
+            </LinearLayout>
+
+            <View style="@style/item_info_div_line" />
+
+
+            <LinearLayout
+                style="@style/item_info_read_singleline">
+
+                <TextView
+                    android:id="@+id/main_title"
+                    android:text="主要参与医生"
+                    style="@style/item_info_read_singleline_title" />
+
+                <EditText
+                    android:id="@+id/main_value"
+                    style="@style/item_info_edit_singleline_value" />
+            </LinearLayout>
+
+            <View style="@style/item_info_div_line" />
+
+
+            <LinearLayout style="@style/item_info_read_singleline">
+
+                <TextView
+                    android:id="@+id/tel_title"
+                    android:text="联系方式"
+                    style="@style/item_info_read_singleline_title" />
+
+                <EditText
+                    android:id="@+id/tel_value"
+                    android:inputType="phone"
+                    style="@style/item_info_edit_singleline_value" />
+            </LinearLayout>
+
+            <View style="@style/item_info_div_line" />
+
+            <LinearLayout
+                style="@style/item_info_read_mutiline"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp">
+
+                <TextView
+                    android:id="@+id/comment_title"
+                    android:text="备注"
+                    style="@style/item_info_read_mutiline_title"
+                    android:layout_marginLeft="10dp" />
+
+                <View
+                    style="@style/item_info_div_line"
+                    android:layout_marginLeft="0dp" />
+
+                <EditText
+                    android:id="@+id/comment_value"
+                    android:lines="5"
+                    style="@style/item_info_edit_mutiline_value"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="25dp" />
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/confirm"
+                style="@style/button_title_color_style"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="确认"
+                android:layout_marginTop="30dp" />
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+</LinearLayout>

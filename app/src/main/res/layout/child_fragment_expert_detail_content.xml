@@ -3,8 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white_bg"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp"
     android:paddingBottom="10dp"
     android:orientation="vertical">
 
@@ -14,74 +12,70 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="10dp"
         android:paddingBottom="4dp"
         android:paddingTop="4dp">
 
         <ImageView
-            android:id="@+id/score_image"
+            android:id="@+id/tel_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"/>
+            android:layout_centerVertical="true" />
 
         <TextView
-            android:id="@+id/score_text"
+            android:id="@+id/tel_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="13sp"
             android:textColor="@color/black_text2"
             android:layout_centerVertical="true"
             android:layout_marginLeft="5dp"
-            android:text=""
-            android:layout_toRightOf="@id/score_image" />
-
-        <com.zhjydy_doc.view.zjview.ScoreView
-            android:id="@+id/score_star"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="5dp"
-            android:layout_toRightOf="@id/score_text" />
+            android:layout_toRightOf="@id/tel_image" />
 
         <TextView
-            android:id="@+id/subscribe_expert"
+            android:id="@+id/tel_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:paddingBottom="5dp"
+            android:paddingBottom="4dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:paddingTop="5dp"
+            android:paddingTop="4dp"
             android:textColor="@color/white_text"
-            android:textSize="14sp"
-            android:text="马上预约"
-          />
+            android:textSize="13sp"
+            android:text="一键通话" />
     </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/div_line"/>
+        android:background="@color/div_line" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:paddingTop="10dp">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="推荐理由"
             android:textColor="@color/black_text"
             android:textSize="14sp" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
             android:id="@+id/reason"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
+
             <TextView
                 android:id="@+id/reason_tv"
                 android:layout_width="wrap_content"
@@ -92,23 +86,29 @@
         </LinearLayout>
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:paddingTop="10dp">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="专业擅长"
             android:textColor="@color/black_text"
             android:textSize="14sp" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
             android:id="@+id/specical"
             android:orientation="vertical">
+
             <TextView
                 android:id="@+id/specical_tv"
                 android:layout_width="wrap_content"

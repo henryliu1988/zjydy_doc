@@ -13,11 +13,12 @@
         android:layout_height="wrap_content"
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
+
         <ImageView
             android:id="@+id/image"
-            android:layout_width="55dp"
+            android:layout_width="65dp"
             android:layout_centerInParent="true"
-            android:layout_height="wrap_content"
+            android:layout_height="65dp"
             android:scaleType="fitCenter" />
     </RelativeLayout>
 
@@ -33,14 +34,14 @@
             android:layout_height="wrap_content"
             android:textColor="@color/black_text"
             android:layout_marginTop="4dp"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/hospital"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black_text2"
-            android:textSize="15sp" />
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/office"
@@ -48,19 +49,20 @@
             android:layout_height="wrap_content"
             android:textColor="@color/black_text2"
             android:layout_marginTop="4dp"
-            android:textSize="15sp" />
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/profess"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black_text2"
-            android:textSize="15sp" />
+            android:textSize="12sp" />
 
         <com.zhjydy_doc.view.zjview.ScoreView
             android:id="@+id/star"
             android:layout_marginTop="4dp"
             android:layout_width="wrap_content"
+            android:visibility="gone"
             android:layout_height="wrap_content" />
     </LinearLayout>
 </LinearLayout>

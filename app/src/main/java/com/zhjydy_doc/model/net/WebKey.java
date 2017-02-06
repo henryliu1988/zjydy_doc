@@ -10,6 +10,7 @@ public class WebKey {
     public static final String WEBKEY_NAMESPACE = "http://59.110.24.36/yiduyi/";
     public static final String WEBKEY_URL_COMMON = "http://59.110.24.36/yiduyi/index.php?s=App/Common/index";
     public static final String WEBKEY_URL_HUAN = "http://59.110.24.36/yiduyi/index.php?s=App/Huan/index";
+    public static final String WEBKEY_URL_ZHUAN = "http://59.110.24.36/yiduyi/index.php?s=App/Zhuan/index";
 
     public static final String WEBKEY_BASE = "http://59.110.24.36/yiduyi/";
     public static final String WEBKEY_URL_RES = "http://59.110.24.36/yiduyi/index.php?s=App/Common/imgUpload";
@@ -24,7 +25,7 @@ public class WebKey {
     public static final int func_banner = 1006;  //首页banner列表
     public static final int func_getNews = 1007;  //首页资讯
     public static final int func_getNewsList = 1008;  //资讯列表
-
+    public static final int func_cancelCollectExpert = 1038;  //取消收藏专家
     public static final int func_getRecommendZhuan = 1009;  //首页推荐专家
     public static final int func_getExpertsList = 1010;  //专家列表
     public static final int func_getExpert = 1011;  //专家详情
@@ -32,49 +33,108 @@ public class WebKey {
     public static final int func_getCommentList = 1013;  //根据专家id获取留言列表
     public static final int func_searchExpertsList = 1014;  //搜索专家列表
     public static final int func_searchNewsList = 1015;  //搜索资讯列表
+    public static final int func_cancelCollectNews = 1039;  //取消收藏资讯
     public static final int func_collectExpert = 1016;  //收藏专家
-    public static final int func_getPatientList = 1017;  //获取登录人的患者列表
-    public static final int func_getPatientById = 1018;  //获取患者病例详情
-    public static final int func_addPatient = 1019;  //添加患者
-    public static final int func_updatePatient = 1020;  //修改患者
-    public static final int func_patient = 1021;  //返回该用户是否已经提交认证信息
-    public static final int func_collectNews = 1022;  //返回该用户是否已经提交认证信息
+    public static final int func_collectNews = 1022;  //收藏资讯
     public static final int func_getoffice = 1023;  //科室字典
     public static final int func_getbusiness = 1024;  //职称字典
     public static final int func_getHospital = 1025;  //医院字典
-    public static final int func_getpro = 1026;  //医院字典
-    public static final int func_getCity = 1027;  //医院字典
-    public static final int func_getQu = 1028;  //医院字典
-    public static final int func_getCollectExpert = 1031;  //医院字典
-    public static final int func_getCollectNews = 1032;  //医院字典
-    public static final int func_updateHuan = 1033;  //医院字典
+    public static final int func_getpro = 1026;  //省份字典
+    public static final int func_getCity = 1027;  //城市字典
+    public static final int func_getQu = 1028;  //地區字典
+    public static final int func_getCollectNews = 1032;  //获取收藏资讯
     public static final int func_getOrders = 1034;  //全部订单
     public static final int func_getOrdersById = 1035;  //订单详情
-    public static final int func_getOrdersMsg = 1036;  //订单详情
-    public static final int func_updateOrdersMsg = 1037;  //订单详情
-    public static final int func_cancelCollectExpert = 1038;  //订单详情
-    public static final int func_cancelCollectNews = 1039;  //订单详情
-    public static final int func_addComment = 1040;  //订单详情
+    public static final int func_getOrdersMsg = 1036;  //订单消息
+    public static final int func_updateOrdersMsg = 1037;  //标记订单消息为已读
+    public static final int func_addComment = 1040;  //添加留言
     public static final int func_updatePassword = 1041;  //修改登录密码
     public static final int func_addPayPass = 1042;  //修改支付密码
-    public static final int func_makeOrder = 1043;  //预约专家
-    public static final int func_getNewCommentList = 1044;  //预约专家
-    public static final int func_getComment = 1045;  //预约专家
-    public static final int func_cancelOrder = 1046;  //预约专家
+    public static final int func_getNewCommentList = 1044;  //获取最新留言列表
+    public static final int func_getComment = 1045;  //获取留言列表
+ //   public static final int func_cancelOrder = 1046;  //预约专家
+
+    public static final int func_updateMember = 1048;  //关注专家
+
     public static final int func_updateMobile = 1047;  //修改手机号
-    public static final int func_updateMember = 1048;  //
-    public static final int func_getCancelReason = 1049;  //
-    public static final int func_searchCollectExpert = 1050;  //
+    public static final int func_getCancelReason = 1049;  //取消预约原因列表
+//    public static final int func_searchCollectExpert = 1050;  //
     public static final int func_searchCollectNews = 1051;  //
-    public static final int func_getRecommend = 1052;  //
-    public static final int func_updateCommentStatus = 1053;  //
-    public static final int func_getSysMsg = 1054;  //
+    public static final int func_getRecommend = 1052;  //首页推荐专家
+    public static final int func_updateCommentStatus = 1053;  //修改留言状态
+    public static final int func_getSysMsg = 1054;  //获取系统消息
+
+    public static final int func_getOrderTrue = 1055;  //专家接受预约，回复会诊时间
+    public static final int func_rebackzhi = 1056;  //专家回复治疗会诊信息
+    public static final int func_updateExpertInformation = 1057;  //专家信息更新
+    public static final int func_updateAuthent = 1058;  //专家认证信息
+    public static final int func_getGuanExperts = 1059;  //获取关注的专家列表
+    public static final int func_getMyfans = 1060;  //获取我的粉丝
+    public static final int func_getMeAndExpert = 1061;  //获取互相关注的专家列表
+    public static final int func_GuanExperts = 1062;  //关注专家
+    public static final int func_cancelGuanExperts = 1063;  //关注专家
+    public static final int func_getGuanbyid = 1064; // 根据双方id获取关注情况
+    public static final int func_getExpertStatusbyid = 1065;  //根据专家id获取认证情况
 
 
+    public static final int func_getPatientById = 1066;  //根据患者病例Id获取详情
+    public static final int func_readMyfans = 1067;  //根据患者病例Id获取详情
+    public static final int func_getExpertOrderCancelReason = 1068;  //根据患者病例Id获取详情
+    public static final int func_expert_cancelorder = 1069;  //根据患者病例Id获取详情
+    public static final int func_intoHui = 1070;  //根据患者病例Id获取详情
+    public static final int func_intoZhi = 1071;  //根据患者病例Id获取详情
+    public static final int func_closeZhi = 1072;  //根据患者病例Id获取详情
+    public static final int func_getRebackMoney = 1073;  // 同意退款
+    public static final int func_cancelRebackMoney = 1074;  //拒绝退款
+    public static final int func_addidear = 1075;  //拒绝退款
+
+    public static final Map<Integer, String> WEBKEY_FUNC_HUAN_MAP = new HashMap<Integer, String>();
+    static {
+        WEBKEY_FUNC_HUAN_MAP.put(func_getPatientById, "getPatientById");
+    }
+
+    public static final Map<Integer, String> WEBKEY_FUNC_ZHUAN_MAP = new HashMap<Integer, String>();
+    static {
+        WEBKEY_FUNC_ZHUAN_MAP.put(func_getRebackMoney, "getRebackMoney");//
+        WEBKEY_FUNC_ZHUAN_MAP.put(func_cancelRebackMoney, "cancelRebackMoney");//
+        WEBKEY_FUNC_ZHUAN_MAP.put(func_intoHui, "intoHui");//
+        WEBKEY_FUNC_ZHUAN_MAP.put(func_intoZhi, "intoZhi");//
+        WEBKEY_FUNC_ZHUAN_MAP.put(func_closeZhi, "closeZhi");//
+        WEBKEY_FUNC_ZHUAN_MAP.put(func_expert_cancelorder, "cancelOrder");//
+        WEBKEY_FUNC_ZHUAN_MAP.put(func_readMyfans, "readMyfans");//
+        WEBKEY_FUNC_ZHUAN_MAP.put(func_getOrders, "getOrders");//全部订单
+        WEBKEY_FUNC_ZHUAN_MAP.put(func_getOrdersById, "getOrdersById");//
+        WEBKEY_FUNC_ZHUAN_MAP.put(func_getOrdersMsg, "getOrdersMsg");//getOrdersMsg
+        WEBKEY_FUNC_ZHUAN_MAP.put(func_updateOrdersMsg, "updateOrdersMsg"); //updateOrdersMsg
+        WEBKEY_FUNC_ZHUAN_MAP.put(func_getOrderTrue, "getOrderTrue");//专家接受预约，回复会诊时间
+        WEBKEY_FUNC_ZHUAN_MAP.put(func_rebackzhi, "rebackzhi"); //.专家回复治疗会诊信息
+        WEBKEY_FUNC_ZHUAN_MAP.put(func_updatePassword, "updatePassword");
+      //  WEBKEY_FUNC_HUAN_MAP.put(func_makeOrder, "makeOrder");
+      //  WEBKEY_FUNC_HUAN_MAP.put(func_cancelOrder, "cancelOrder");
+        WEBKEY_FUNC_ZHUAN_MAP.put(func_updateMobile, "updateMobile");
+        WEBKEY_FUNC_ZHUAN_MAP.put(func_updateExpertInformation, "updateExpertInformation");
+        WEBKEY_FUNC_ZHUAN_MAP.put(func_updateAuthent, "updateAuthent");
+        WEBKEY_FUNC_ZHUAN_MAP.put(func_getGuanExperts, "getGuanExperts");   // 获取关注的专家列表
+        WEBKEY_FUNC_ZHUAN_MAP.put(func_getMyfans, "getMyfans");   // 获取我的粉丝
+        WEBKEY_FUNC_ZHUAN_MAP.put(func_getMeAndExpert, "getMeAndExpert");   // 获取互相关注的专家列表
+        WEBKEY_FUNC_ZHUAN_MAP.put(func_GuanExperts, "GuanExperts");   // 关注专家
+        WEBKEY_FUNC_ZHUAN_MAP.put(func_cancelGuanExperts, "cancelGuanExperts");   // 关注专家
+
+        WEBKEY_FUNC_ZHUAN_MAP.put(func_updateMember, "updateMember");
+        WEBKEY_FUNC_ZHUAN_MAP.put(func_getGuanbyid, "getGuanbyid");
+        WEBKEY_FUNC_ZHUAN_MAP.put(func_getExpertStatusbyid, "getExpertStatusbyid");
+        WEBKEY_FUNC_ZHUAN_MAP.put(func_getExpertOrderCancelReason, "cancelOrderReason");
+
+        //    WEBKEY_FUNC_HUAN_MAP.put(func_searchCollectExpert, "searchCollectExpert");
+
+
+
+    }
 
 
     public static final Map<Integer, String> WEBKEY_FUNC_COMMON_MAP = new HashMap<Integer, String>();
     static {
+        WEBKEY_FUNC_COMMON_MAP.put(func_addidear, "addidear");
         WEBKEY_FUNC_COMMON_MAP.put(func_getComment, "getComment");
         WEBKEY_FUNC_COMMON_MAP.put(func_getNewCommentList, "getNewCommentList");
         WEBKEY_FUNC_COMMON_MAP.put(func_cancelCollectExpert, "cancelCollectExpert");
@@ -114,27 +174,5 @@ public class WebKey {
 
     }
 
-    public static final Map<Integer, String> WEBKEY_FUNC_HUAN_MAP = new HashMap<Integer, String>();
-    static {
-        WEBKEY_FUNC_HUAN_MAP.put(func_getCollectExpert, "getCollectExpert");
-        WEBKEY_FUNC_HUAN_MAP.put(func_getPatientList, "getPatientList");
-        WEBKEY_FUNC_HUAN_MAP.put(func_getPatientById, "getPatientById");
-        WEBKEY_FUNC_HUAN_MAP.put(func_addPatient, "addPatient");
-        WEBKEY_FUNC_HUAN_MAP.put(func_updatePatient, "updatePatient");
-        WEBKEY_FUNC_HUAN_MAP.put(func_patient, "patient");
-        WEBKEY_FUNC_HUAN_MAP.put(func_updateHuan, "updateHuan");
-        WEBKEY_FUNC_HUAN_MAP.put(func_getOrders, "getOrders");
-        WEBKEY_FUNC_HUAN_MAP.put(func_getOrdersById, "getOrdersById");
-        WEBKEY_FUNC_HUAN_MAP.put(func_getOrdersMsg, "getOrdersMsg");
-        WEBKEY_FUNC_HUAN_MAP.put(func_updateOrdersMsg, "updateOrdersMsg");
-        WEBKEY_FUNC_HUAN_MAP.put(func_updatePassword, "updatePassword");
-        WEBKEY_FUNC_HUAN_MAP.put(func_makeOrder, "makeOrder");
-        WEBKEY_FUNC_HUAN_MAP.put(func_cancelOrder, "cancelOrder");
-        WEBKEY_FUNC_HUAN_MAP.put(func_updateMobile, "updateMobile");
-        WEBKEY_FUNC_HUAN_MAP.put(func_updateMember, "updateMember");
-        WEBKEY_FUNC_HUAN_MAP.put(func_searchCollectExpert, "searchCollectExpert");
 
-
-
-    }
 }

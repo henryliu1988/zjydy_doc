@@ -11,7 +11,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 
-
+import com.zhjydy_doc.model.entity.IntentKey;
 import com.zhjydy_doc.util.DateUtil;
 import com.zhjydy_doc.util.ImageUtils;
 import com.zhjydy_doc.view.activity.PagerImpActivity;
@@ -63,6 +63,18 @@ public abstract class PageImpBaseFragment extends StatedFragment
         }
     }
 
+    protected void gotoFragment(int key, String info)
+    {
+        String tag = FragKey.FragMap.get(key);
+        PageImpBaseFragment newFragment = PagerFragmentFactory.createFragment(key);
+        if (!TextUtils.isEmpty(tag) && newFragment != null)
+        {
+            Bundle bundle = new Bundle();
+            bundle.putString(IntentKey.FRAG_INFO,info);
+            newFragment.setArguments(bundle);
+            FragmentUtils.changeFragment(getActivity(), this, newFragment, tag, getViewId());
+        }
+    }
     protected void back()
     {
         Activity activity = getActivity();

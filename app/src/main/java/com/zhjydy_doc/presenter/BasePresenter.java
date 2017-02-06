@@ -5,5 +5,6 @@ package com.zhjydy_doc.presenter;
  */
 public interface BasePresenter {
     void start();
+
     void finish();
 }

@@ -31,7 +31,8 @@ import butterknife.OnClick;
 /**
  * Created by Administrator on 2016/9/29 0029.
  */
-public class ForgetPassWordActivity extends BaseActivity implements ForgetPassWordContract.View{
+public class ForgetPassWordActivity extends BaseActivity implements ForgetPassWordContract.View {
+
 
     @BindView(R.id.title_back)
     ImageView titleBack;
@@ -43,18 +44,18 @@ public class ForgetPassWordActivity extends BaseActivity implements ForgetPassWo
     EditText confirmCodeEdit;
     @BindView(R.id.confirm_code_get)
     Button confirmCodeGet;
-    @BindView(R.id.password_edit)
-    EditText passwordEdit;
     @BindView(R.id.input_layout)
     LinearLayout inputLayout;
     @BindView(R.id.btnConfirm)
     Button btnConfirm;
-
+    @BindView(R.id.password_edit)
+    EditText passwordEdit;
     private MyCountTimer mCountTimer;
 
     private String mConfirSmsCode;
 
     private ForgetPassWordContract.Presenter mPresenter;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +63,7 @@ public class ForgetPassWordActivity extends BaseActivity implements ForgetPassWo
         ButterKnife.bind(this);
         titleCenterTv.setText("忘记密码");
         new ForgetPassWordPresenterImp(this);
-        mCountTimer = new MyCountTimer(confirmCodeGet,0xff658dff,0xff658dff);
+        mCountTimer = new MyCountTimer(confirmCodeGet, 0xff658dff, 0xff658dff);
     }
 
     @OnClick({R.id.title_back, R.id.confirm_code_get, R.id.btnConfirm})
@@ -79,18 +80,19 @@ public class ForgetPassWordActivity extends BaseActivity implements ForgetPassWo
                 break;
         }
     }
+
     private void tryGetConfirmCode() {
         String phoneNum = phonenumEdit.getText().toString();
         if (TextUtils.isEmpty(phoneNum)) {
             zhToast.showToast("请输入手机号");
             return;
         }
-        if(!Utils.isPhone(phoneNum)) {
+        if (!Utils.isPhone(phoneNum)) {
             zhToast.showToast("请输入正确的手机号");
             return;
         }
         if (mPresenter != null) {
-            mPresenter.getConfirmCode(phoneNum).subscribe(new BaseSubscriber<WebResponse>(this,"") {
+            mPresenter.getConfirmCode(phoneNum).subscribe(new BaseSubscriber<WebResponse>(this, "") {
                 @Override
                 public void onNext(WebResponse webResponse) {
                     mConfirSmsCode = webResponse.getData();
@@ -101,13 +103,13 @@ public class ForgetPassWordActivity extends BaseActivity implements ForgetPassWo
         }
     }
 
-    private void tryConfirmReset(){
+    private void tryConfirmReset() {
         String phoneNum = phonenumEdit.getText().toString();
         if (TextUtils.isEmpty(phoneNum)) {
             zhToast.showToast("请输入手机号");
             return;
         }
-        if(!Utils.isPhone(phoneNum)) {
+        if (!Utils.isPhone(phoneNum)) {
             zhToast.showToast("请输入正确的手机号");
             return;
         }
@@ -115,7 +117,7 @@ public class ForgetPassWordActivity extends BaseActivity implements ForgetPassWo
         if (TextUtils.isEmpty(confirmCode)) {
             zhToast.showToast("请输入验证码");
             return;
-    }
+        }
 
 
         String passoword = passwordEdit.getText().toString();
@@ -123,31 +125,32 @@ public class ForgetPassWordActivity extends BaseActivity implements ForgetPassWo
             zhToast.showToast("请输入密码");
             return;
         }
-        if(passoword.length() <6) {
+        if (passoword.length() < 6) {
             zhToast.showToast("密码长度太短");
             return;
         }
-        if(passoword.length() > 19) {
+        if (passoword.length() > 19) {
             zhToast.showToast("密码长度太长");
             return;
         }
-        HashMap<String,Object> param = new HashMap<>();
-        param.put("mobile",phoneNum);
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("mobile", phoneNum);
         param.put("password", MD5.GetMD5Code(passoword));
-        param.put("yanzheng",confirmCode);
+        param.put("yanzheng", confirmCode);
 
         mPresenter.resetPassWord(param);
 
     }
+
     @Override
     public void resetOk(String msg) {
         zhToast.showToast("重置密码成功");
-        ActivityUtils.transActivity(this,LoginActivity.class,true);
+        ActivityUtils.transActivity(this, LoginActivity.class, true);
     }
 
     @Override
     public void setPresenter(ForgetPassWordContract.Presenter presenter) {
-        mPresenter =presenter;
+        mPresenter = presenter;
     }
 
     @Override

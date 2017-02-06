@@ -30,7 +30,7 @@
         android:layout_height="35dp"
         android:layout_marginRight="10dp"
         android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"/>
+        android:layout_alignParentRight="true" />
 
     <com.zhjydy_doc.view.zjview.ImageTipsView
         android:id="@+id/right_l_img"

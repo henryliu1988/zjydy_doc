@@ -63,6 +63,7 @@ public class MainInfoFragment extends StatedFragment implements MainInfoContract
         new MainInfoPresenterImp(this, mList);
         titleSearchText.setText("搜索资讯");
         rightImg.setImageResource(R.mipmap.title_msg);
+        rightLImg.setImageResource(R.mipmap.shoucang);
         rightLImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -111,6 +112,11 @@ public class MainInfoFragment extends StatedFragment implements MainInfoContract
         mPresenter = presenter;
     }
 
+    public void refrehCollectCount() {
+        if (mPresenter != null) {
+            mPresenter.loadFavMsgCount();
+        }
+    }
     public void updateUnReadMsgCount(int count) {
         String text = "";
         if (count != 0) {

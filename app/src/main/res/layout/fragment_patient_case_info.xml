@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/titlebar_layout_back" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                style="@style/item_info_read_singleline"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/name_title"
+                    style="@style/item_info_read_singleline_title"
+                    android:text="患者姓名" />
+
+                <TextView
+                    android:id="@+id/name_value"
+                    style="@style/item_info_read_singleline_value" />
+            </LinearLayout>
+
+            <View style="@style/item_info_div_line" />
+
+            <LinearLayout style="@style/item_info_read_singleline">
+
+                <TextView
+                    android:id="@+id/sex_title"
+                    style="@style/item_info_read_singleline_title"
+                    android:text="性别" />
+
+                <TextView
+                    android:id="@+id/sex_value"
+                    style="@style/item_info_read_singleline_value" />
+            </LinearLayout>
+
+            <View style="@style/item_info_div_line" />
+
+            <LinearLayout style="@style/item_info_read_singleline">
+
+                <TextView
+                    android:id="@+id/tel_title"
+                    style="@style/item_info_read_singleline_title"
+                    android:text="联系方式" />
+
+                <TextView
+                    android:id="@+id/tel_value"
+                    style="@style/item_info_read_singleline_value" />
+            </LinearLayout>
+
+            <View style="@style/item_info_div_line" />
+
+            <LinearLayout style="@style/item_info_read_singleline">
+
+                <TextView
+                    android:id="@+id/birth_title"
+                    style="@style/item_info_read_singleline_title"
+                    android:text="出生日期" />
+
+                <TextView
+                    android:id="@+id/birth_value"
+                    style="@style/item_info_read_singleline_value" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                style="@style/item_info_read_singleline"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/domain_title"
+                    style="@style/item_info_read_singleline_title"
+                    android:text="所在地区" />
+
+                <TextView
+                    android:id="@+id/domain_value"
+                    style="@style/item_info_read_singleline_value" />
+            </LinearLayout>
+
+            <View style="@style/item_info_div_line" />
+
+
+            <LinearLayout style="@style/item_info_read_singleline">
+
+                <TextView
+                    android:id="@+id/hospital_title"
+                    style="@style/item_info_read_singleline_title"
+                    android:text="所在医院" />
+
+                <TextView
+                    android:id="@+id/hospital_value"
+                    style="@style/item_info_read_singleline_value" />
+            </LinearLayout>
+
+            <View style="@style/item_info_div_line" />
+
+
+            <LinearLayout style="@style/item_info_read_singleline">
+
+                <TextView
+                    android:id="@+id/depart_title"
+                    style="@style/item_info_read_singleline_title"
+                    android:text="所在科室" />
+
+                <TextView
+                    android:id="@+id/depart_value"
+                    style="@style/item_info_read_singleline_value" />
+            </LinearLayout>
+
+            <View style="@style/item_info_div_line" />
+
+            <LinearLayout style="@style/item_info_read_singleline">
+
+                <TextView
+                    android:id="@+id/doc_title"
+                    style="@style/item_info_read_singleline_title"
+                    android:text="主治医师" />
+
+                <TextView
+                    android:id="@+id/doc_value"
+                    style="@style/item_info_read_singleline_value" />
+            </LinearLayout>
+
+            <View style="@style/item_info_div_line" />
+
+
+            <LinearLayout style="@style/item_info_read_singleline">
+
+                <TextView
+                    android:id="@+id/sick_title"
+                    style="@style/item_info_read_singleline_title"
+                    android:text="疾病名称" />
+
+                <TextView
+                    android:id="@+id/sick_value"
+                    style="@style/item_info_read_singleline_value" />
+            </LinearLayout>
+
+            <View style="@style/item_info_div_line" />
+
+
+            <LinearLayout style="@style/item_info_read_mutiline">
+
+                <TextView
+                    android:id="@+id/sick_discript_title"
+                    style="@style/item_info_read_mutiline_title"
+                    android:text="疾病描述" />
+
+                <TextView
+                    android:id="@+id/sick_discript_value"
+                    style="@style/item_info_read_mutiline_value" />
+            </LinearLayout>
+
+            <View style="@style/item_info_div_line" />
+
+
+            <LinearLayout
+                style="@style/item_info_read_mutiline"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/comment_title"
+                    style="@style/item_info_read_mutiline_title"
+                    android:text="备注" />
+
+                <TextView
+                    android:id="@+id/comment_value"
+                    style="@style/item_info_read_mutiline_value" />
+            </LinearLayout>
+
+            <View style="@style/item_info_div_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@android:color/transparent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="病例资料"
+                    android:layout_gravity="left"
+                    android:layout_marginTop="5dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp" />
+
+                <com.zhjydy_doc.view.zjview.ImageHorizontalView
+                    android:id="@+id/iamge_horizontal_list"
+                    android:layout_width="match_parent"
+                    android:background="@color/white_bg"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_height="100dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </ScrollView>
+</LinearLayout>

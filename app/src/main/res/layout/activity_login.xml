@@ -12,8 +12,8 @@
         android:orientation="vertical"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:paddingTop="15dp"
-        >
+        android:paddingTop="15dp">
+
         <LinearLayout
             android:id="@+id/input_layout"
             android:layout_width="match_parent"
@@ -79,8 +79,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:scaleType="fitCenter"
-                        android:src="@mipmap/login_password"
-                        />
+                        android:src="@mipmap/login_password" />
                 </RelativeLayout>
 
                 <EditText
@@ -112,6 +111,7 @@
             android:textColor="@color/black_text2"
             android:text="忘记密码？"
             android:textSize="14sp" />
+
         <TextView
             android:id="@+id/btnLogin"
             android:layout_width="match_parent"
@@ -123,20 +123,22 @@
             android:gravity="center"
             android:text="确定"
             android:textColor="#FFFFFF"
-            android:textSize="16sp"/>
+            android:textSize="16sp" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:orientation="horizontal"
-            android:gravity="center"
-            >
+            android:gravity="center">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
                 android:text="还没有账号？"
                 android:textColor="@color/black_text2" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -144,8 +146,7 @@
                 android:id="@+id/rigister_now"
                 android:drawableBottom="@color/title_bg"
                 android:autoLink="all"
-                android:textColor="@color/title_bg"
-                />
+                android:textColor="@color/title_bg" />
 
         </LinearLayout>
     </LinearLayout>

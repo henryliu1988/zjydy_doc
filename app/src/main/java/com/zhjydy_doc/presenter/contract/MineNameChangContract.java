@@ -15,6 +15,6 @@ public interface MineNameChangContract {
 
     interface Presenter extends BasePresenter
     {
-        void submitChangeConfirm(String name);
+        void submitChangeConfirm(String key,String value);
     }
 }

@@ -3,6 +3,7 @@ package com.zhjydy_doc.app;
 import android.app.Application;
 import android.content.Context;
 
+import com.zhjydy_doc.model.data.AppDataManager;
 import com.zhjydy_doc.util.ImageUtils;
 
 /**
@@ -11,32 +12,31 @@ import com.zhjydy_doc.util.ImageUtils;
 public class ZhJDocApplication extends Application {
 
     private static ZhJDocApplication instance;
-    public static ZhJDocApplication getInstance()
-    {
+
+    public static ZhJDocApplication getInstance() {
         return instance;
     }
-    public Context getContext()
-    {
+
+    public Context getContext() {
         return this.getApplicationContext();
     }
 
     @Override
-    public void onCreate()
-    {
+    public void onCreate() {
         super.onCreate();
         init();
 
     }
+
     @Override
-    public void onTerminate()
-    {
+    public void onTerminate() {
         super.onTerminate();
     }
 
-    private void init()
-    {
+    private void init() {
         instance = this;
         ImageUtils.getInstance().initImageLoader();
+        AppDataManager.getInstance().initData();
     }
 
 }

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:id="@+id/null_data_layout"
     android:visibility="gone"
     android:background="@color/gray_bg">
+
     <TextView
         android:id="@+id/null_data_text"
         android:layout_width="wrap_content"
@@ -27,7 +29,6 @@
         android:background="#D6D7D7"
         android:textColor="@color/black_text1"
         android:visibility="gone"
-        android:text="重试"
-        />
+        android:text="重试" />
 
 </RelativeLayout>

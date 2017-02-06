@@ -1,7 +1,7 @@
 package com.zhjydy_doc.presenter.presenterImp;
 
 
-import com.zhjydy_doc.model.data.AppData;
+import com.zhjydy_doc.model.data.UserData;
 import com.zhjydy_doc.presenter.contract.AccountSafeContract;
 
 /**
@@ -22,7 +22,7 @@ public class AccountSafePresenterImp implements AccountSafeContract.Presenter
     @Override
     public void start()
     {
-        mView.updatePhoneNum(AppData.getInstance().getToken().getMobile());
+        mView.updatePhoneNum(UserData.getInstance().getToken().getMobile());
     }
 
 

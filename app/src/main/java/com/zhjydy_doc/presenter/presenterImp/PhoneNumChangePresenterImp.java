@@ -1,7 +1,7 @@
 package com.zhjydy_doc.presenter.presenterImp;
 
 
-import com.zhjydy_doc.model.data.AppData;
+import com.zhjydy_doc.model.data.UserData;
 import com.zhjydy_doc.model.net.BaseSubscriber;
 import com.zhjydy_doc.model.net.WebCall;
 import com.zhjydy_doc.model.net.WebKey;
@@ -52,7 +52,7 @@ public class PhoneNumChangePresenterImp implements PhoneNumChangContract.Present
     public void submitChangeConfirm(final String phone, String confirmCode)
     {
         HashMap<String,Object> params = new HashMap<>();
-        params.put("id", AppData.getInstance().getToken().getId());
+        params.put("id", UserData.getInstance().getToken().getId());
         params.put("mobile",phone);
         params.put("yanzheng",confirmCode);
         WebCall.getInstance().call(WebKey.func_updateMobile,params).subscribe(new BaseSubscriber<WebResponse>(mView.getContext(),"请稍后，正在提交修改数据")

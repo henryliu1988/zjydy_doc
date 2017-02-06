@@ -14,6 +14,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:orientation="vertical">
 
             <com.bigkoo.convenientbanner.ConvenientBanner xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -23,39 +25,42 @@
                 app:canLoop="true" />
 
             <LinearLayout
-                android:id="@+id/news_msg"
+                android:id="@+id/search_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white_bg"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <RelativeLayout
-                    android:layout_width="40dp"
-                    android:layout_height="35dp"
-                    android:background="@color/yellow_color"
-                    android:padding="10dp">
+                <ImageView
+                    android:id="@+id/m_search_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:background="@color/title_bg"
+                    android:paddingLeft="11dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:paddingRight="11dp"
+                    android:src="@mipmap/titlebar_search" />
 
-                    <ImageView
-                        android:id="@+id/m_new_msg_icon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:src="@mipmap/main_msg_ringer" />
-                </RelativeLayout>
-
-                <TextSwitcher
-                    android:id="@+id/m_new_msg_title"
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:gravity="left|center_vertical"
-                    android:layout_gravity="center_vertical"
-                    android:singleLine="true"
-                    android:textColor="@color/black_text1"
-                    android:inAnimation="@anim/push_up_in"
-                    android:outAnimation="@anim/push_up_out"
-                    android:textSize="14sp" />
+                    android:paddingLeft="10dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:textSize="13sp"
+                    android:textColor="@color/black_text"
+                    android:text="请输入您想搜索的内容" />
             </LinearLayout>
+
+            <com.zhjydy_doc.view.zjview.HorizontalOfficeHomeView
+                android:id="@+id/horizontal_ScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:background="@color/gray_bg"
+                android:scrollbars="none"></com.zhjydy_doc.view.zjview.HorizontalOfficeHomeView>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -78,7 +83,7 @@
                         android:layout_alignParentLeft="true"
                         android:text="专家推荐"
                         android:textColor="#383838"
-                        android:textSize="14sp" />
+                        android:textSize="13sp" />
 
                     <TextView
                         android:id="@+id/expert_more"
@@ -88,30 +93,28 @@
                         android:gravity="center_vertical"
                         android:text="更多>>"
                         android:textColor="#4F7BF9"
-                        android:textSize="14sp" />
+                        android:textSize="13sp" />
                 </RelativeLayout>
 
-                <HorizontalScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/scorll_expert"
+                <com.zhjydy_doc.view.zjview.BannerLayout
+                    android:id="@+id/expert_banner_layout"
+                    android:paddingTop="7dp"
+                    android:paddingBottom="9dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
-                <LinearLayout
-                    android:id="@+id/scorll_expert_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    ></LinearLayout>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingTop="8dp"
+                android:background="@color/gray_bg"
                 android:orientation="vertical">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/gray_bg"
+                    android:background="@color/white_bg"
                     android:gravity="center_vertical"
                     android:paddingBottom="8dp"
                     android:paddingLeft="15dp"
@@ -124,7 +127,7 @@
                         android:layout_alignParentLeft="true"
                         android:text="资讯推荐"
                         android:textColor="#383838"
-                        android:textSize="14sp" />
+                        android:textSize="13sp" />
 
                     <TextView
                         android:id="@+id/info_more"
@@ -134,11 +137,12 @@
                         android:gravity="center_vertical"
                         android:text="更多>>"
                         android:textColor="#4F7BF9"
-                        android:textSize="14sp" />
+                        android:textSize="13sp" />
                 </RelativeLayout>
 
                 <com.zhjydy_doc.view.zjview.ListViewForScrollView
                     android:id="@+id/info_list"
+                    android:background="@color/white_bg"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 

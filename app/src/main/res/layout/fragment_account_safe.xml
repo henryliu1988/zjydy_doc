@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray_bg"
-    >
+    android:background="@color/gray_bg">
 
-    <include layout="@layout/titlebar_layout_back"/>
+    <include layout="@layout/titlebar_layout_back" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,6 +13,7 @@
         android:orientation="vertical"
         android:background="@color/white_bg"
         android:paddingLeft="10dp">
+
         <RelativeLayout
             android:id="@+id/layout_change_phonenum"
             android:layout_width="match_parent"
@@ -20,6 +21,7 @@
             android:paddingTop="12dp"
             android:gravity="center_vertical"
             android:paddingBottom="12dp">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -28,6 +30,7 @@
                 android:textColor="@color/black_text"
                 android:text="修改手机号码"
                 android:layout_alignParentLeft="true" />
+
             <TextView
                 android:id="@+id/phoneNum_tv"
                 android:layout_width="wrap_content"
@@ -44,6 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="@color/div_line" />
+
         <RelativeLayout
             android:id="@+id/layout_change_payword"
             android:layout_width="match_parent"
@@ -51,6 +55,7 @@
             android:paddingTop="12dp"
             android:gravity="center_vertical"
             android:paddingBottom="12dp">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -59,6 +64,7 @@
                 android:textColor="@color/black_text"
                 android:text="修改支付密码"
                 android:layout_alignParentLeft="true" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -68,6 +74,7 @@
                 android:drawableRight="@mipmap/item_turn"
                 android:layout_alignParentRight="true" />
         </RelativeLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
@@ -80,6 +87,7 @@
             android:paddingTop="12dp"
             android:gravity="center_vertical"
             android:paddingBottom="12dp">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

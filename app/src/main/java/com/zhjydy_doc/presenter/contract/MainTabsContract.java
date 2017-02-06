@@ -12,7 +12,7 @@ public interface MainTabsContract {
     {
         void updateMsgCount(int count);
         void refreshOrderList();
-
+        void refreshNewsCollectList();
     }
 
     interface Presenter extends BasePresenter

@@ -5,7 +5,7 @@ import android.text.TextUtils;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.shizhefei.mvc.RequestHandle;
 import com.shizhefei.mvc.ResponseSender;
-import com.zhjydy_doc.model.data.AppData;
+import com.zhjydy_doc.model.data.UserData;
 import com.zhjydy_doc.model.net.BaseSubscriber;
 import com.zhjydy_doc.model.net.WebCall;
 import com.zhjydy_doc.model.net.WebKey;
@@ -55,9 +55,9 @@ public class MainInfoPresenterImp extends PageLoadDataSource implements MainInfo
     {
     }
 
-    private void loadFavMsgCount()
+    public  void loadFavMsgCount()
     {
-        String collect = AppData.getInstance().getToken().getCollectNews();
+        String collect = UserData.getInstance().getToken().getCollectNews();
         int count = 0;
         if (!TextUtils.isEmpty(collect) && collect.length() > 0)
         {

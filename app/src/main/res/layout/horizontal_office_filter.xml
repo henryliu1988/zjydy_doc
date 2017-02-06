@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="6dp"
+    android:paddingLeft="3dp"
+    android:paddingRight="3dp"
+    android:paddingTop="6dp">
+
+    <com.zhjydy_doc.view.zjview.MapTextView
+        android:id="@+id/top"
+        android:layout_width="80dp"
+        android:layout_height="0dp"
+        android:textSize="13sp"
+        android:textColor="@color/white_text"
+        android:gravity="center"
+        android:layout_weight="1" />
+
+    <View
+        android:layout_width="80dp"
+        android:layout_height="6dp"
+        android:background="@null" />
+
+    <com.zhjydy_doc.view.zjview.MapTextView
+        android:id="@+id/bottom"
+        android:layout_width="80dp"
+        android:layout_height="0dp"
+        android:textSize="13sp"
+        android:textColor="@color/white_text"
+        android:gravity="center"
+        android:layout_weight="1" />
+
+
+</LinearLayout>

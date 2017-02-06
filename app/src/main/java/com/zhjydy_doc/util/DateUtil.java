@@ -374,15 +374,16 @@ public class DateUtil {
         return calEnd.get(Calendar.YEAR) - calBegin.get(Calendar.YEAR);
     }
 
-    public static Date getDateBySeconds(long seconds){
-        return new Date(seconds*1000);
+    public static Date getDateBySeconds(long seconds) {
+        return new Date(seconds * 1000);
     }
-    public static long getDiffOfBaseTime(String current,String formate) {
+
+    public static long getDiffOfBaseTime(String current, String formate) {
         SimpleDateFormat sdf = new SimpleDateFormat(formate);
         try {
             long millionSeconds = sdf.parse(current).getTime();//毫秒
-            return millionSeconds/1000;
-        }catch (ParseException e) {
+            return millionSeconds / 1000;
+        } catch (ParseException e) {
             return 0;
         }
     }
@@ -661,27 +662,36 @@ public class DateUtil {
        根据秒获取时间，同一天，返回 time
        不同天，返回day
         */
-    public static String getTimeDiffDayCurrent(long seconds)
-    {
+    public static String getTimeDiffDayCurrent(long seconds) {
         Date Current = new Date();
         Date date = getDateBySeconds(seconds);
         String time;
-        if(isSameDateByDay(date,Current)) {
-            time = dateToString(date,"HH:mm");
+        if (isSameDateByDay(date, Current)) {
+            time = dateToString(date, "HH:mm");
         } else {
-            time = dateToString(date,LONG_DATE_FORMAT);
+            time = dateToString(date, LONG_DATE_FORMAT);
         }
         return time;
     }
-
-    public static String getFullTimeDiffDayCurrent(long seconds)
-    {
+    public static String getTimeDiffDayCurrent(long seconds,String foramate) {
+        Date Current = new Date();
         Date date = getDateBySeconds(seconds);
-        return dateToString(date,FORMAT_TWO);
+        String time;
+        if (isSameDateByDay(date, Current)) {
+            time = dateToString(date, "HH:mm");
+        } else {
+            time = dateToString(date, foramate);
+        }
+        return time;
     }
-    public static String getFullTimeDiffDayCurrent(long seconds,String formate) {
+    public static String getFullTimeDiffDayCurrent(long seconds) {
         Date date = getDateBySeconds(seconds);
-        return dateToString(date,formate);
+        return dateToString(date, FORMAT_TWO);
+    }
+
+    public static String getFullTimeDiffDayCurrent(long seconds, String formate) {
+        Date date = getDateBySeconds(seconds);
+        return dateToString(date, formate);
 
     }
 }

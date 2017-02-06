@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zhjydy_doc.R;
+import com.zhjydy_doc.model.data.UserData;
 import com.zhjydy_doc.model.net.BaseSubscriber;
 import com.zhjydy_doc.model.net.WebResponse;
 import com.zhjydy_doc.presenter.contract.RegisterContract;
@@ -67,7 +68,6 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
         legend.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
         new RegisterPresenterImp(this);
         mCountTimer = new MyCountTimer(confirmCodeGet,0xff658dff,0xff658dff);
-
     }
 
     @OnClick({R.id.title_back, R.id.register_now, R.id.confirm_code_get, R.id.legend})
@@ -136,9 +136,14 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
             mPresenter.getConfirmCode(phoneNum).subscribe(new BaseSubscriber<WebResponse>(this,"") {
                 @Override
                 public void onNext(WebResponse webResponse) {
-                    mConfirSmsCode = webResponse.getData();
-                    zhToast.showToast(mConfirSmsCode);
-                    mCountTimer.start();
+                    int errot = webResponse.getError();
+                    if (errot == 0) {
+                        mConfirSmsCode = webResponse.getData();
+                        zhToast.showToast(mConfirSmsCode);
+                        mCountTimer.start();
+                    } else {
+                        zhToast.showToast(webResponse.getInfo());
+                    }
                 }
             });
         }
@@ -146,8 +151,11 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
 
     @Override
     public void registerOK(String msg) {
-        zhToast.showToast("注册成功");
-        ActivityUtils.transActivity(this,LoginActivity.class,true);
+        if (!UserData.getInstance().isExpertInfoSubmit()) {
+            ActivityUtils.transActivity(this,UserInfoNewActivity.class,true);
+        } else {
+            ActivityUtils.transActivity(this,LoginActivity.class,true);
+        }
     }
 
     @Override
