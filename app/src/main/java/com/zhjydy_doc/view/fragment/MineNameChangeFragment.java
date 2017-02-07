@@ -107,6 +107,8 @@ public class MineNameChangeFragment extends PageImpBaseFragment implements MineN
     public void submitResult(boolean result, String msg) {
         if (result) {
             back();
+        } else {
+            zhToast.showToast(msg);
         }
     }
 

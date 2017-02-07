@@ -1,8 +1,13 @@
 package com.zhjydy_doc.presenter.presenterImp;
 
 
+import com.zhjydy_doc.model.data.DicData;
 import com.zhjydy_doc.model.data.UserData;
 import com.zhjydy_doc.model.entity.ExpertInfo;
+import com.zhjydy_doc.model.entity.HosipitalPickViewData;
+import com.zhjydy_doc.model.entity.HospitalDicItem;
+import com.zhjydy_doc.model.entity.NormalDicItem;
+import com.zhjydy_doc.model.entity.NormalPickViewData;
 import com.zhjydy_doc.model.entity.PickViewData;
 import com.zhjydy_doc.model.net.BaseSubscriber;
 import com.zhjydy_doc.model.net.FileUpLoad;
@@ -44,12 +49,50 @@ public class MineInfoPresenterImp implements MineInfoContract.Presenter,RefreshW
     public void start() {
         loadPersonInfo();
         loadSexPickData();
+        loadDistricPickData();
+        loadOfficeData();
+        loadHospitalData();
+        loadBusinessData();
     }
     private void loadSexPickData() {
         ArrayList<PickViewData> sexData = new ArrayList<>();
         sexData.add(new PickViewData("1","男"));
         sexData.add(new PickViewData("2","女"));
         mView.updateSexPick(sexData);
+    }
+    private void loadOfficeData() {
+        ArrayList<NormalPickViewData> officeData = new ArrayList<>();
+        List<NormalDicItem> items = DicData.getInstance().getOffice();
+        for (NormalDicItem item:items) {
+            officeData.add(new NormalPickViewData(item));
+        }
+        mView.updateOffice(officeData);
+    }
+    private void loadHospitalData() {
+        List<HospitalDicItem> list = DicData.getInstance().getHospitals();
+        ArrayList<HosipitalPickViewData> listPick = new ArrayList<>();
+        if (list != null && list.size() > 0) {
+            for(HospitalDicItem item:list) {
+                listPick.add(new HosipitalPickViewData(item));
+            }
+        }
+        mView.updateHospitalByAddress(listPick);
+    }
+    private void loadDistricPickData() {
+        DicData.getInstance().getAllDistrictForPicker().subscribe(new BaseSubscriber<Map<String, ArrayList>>() {
+            @Override
+            public void onNext(Map<String, ArrayList> map) {
+                mView.updateDistrict(map);
+            }
+        });
+    }
+    private void loadBusinessData() {
+        ArrayList<NormalPickViewData> businessData = new ArrayList<>();
+        List<NormalDicItem> items = DicData.getInstance().getBusiness();
+        for (NormalDicItem item:items) {
+            businessData.add(new NormalPickViewData(item));
+        }
+        mView.updateBusiness(businessData);
     }
 
 
@@ -66,6 +109,22 @@ public class MineInfoPresenterImp implements MineInfoContract.Presenter,RefreshW
 
 
     private String photoUrl;
+
+    @Override
+    public void updateHospitalList(String addressId)
+    {
+        // List<HospitalDicItem> list = DicData.getInstance().getHospitalByAddress(addressId);
+        List<HospitalDicItem> list = DicData.getInstance().getHospitals();
+        ArrayList<HosipitalPickViewData> listPick = new ArrayList<>();
+        if (list != null && list.size() > 0) {
+            for(HospitalDicItem item:list) {
+                listPick.add(new HosipitalPickViewData(item));
+            }
+        }
+        mView.updateHospitalByAddress(listPick);
+
+    }
+
     @Override
     public void updateMemberPhoto(String path) {
         List<Map<String,Object>> files = new ArrayList<>();
@@ -100,45 +159,35 @@ public class MineInfoPresenterImp implements MineInfoContract.Presenter,RefreshW
         });
     }
 
+
+
+
     @Override
-    public void updateMemberSex(final int sex) {
+    public void updateExpertInfo(final String key, final String value)
+    {
+        String nowValue = UserData.getInstance().getToken().getmExpertInfo().getValueByKey(key);
+        if (nowValue.equals(value)) {
+            return;
+        }
         HashMap<String,Object> params = new HashMap<>();
-       // params.put("nickname",UserData.getInstance().getToken().getNickname());
-        params.put("sex",sex);
+        // params.put("nickname",UserData.getInstance().getToken().getNickname());
+        params.put(key,value);
         params.put("memberid",UserData.getInstance().getToken().getId());
-        WebCall.getInstance().call(WebKey.func_updateExpertInformation,params).subscribe(new BaseSubscriber<WebResponse>() {
+        WebCall.getInstance().call(WebKey.func_updateExpertInformation,params).subscribe(new BaseSubscriber<WebResponse>(mView.getContext(),"") {
             @Override
             public void onNext(WebResponse webResponse) {
                 boolean status = WebUtils.getWebStatus(webResponse);
                 if (status) {
-                  //  UserData.getInstance().getToken().setSex(sex + "");
                     ExpertInfo info=  UserData.getInstance().getToken().getmExpertInfo();
-                    info.setSex(sex + "");
+                    info.setValueByKey(key,value);
                     UserData.getInstance().getToken().setmExpertInfo(info);
-
+                } else{
+                    zhToast.showToast("提交信息失败");
                 }
-              //  zhToast.showToast(WebUtils.getWebMsg(webResponse));
+                //
             }
         });
-    }
 
-    @Override
-    public void updateMemberName(final String name) {
-        HashMap<String,Object> params = new HashMap<>();
-        params.put("realname",name);
-        params.put("memberid",UserData.getInstance().getToken().getId());
-        WebCall.getInstance().call(WebKey.func_updateExpertInformation,params).subscribe(new BaseSubscriber<WebResponse>() {
-            @Override
-            public void onNext(WebResponse webResponse) {
-                boolean status = WebUtils.getWebStatus(webResponse);
-                zhToast.showToast(WebUtils.getWebMsg(webResponse));
-                if(status) {
-                    ExpertInfo info=  UserData.getInstance().getToken().getmExpertInfo();
-                    info.setRealname(name + "");
-                    UserData.getInstance().getToken().setmExpertInfo(info);
-                }
-            }
-        });
     }
 
     @Override

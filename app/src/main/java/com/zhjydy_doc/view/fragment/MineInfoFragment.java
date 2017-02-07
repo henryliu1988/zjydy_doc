@@ -20,8 +20,15 @@ import com.bigkoo.pickerview.OptionsPickerView;
 import com.soundcloud.android.crop.Crop;
 import com.zhjydy_doc.R;
 import com.zhjydy_doc.model.data.DicData;
+import com.zhjydy_doc.model.entity.DistricPickViewData;
+import com.zhjydy_doc.model.entity.District;
+import com.zhjydy_doc.model.entity.ExpertInfo;
+import com.zhjydy_doc.model.entity.HosipitalPickViewData;
+import com.zhjydy_doc.model.entity.HospitalDicItem;
 import com.zhjydy_doc.model.entity.IntentKey;
+import com.zhjydy_doc.model.entity.NormalDicItem;
 import com.zhjydy_doc.model.entity.NormalItem;
+import com.zhjydy_doc.model.entity.NormalPickViewData;
 import com.zhjydy_doc.model.entity.PickViewData;
 import com.zhjydy_doc.model.entity.TokenInfo;
 import com.zhjydy_doc.presenter.contract.MineInfoContract;
@@ -38,6 +45,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,7 +54,8 @@ import butterknife.OnClick;
 /**
  * Created by Administrator on 2016/9/26 0026.
  */
-public class MineInfoFragment extends PageImpBaseFragment implements MineInfoContract.View, ActivityResultView {
+public class MineInfoFragment extends PageImpBaseFragment implements MineInfoContract.View, ActivityResultView
+{
 
 
     @BindView(R.id.title_back)
@@ -107,69 +116,163 @@ public class MineInfoFragment extends PageImpBaseFragment implements MineInfoCon
     private OptionsPickerView<PickViewData> mSexPicker;
     private ArrayList<PickViewData> mSexPickViewData = new ArrayList<>();
 
+
+    private OptionsPickerView mDistricePicker;
+    private OptionsPickerView mHospitalPicker;
+    private OptionsPickerView mOfficePicker;
+    private OptionsPickerView mBusinessPicker;
+    private ArrayList<DistricPickViewData> mProPickViewData = new ArrayList<>();
+    private ArrayList<ArrayList<DistricPickViewData>> mCityPickViewData = new ArrayList<>();
+    private ArrayList<ArrayList<ArrayList<DistricPickViewData>>> mQuPickViewData = new ArrayList<>();
+    private ArrayList<HosipitalPickViewData> mHospitalPickViewData = new ArrayList<>();
+    private ArrayList<NormalPickViewData> mDepartPickViewData = new ArrayList<>();
+    private ArrayList<NormalPickViewData> mBusinessPickViewData = new ArrayList<>();
+
     @Override
-    protected void initData() {
+    protected void initData()
+    {
         mSexPicker = new OptionsPickerView<PickViewData>(getContext());
     }
 
     @Override
-    protected int getLayoutId() {
+    protected int getLayoutId()
+    {
         return R.layout.fragment_mine_info;
     }
 
     @Override
-    public void onResume() {
+    public void onResume()
+    {
         super.onResume();
-        if (mPresenter != null) {
+        if (mPresenter != null)
+        {
             mPresenter.refreshView();
         }
     }
 
     @Override
-    protected void afterViewCreate() {
-        new MineInfoPresenterImp(this);
+    protected void afterViewCreate()
+    {
         addOnActivityResultView(this);
         titleCenterTv.setText("个人信息");
+
+        mDistricePicker = new OptionsPickerView<DistricPickViewData>(getContext());
+        mHospitalPicker = new OptionsPickerView<HosipitalPickViewData>(getContext());
+        mOfficePicker = new OptionsPickerView<NormalDicItem>(getContext());
+        mBusinessPicker = new OptionsPickerView<NormalDicItem>(getContext());
+        new MineInfoPresenterImp(this);
+
     }
 
     @Override
-    public void updateSexPick(ArrayList<PickViewData> sexData) {
+    public void updateSexPick(ArrayList<PickViewData> sexData)
+    {
         mSexPickViewData = sexData;
         mSexPicker.setPicker(sexData);
-        initSexPickView();
-    }
-
-    private void initSexPickView() {
         mSexPicker.setCyclic(false);
         mSexPicker.setSelectOptions(0);
         mSexPicker.setCancelable(true);
-        mSexPicker.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
+        mSexPicker.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener()
+        {
             @Override
-            public void onOptionsSelect(int options1, int option2, int options3) {
-                String sexName = mSexPickViewData.get(options1).getName();
+            public void onOptionsSelect(int options1, int option2, int options3)
+            {
                 String sexId = mSexPickViewData.get(options1).getId();
-                userSexValue.setMap(sexId, sexName);
-                mPresenter.updateMemberSex(Utils.toInteger(sexId));
+                mPresenter.updateExpertInfo("sex",sexId);
             }
         });
     }
 
-    private void confirmLogOut() {
+    @Override
+    public void updateDistrict(Map<String, ArrayList> distrctData)
+    {
+        mProPickViewData = (ArrayList<DistricPickViewData>) distrctData.get("pro");
+        mCityPickViewData = (ArrayList<ArrayList<DistricPickViewData>>) distrctData.get("city");
+        mQuPickViewData = (ArrayList<ArrayList<ArrayList<DistricPickViewData>>>) distrctData.get("qu");
+        mDistricePicker.setPicker(mProPickViewData, mCityPickViewData, mQuPickViewData, true);
+        initDistricePicker();
+
+    }
+
+    @Override
+    public void updateOffice(ArrayList<NormalPickViewData> officeData)
+    {
+        mDepartPickViewData = officeData;
+        mOfficePicker.setPicker(mDepartPickViewData);
+        mOfficePicker.setCyclic(false);
+        mOfficePicker.setSelectOptions(0);
+        mOfficePicker.setCancelable(true);
+        mOfficePicker.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3) {
+                String officeId = mDepartPickViewData.get(options1).getmItem().getId();
+                mPresenter.updateExpertInfo("office",officeId);
+            }
+        });
+
+    }
+
+    @Override
+    public void updateBusiness(ArrayList<NormalPickViewData> business)
+    {
+        mBusinessPickViewData = business;
+        mBusinessPicker.setPicker(mBusinessPickViewData);
+        mBusinessPicker.setCyclic(false);
+        mBusinessPicker.setSelectOptions(0);
+        mBusinessPicker.setCancelable(true);
+        mBusinessPicker.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3) {
+                String busName = mBusinessPickViewData.get(options1).getmItem().getName();
+                String busId = mBusinessPickViewData.get(options1).getmItem().getId();
+                mPresenter.updateExpertInfo("business",busId);
+            }
+        });
+
+    }
+
+    @Override
+    public void updateHospitalByAddress(final ArrayList<HosipitalPickViewData> hosData)
+    {
+        if (hosData == null || hosData.size() < 1) {
+            return;
+        }
+        mHospitalPickViewData = hosData;
+        mHospitalPicker.setPicker(hosData);
+        mHospitalPicker.setCyclic(false);
+        mHospitalPicker.setCancelable(true);
+        mHospitalPicker.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3) {
+                HospitalDicItem hos = hosData.get(options1).getHospitalDicItem();
+                mPresenter.updateExpertInfo("hospital",hos.getId());
+            }
+        });
+
+    }
+
+
+
+    private void confirmLogOut()
+    {
         ActivityUtils.showLogin(getActivity(), true);
     }
 
     @Override
-    public void setPresenter(MineInfoContract.Presenter presenter) {
+    public void setPresenter(MineInfoContract.Presenter presenter)
+    {
         mPresenter = presenter;
     }
 
     @Override
-    public void refreshView() {
+    public void refreshView()
+    {
 
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         ButterKnife.bind(this, rootView);
@@ -177,25 +280,105 @@ public class MineInfoFragment extends PageImpBaseFragment implements MineInfoCon
     }
 
     @Override
-    public void updateInfo(TokenInfo info) {
+    public void updateInfo(TokenInfo info)
+    {
+        ExpertInfo expertInfo = info.getmExpertInfo();
         String realNameText = info.getmExpertInfo().getRealname();
         userNameValue.setText(realNameText);
-        int sex = Utils.toInteger(info.getmExpertInfo().getSex());
-        if (sex > 0) {
+
+
+        String photoPath = info.getPhotoUrl();
+        if (!TextUtils.isEmpty(photoPath))
+        {
+            ImageUtils.getInstance().displayFromRemoteOver(photoPath, userPhoto);
+        }
+        String addressId = expertInfo.getAddress();
+        String officeId = expertInfo.getOffice();
+        String hospitalid = expertInfo.getHospital();
+        String businessId = expertInfo.getBusiness();
+        String phoneNum = expertInfo.getPhone();
+        String soFunc = expertInfo.getSofunc();
+        String adpter = expertInfo.getAdept();
+        int sex = Utils.toInteger(expertInfo.getSex());
+        if (sex > 0)
+        {
             NormalItem item = DicData.getInstance().getSexById(sex + "");
             userSexValue.setMap(item.getId(), item.getName());
         }
-
-        String photoPath = info.getPhotoUrl();
-        if (!TextUtils.isEmpty(photoPath)) {
-            ImageUtils.getInstance().displayFromRemoteOver(photoPath, userPhoto);
+        if (!TextUtils.isEmpty(phoneNum)) {
+            telValue.setText(phoneNum);
         }
-        telValue.setText(info.getmExpertInfo().getPhone());
+        if (!TextUtils.isEmpty(addressId)) {
+            String addressName = DicData.getInstance().getDistrictStrById(addressId);
+            domainValue.setMap(addressId, addressName);
+        }
+        if (!TextUtils.isEmpty(hospitalid)) {
+            HospitalDicItem item = DicData.getInstance().getHospitalById(hospitalid);
+            if (item != null) {
+                hospitalValue.setMap(item.getId(), item.getHospital());
+            }
+        }
+        if (!TextUtils.isEmpty(officeId)) {
+            NormalDicItem item = DicData.getInstance().getOfficeById(officeId);
+            if (item != null) {
+                departValue.setMap(item.getId(), item.getName());
+            }
+        }
+        if (!TextUtils.isEmpty(businessId)) {
+            NormalDicItem item = DicData.getInstance().getBusinessById(businessId);
+            if (item != null) {
+                businessValue.setMap(item.getId(), item.getName());
+            }
+        }
+        if (!TextUtils.isEmpty(soFunc)) {
+            jobValue.setText(soFunc);
+        }
+        if (!TextUtils.isEmpty(adpter)) {
+            zhuanchangValue.setText(adpter);
+        }
     }
+    private void initDistricePicker() {
+        mDistricePicker.setCyclic(false);
+        mDistricePicker.setCancelable(true);
+        mDistricePicker.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3) {
+                District pro = null;
+                District city = null;
+                District qu = null;
+                if (mProPickViewData.size() > options1) {
+                    pro = mProPickViewData.get(options1).getDistrict();
+                }
+                if (mCityPickViewData.size() > options1 && mCityPickViewData.get(options1).size() > option2) {
+                    city = mCityPickViewData.get(options1).get(option2).getDistrict();
+                }
+                if (mQuPickViewData.size() > options1 && mQuPickViewData.get(options1).size() > option2 && mQuPickViewData.get(options1).get(option2).size() > options3) {
+                    qu = mQuPickViewData.get(options1).get(option2).get(options3).getDistrict();
+                }
+                String addresId = "";
+                if (pro == null) {
+                    return;
+                } else if (city == null) {
+                    addresId = pro.getId();
+                } else if (qu == null) {
+                    addresId = city.getId();
+                } else {
+                    addresId = qu.getId();
+                }
+                mHospitalPickViewData.clear();
+                mPresenter.updateExpertInfo("address",addresId);
+                mPresenter.updateHospitalList(addresId);
 
-    @OnClick({R.id.title_back, R.id.item_more_flag, R.id.user_photo, R.id.user_name_value, R.id.user_sex_value, R.id.logout, R.id.tel_value})
-    public void onClick(View view) {
-        switch (view.getId()) {
+            }
+        });
+    }
+    @OnClick({R.id.title_back, R.id.item_more_flag, R.id.user_photo, R.id.user_name_value, R.id.user_sex_value, R.id.logout, R.id.tel_value
+            , R.id.domain_value, R.id.hospital_value, R.id.depart_value, R.id.business_value, R.id.job_layout, R.id.zhuangchang_layout})
+    public void onClick(View view)
+    {
+        Bundle bundle = new Bundle();
+        switch (view.getId())
+        {
             case R.id.title_back:
                 back();
                 break;
@@ -204,19 +387,54 @@ public class MineInfoFragment extends PageImpBaseFragment implements MineInfoCon
                 selectImg();
                 break;
             case R.id.user_name_value:
-                Bundle bundle = new Bundle();
+                bundle = new Bundle();
                 bundle.putString(IntentKey.FRAG_INFO, "realname");
                 gotoFragment(FragKey.mine_name_change_fragment, bundle);
                 break;
             case R.id.user_sex_value:
-                if (mSexPickViewData.size() > 0) {
+                if (mSexPickViewData.size() > 0)
+                {
                     mSexPicker.show();
                 }
                 break;
             case R.id.tel_value:
-                Bundle bundle1 = new Bundle();
-                bundle1.putString(IntentKey.FRAG_INFO, "phone");
-                gotoFragment(FragKey.mine_name_change_fragment, bundle1);
+                bundle = new Bundle();
+                bundle.putString(IntentKey.FRAG_INFO, "phone");
+                gotoFragment(FragKey.mine_name_change_fragment, bundle);
+                break;
+            case R.id.domain_value:
+                if (mProPickViewData.size() > 0) {
+                    mDistricePicker.show();
+                }
+
+                break;
+            case R.id.hospital_value:
+                if (mHospitalPickViewData.size() > 0) {
+                    mHospitalPicker.show();
+                }
+                break;
+
+            case R.id.depart_value:
+                if (mDepartPickViewData.size() > 0) {
+                    mOfficePicker.show();
+                }
+                break;
+
+            case R.id.business_value:
+                if (mBusinessPickViewData.size() > 0) {
+                    mBusinessPicker.show();
+                }
+                break;
+
+            case R.id.job_layout:
+                bundle = new Bundle();
+                bundle.putString(IntentKey.FRAG_INFO, "sofunc");
+                gotoFragment(FragKey.mine_name_change_fragment, bundle);
+                break;
+            case R.id.zhuangchang_layout:
+                bundle = new Bundle();
+                bundle.putString(IntentKey.FRAG_INFO, "adept");
+                gotoFragment(FragKey.mine_name_change_fragment, bundle);
                 break;
             case R.id.logout:
                 final AlertDialog dialog = new AlertDialog.Builder(getContext()).create();
@@ -224,16 +442,20 @@ public class MineInfoFragment extends PageImpBaseFragment implements MineInfoCon
                 dialog.getWindow().setContentView(R.layout.confirm_dlg_layout);
                 ((TextView) dialog.getWindow().findViewById(R.id.dlg_msg)).setText("确定要退出登录吗？");
                 dialog.getWindow().setLayout(ScreenUtils.getScreenWidth() / 4 * 3, WindowManager.LayoutParams.WRAP_CONTENT);
-                dialog.getWindow().findViewById(R.id.confirm).setOnClickListener(new View.OnClickListener() {
+                dialog.getWindow().findViewById(R.id.confirm).setOnClickListener(new View.OnClickListener()
+                {
                     @Override
-                    public void onClick(View view) {
+                    public void onClick(View view)
+                    {
                         confirmLogOut();
                         dialog.dismiss();
                     }
                 });
-                dialog.getWindow().findViewById(R.id.cancel).setOnClickListener(new View.OnClickListener() {
+                dialog.getWindow().findViewById(R.id.cancel).setOnClickListener(new View.OnClickListener()
+                {
                     @Override
-                    public void onClick(View view) {
+                    public void onClick(View view)
+                    {
                         dialog.dismiss();
                     }
                 });
@@ -243,11 +465,14 @@ public class MineInfoFragment extends PageImpBaseFragment implements MineInfoCon
     }
 
     @Override
-    public void onActivityResult1(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
+    public void onActivityResult1(int requestCode, int resultCode, Intent data)
+    {
+        switch (requestCode)
+        {
             //从相册选择
             case SELECT_PICTURE:
-                if (data != null) {
+                if (data != null)
+                {
                     Uri uri = data.getData();
                     String path = Utils.getPath(uri);
                     beginCrop(uri);
@@ -256,7 +481,8 @@ public class MineInfoFragment extends PageImpBaseFragment implements MineInfoCon
                 break;
             //拍照添加图片
             case SELECT_CAMER:
-                if (mCameraPath != null) {
+                if (mCameraPath != null)
+                {
                     String p = mCameraPath.toString();
                     Uri uri = Uri.fromFile(new File(p));
                     beginCrop(uri);
@@ -270,27 +496,34 @@ public class MineInfoFragment extends PageImpBaseFragment implements MineInfoCon
         }
     }
 
-    private void beginCrop(Uri source) {
+    private void beginCrop(Uri source)
+    {
         Uri destination = Uri.fromFile(new File(getActivity().getCacheDir(), "cropped"));
         Crop.of(source, destination).asSquare().start(getActivity());
     }
 
-    private void handleCrop(int resultCode, Intent result) {
-        if (resultCode == getActivity().RESULT_OK) {
+    private void handleCrop(int resultCode, Intent result)
+    {
+        if (resultCode == getActivity().RESULT_OK)
+        {
             Uri uri = Crop.getOutput(result);
             String path = Utils.getPath(uri);
             mPresenter.updateMemberPhoto(path);
-        } else if (resultCode == Crop.RESULT_ERROR) {
+        } else if (resultCode == Crop.RESULT_ERROR)
+        {
             zhToast.showToast(Crop.getError(result).getMessage());
         }
     }
 
     @Override
-    public void onPermissionResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onPermissionResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
+    {
         List<String> permissionList = Arrays.asList(permissions);
-        if (permissionList.contains(Manifest.permission.CAMERA)) {
+        if (permissionList.contains(Manifest.permission.CAMERA))
+        {
             toGetCameraImage();
-        } else if (permissionList.contains(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+        } else if (permissionList.contains(Manifest.permission.WRITE_EXTERNAL_STORAGE))
+        {
             toGetLocalImage();
         }
 

@@ -37,12 +37,7 @@ public class MineNamePresenterIml implements MineNameChangContract.Presenter {
                 if (status) {
                   //  UserData.getInstance().getToken().setNickname(name);
                     ExpertInfo info=  UserData.getInstance().getToken().getmExpertInfo();
-
-                    if ("realname".equals(key)) {
-                        info.setRealname(value);
-                    } else if ("phone".equals(key)) {
-                        info.setPhone(value + "");
-                    }
+                    info.setValueByKey(key,value);
                     UserData.getInstance().getToken().setmExpertInfo(info);
                 }
                 mView.submitResult(status,msg);
