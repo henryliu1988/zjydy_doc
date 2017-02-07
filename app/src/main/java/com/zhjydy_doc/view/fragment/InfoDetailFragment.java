@@ -11,6 +11,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.shareboard.ShareBoardConfig;
 import com.zhjydy_doc.R;
 import com.zhjydy_doc.model.entity.IntentKey;
 import com.zhjydy_doc.presenter.contract.InfoDetailContract;
@@ -42,7 +46,7 @@ public class InfoDetailFragment extends PageImpBaseFragment implements InfoDetai
     @BindView(R.id.m_info_webview)
     WebView mInfoWebview;
     private InfoDetailContract.Presenter mPresenter;
-  //  private ShareAction mShareAction;
+    private ShareAction mShareAction;
     String id;
 
     @Override
@@ -84,17 +88,17 @@ public class InfoDetailFragment extends PageImpBaseFragment implements InfoDetai
         mShareInfoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //shareInfo();
+                shareInfo();
             }
         });
-    //    initShareAction();
+        initShareAction();
 
     }
 
-    /*
+
     private void initShareAction() {
         mShareAction = new ShareAction(getActivity())
-                .setDisplayList(SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE, SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE, SHARE_MEDIA.SINA).withText("分享资讯")
+                .setDisplayList(SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE, SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE)
                 .setCallback(new UMShareListener() {
                     @Override
                     public void onResult(SHARE_MEDIA share_media) {
@@ -110,7 +114,7 @@ public class InfoDetailFragment extends PageImpBaseFragment implements InfoDetai
                     public void onCancel(SHARE_MEDIA share_media) {
 
                     }
-                });
+                }).withText("分享资讯");
 
     }
 
@@ -122,18 +126,21 @@ public class InfoDetailFragment extends PageImpBaseFragment implements InfoDetai
 
     }
 
-*/
+
     @Override
     public void update(Map<String, Object> info) {
         String url = Utils.toString(info.get("url"));
         mInfoWebview.loadUrl(url);
-        mInfoWebview.setWebViewClient(new WebViewClient(){
+        mInfoWebview.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
                 return super.shouldOverrideUrlLoading(view, url);
             }
         });
+        String title = Utils.toString(info.get("title"));
+
+        mShareAction.withTargetUrl(url).withTitle(title);
 
     }
 
@@ -156,6 +163,7 @@ public class InfoDetailFragment extends PageImpBaseFragment implements InfoDetai
                 }
             });
         }
+
     }
 
     @Override
