@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zhjydy_doc.R;
+import com.zhjydy_doc.model.data.UserData;
 import com.zhjydy_doc.model.entity.IntentKey;
 import com.zhjydy_doc.presenter.contract.MineNameChangContract;
 import com.zhjydy_doc.presenter.presenterImp.MineNamePresenterIml;
@@ -73,6 +74,7 @@ public class MineNameChangeFragment extends PageImpBaseFragment implements MineN
             valueText = "社会任职";
             editName.setLines(4);
         }
+        editName.setText(UserData.getInstance().getToken().getmExpertInfo().getValueByKey(changeKey));
         titleCenterTv.setText("修改" + valueText);
         editTitle.setText("请输入" + valueText);
         titleBack.setOnClickListener(new View.OnClickListener() {
