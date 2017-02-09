@@ -32,7 +32,7 @@ import rx.functions.Func1;
 /**
  * Created by Administrator on 2016/12/13 0013.
  */
-public class UserInfoNewPresenterImp implements UserInfoNewContract.Presenter, RefreshWithData {
+public class UserInfoNewPresenterImp implements UserInfoNewContract.Presenter {
 
     private UserInfoNewContract.View mView;
     private String userId;
@@ -40,7 +40,6 @@ public class UserInfoNewPresenterImp implements UserInfoNewContract.Presenter, R
         this.mView = view;
         this.userId = userid;
         mView.setPresenter(this);
-        RefreshManager.getInstance().addNewListener(RefreshKey.LOGIN_RESULT_BACK, this);
         start();
     }
     @Override
@@ -150,7 +149,6 @@ public class UserInfoNewPresenterImp implements UserInfoNewContract.Presenter, R
                 }else {
                     mView.gotoMainTabs();
                 }
-
             }
         }
     }

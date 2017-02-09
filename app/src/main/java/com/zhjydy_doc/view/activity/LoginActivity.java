@@ -12,6 +12,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zhjydy_doc.R;
+import com.zhjydy_doc.model.refresh.RefreshKey;
+import com.zhjydy_doc.model.refresh.RefreshManager;
+import com.zhjydy_doc.model.refresh.RefreshWithData;
 import com.zhjydy_doc.presenter.contract.LoginContract;
 import com.zhjydy_doc.presenter.presenterImp.LoginPresenterImp;
 import com.zhjydy_doc.util.ActivityUtils;
@@ -24,7 +27,7 @@ import butterknife.OnClick;
 /**
  * Created by Administrator on 2016/9/29 0029.
  */
-public class LoginActivity extends BaseActivity implements LoginContract.View{
+public class LoginActivity extends BaseActivity implements LoginContract.View,RefreshWithData{
 
 
     @BindView(R.id.title_back)
@@ -117,4 +120,29 @@ public class LoginActivity extends BaseActivity implements LoginContract.View{
         phonenumEdit.setText(phone);
         passwordEdit.setText(password);
     }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        RefreshManager.getInstance().addNewListener(RefreshKey.LOGIN_RESULT_BACK, this);
+    }
+
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+        RefreshManager.getInstance().removeListner(RefreshKey.LOGIN_RESULT_BACK, this);
+    }
+
+    @Override
+    public void onRefreshWithData(int key, Object data)
+    {
+        if (mPresenter != null)
+        {
+            mPresenter.onRefreshWithData(key, data);
+        }
+
+    }
+
 }

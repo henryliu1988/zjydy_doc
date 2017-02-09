@@ -26,6 +26,8 @@ public interface UserInfoNewContract  {
     {
         void submitUserInfo(Map<String,Object> info);
         void updateHospitalList(String addressId);
+        void onRefreshWithData(int key, Object data);
+
 
     }
 }

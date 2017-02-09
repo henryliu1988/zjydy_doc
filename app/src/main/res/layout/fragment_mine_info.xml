@@ -287,6 +287,8 @@
                 <TextView
                     android:id="@+id/job_value"
                     style="@style/item_info_edit_mutiline_value"
+                    android:textColor="@color/black_text2"
+                    android:paddingTop="4dp"
                     android:lines="2"/>
             </LinearLayout>
 
@@ -321,6 +323,8 @@
                 <TextView
                     android:id="@+id/zhuanchang_value"
                     style="@style/item_info_edit_mutiline_value"
+                    android:textColor="@color/black_text2"
+                    android:paddingTop="4dp"
                     android:lines="2"/>
             </LinearLayout>
         </LinearLayout>

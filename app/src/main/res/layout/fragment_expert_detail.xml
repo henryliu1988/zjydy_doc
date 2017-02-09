@@ -54,8 +54,9 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/bottom_div"
-        android:layout_below="@id/titlebar_layout">
+        android:layout_below="@+id/titlebar_layout"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <LinearLayout
             android:layout_width="match_parent"

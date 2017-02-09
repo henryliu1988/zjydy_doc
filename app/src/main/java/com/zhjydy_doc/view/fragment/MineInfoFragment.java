@@ -255,6 +255,7 @@ public class MineInfoFragment extends PageImpBaseFragment implements MineInfoCon
 
     private void confirmLogOut()
     {
+        mPresenter.logout();
         ActivityUtils.showLogin(getActivity(), true);
     }
 

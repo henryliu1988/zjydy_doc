@@ -31,7 +31,9 @@ public class ActivityUtils {
     public static void addActivity(Activity activity) {
         activityStack.push(activity);
     }
-
+    public static void removeActivity(Activity aty) {
+        activityStack.remove(aty);
+    }
     /**
      * 获取当前Activity（堆栈中最后一个压入的）
      */
@@ -114,11 +116,17 @@ public class ActivityUtils {
     }
 
     public static void showLogin(Activity context, boolean finish) {
+
         if (finish) {
             finishAllActivity();
         }
         Intent intent = new Intent(ZhJDocApplication.getInstance().getContext(), LoginActivity.class);
+        if (finish) {
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+        }
         context.startActivity(intent);
+
     }
 
     public static void transActivity(Activity context1, Class des, boolean finish) {

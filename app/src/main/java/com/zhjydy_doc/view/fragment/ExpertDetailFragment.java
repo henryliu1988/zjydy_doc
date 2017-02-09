@@ -141,7 +141,7 @@ public class ExpertDetailFragment extends PageImpBaseFragment implements ExpertD
             depart.setText(DicData.getInstance().getOfficeById(Utils.toString(expertInfo.get("office"))).getName());
         }
         hospital.setText(DicData.getInstance().getHospitalById(Utils.toString(expertInfo.get("hospital"))).getHospital());
-        profession.setText(DicData.getInstance().getOfficeById(Utils.toString(expertInfo.get("business"))).getName());
+        profession.setText(DicData.getInstance().getBusinessById(Utils.toString(expertInfo.get("business"))).getName());
         reasonTv.setText(Utils.toString(expertInfo.get("reason")));
         specicalTv.setText(Utils.toString(expertInfo.get("adept")));
         int score = Utils.toInteger(expertInfo.get("stars"));

@@ -45,7 +45,10 @@ public class MainHomePresenterImp implements MainHomeContract.MainHomePresenter 
 
     private void loadBanner() {
 
-        WebCall.getInstance().call(WebKey.func_banner, new HashMap<String, Object>()).map(new Func1<WebResponse, List<Map<String,Object>>>() {
+        HashMap<String,Object> parasm = new HashMap<>();
+        parasm.put("type",WebKey.TYPE_KEY);
+
+        WebCall.getInstance().call(WebKey.func_banner, parasm).map(new Func1<WebResponse, List<Map<String,Object>>>() {
             @Override
             public List<Map<String,Object>> call(WebResponse webResponse) {
                 String data = webResponse.getData();

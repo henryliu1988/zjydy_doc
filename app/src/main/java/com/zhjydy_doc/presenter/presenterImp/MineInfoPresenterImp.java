@@ -159,7 +159,11 @@ public class MineInfoPresenterImp implements MineInfoContract.Presenter,RefreshW
         });
     }
 
-
+    @Override
+    public void logout()
+    {
+        UserData.getInstance().logOut();
+    }
 
 
     @Override

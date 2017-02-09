@@ -29,6 +29,9 @@ import com.zhjydy_doc.model.entity.HospitalDicItem;
 import com.zhjydy_doc.model.entity.NormalDicItem;
 import com.zhjydy_doc.model.entity.NormalPickViewData;
 import com.zhjydy_doc.model.entity.TokenInfo;
+import com.zhjydy_doc.model.refresh.RefreshKey;
+import com.zhjydy_doc.model.refresh.RefreshManager;
+import com.zhjydy_doc.model.refresh.RefreshWithData;
 import com.zhjydy_doc.presenter.contract.UserInfoNewContract;
 import com.zhjydy_doc.presenter.presenterImp.UserInfoNewPresenterImp;
 import com.zhjydy_doc.util.ActivityUtils;
@@ -52,7 +55,7 @@ import butterknife.OnClick;
 /**
  * Created by Administrator on 2016/12/13 0013.
  */
-public class UserInfoNewActivity extends BaseActivity implements UserInfoNewContract.View {
+public class UserInfoNewActivity extends BaseActivity implements UserInfoNewContract.View ,RefreshWithData{
 
     @BindView(R.id.title_back)
     ImageView titleBack;
@@ -484,5 +487,29 @@ public class UserInfoNewActivity extends BaseActivity implements UserInfoNewCont
     @Override
     public void gotoMainTabs() {
         ActivityUtils.showHome(this, true);
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        RefreshManager.getInstance().addNewListener(RefreshKey.LOGIN_RESULT_BACK, this);
+    }
+
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+        RefreshManager.getInstance().removeListner(RefreshKey.LOGIN_RESULT_BACK, this);
+    }
+
+    @Override
+    public void onRefreshWithData(int key, Object data)
+    {
+        if (mPresenter != null)
+        {
+            mPresenter.onRefreshWithData(key, data);
+        }
+
     }
 }

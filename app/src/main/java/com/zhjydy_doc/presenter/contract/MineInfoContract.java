@@ -30,7 +30,7 @@ public interface MineInfoContract {
     {
         void updateHospitalList(String addressId);
         void updateMemberPhoto(String path);
-
+        void logout();
         void updateExpertInfo(String key,String value);
         void refreshView();
     }
