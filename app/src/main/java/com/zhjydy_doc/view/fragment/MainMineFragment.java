@@ -153,13 +153,13 @@ public class MainMineFragment extends StatedFragment implements MainMineContract
                 text = "已认证";
                 break;
             case 2:
-                text="未上传";
+                text="认证中";
                 break;
             case 3:
-                text = "认证未通过";
+                text = "未上传";
                 break;
             case 4:
-                text = "认证中";
+                text = "审核未通过";
                 break;
             default:
                 text = "未上传";

@@ -5,8 +5,6 @@ import android.text.TextUtils;
 import com.zhjydy_doc.model.data.UserData;
 import com.zhjydy_doc.model.preference.SPUtils;
 import com.zhjydy_doc.model.refresh.RefreshKey;
-import com.zhjydy_doc.model.refresh.RefreshManager;
-import com.zhjydy_doc.model.refresh.RefreshWithData;
 import com.zhjydy_doc.presenter.contract.InitLoaderContract;
 import com.zhjydy_doc.util.Utils;
 import com.zhjydy_doc.view.zjview.zhToast;
@@ -22,15 +20,16 @@ public class InitLoaderPresenterImp implements InitLoaderContract.Presenter {
 
     public InitLoaderPresenterImp(InitLoaderContract.View view) {
         this.mView = view;
+        mView.setPresenter(this);
         start();
     }
 
     @Override
     public void start() {
-        tryLogInBackGroud();
+       //tryLogInBackGroud();
     }
 
-    private void tryLogInBackGroud() {
+    public void tryLogInBackGroud() {
 
         String phoneNum = Utils.toString(SPUtils.get("login_phoneNum", ""));
         String passoword = Utils.toString(SPUtils.get("login_password", ""));

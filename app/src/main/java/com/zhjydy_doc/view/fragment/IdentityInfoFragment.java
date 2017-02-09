@@ -120,7 +120,17 @@ public class IdentityInfoFragment extends PageImpBaseFragment implements Identit
             ViewUtil.setOverViewDrawbleBg(stepWait, "#FFAD0E", "#FFE3B9", strokWidth);
             ViewUtil.setOverViewDrawbleBg(stepVerify, "#FFAD0E", "#FFE3B9", strokWidth);
         } else if (status == 2) {
+            stepUpload.setText("上传" + "\n" + "成功");
+            stepWaitVerify.setText("等待\n审核");
+            stepWait.setText("等待中");
+            stepVerify.setText("审核\n结果");
+            ViewUtil.setOverViewDrawbleBg(stepUpload, "#FFAD0E", "#FFE3B9", strokWidth);
+            ViewUtil.setOverViewDrawbleBg(stepWaitVerify, "#FFAD0E", "#FFE3B9", strokWidth);
+            ViewUtil.setOverViewDrawbleBg(stepWait, "#FFAD0E", "#FFE3B9", strokWidth);
         } else  if (status == 3) {
+
+        } else if (status == 4) {
+
             stepUpload.setText("上传" + "\n" + "成功");
             stepWaitVerify.setText("等待\n审核");
             stepWait.setText("等待中");
@@ -130,14 +140,6 @@ public class IdentityInfoFragment extends PageImpBaseFragment implements Identit
             ViewUtil.setOverViewDrawbleBg(stepWait, "#FFAD0E", "#FFE3B9", strokWidth);
             ViewUtil.setOverViewDrawbleBg(stepVerify, "#FFAD0E", "#FFE3B9", strokWidth);
 
-        } else if (status == 4) {
-            stepUpload.setText("上传" + "\n" + "成功");
-            stepWaitVerify.setText("等待\n审核");
-            stepWait.setText("等待中");
-            stepVerify.setText("审核\n结果");
-            ViewUtil.setOverViewDrawbleBg(stepUpload, "#FFAD0E", "#FFE3B9", strokWidth);
-            ViewUtil.setOverViewDrawbleBg(stepWaitVerify, "#FFAD0E", "#FFE3B9", strokWidth);
-            ViewUtil.setOverViewDrawbleBg(stepWait, "#FFAD0E", "#FFE3B9", strokWidth);
         }
 
     }

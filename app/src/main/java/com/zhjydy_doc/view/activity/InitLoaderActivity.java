@@ -6,10 +6,8 @@ import android.support.annotation.Nullable;
 import android.view.WindowManager;
 
 import com.zhjydy_doc.model.refresh.RefreshKey;
-import com.zhjydy_doc.model.refresh.RefreshListener;
 import com.zhjydy_doc.model.refresh.RefreshManager;
 import com.zhjydy_doc.model.refresh.RefreshWithData;
-import com.zhjydy_doc.model.refresh.RefreshWithKey;
 import com.zhjydy_doc.presenter.contract.InitLoaderContract;
 import com.zhjydy_doc.presenter.presenterImp.InitLoaderPresenterImp;
 import com.zhjydy_doc.util.ActivityUtils;
@@ -45,6 +43,9 @@ public class InitLoaderActivity extends BaseActivity implements InitLoaderContra
     {
         super.onResume();
         RefreshManager.getInstance().addNewListener(RefreshKey.LOGIN_RESULT_BACK, this);
+        if (mPresenter != null){
+            mPresenter.tryLogInBackGroud();
+        }
     }
 
     @Override
