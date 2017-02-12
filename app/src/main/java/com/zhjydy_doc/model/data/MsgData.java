@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -145,6 +144,9 @@ public class MsgData
                 msgList.add(msgData);
             }
         }
+        ListMapComparator comp = new ListMapComparator("addtime", 0);
+        Collections.sort(msgList, comp);
+
         return  msgList;
     }
 

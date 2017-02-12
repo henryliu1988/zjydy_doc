@@ -28,6 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
             android:background="@drawable/bg_eeeeee_corner"
+            android:gravity="top"
             android:textSize="16sp"
             android:paddingTop="10dp"
             android:paddingLeft="5dp"

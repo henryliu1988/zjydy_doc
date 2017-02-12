@@ -15,7 +15,5 @@ public interface InitLoaderContract {
     }
 
     interface Presenter extends BasePresenter {
-        void onRefreshWithData(int key, Object data);
-        void tryLogInBackGroud();
     }
 }

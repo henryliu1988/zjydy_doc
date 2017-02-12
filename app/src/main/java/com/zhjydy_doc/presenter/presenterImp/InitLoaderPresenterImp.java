@@ -5,6 +5,8 @@ import android.text.TextUtils;
 import com.zhjydy_doc.model.data.UserData;
 import com.zhjydy_doc.model.preference.SPUtils;
 import com.zhjydy_doc.model.refresh.RefreshKey;
+import com.zhjydy_doc.model.refresh.RefreshManager;
+import com.zhjydy_doc.model.refresh.RefreshWithData;
 import com.zhjydy_doc.presenter.contract.InitLoaderContract;
 import com.zhjydy_doc.util.Utils;
 import com.zhjydy_doc.view.zjview.zhToast;
@@ -14,7 +16,7 @@ import java.util.Map;
 /**
  * Created by Administrator on 2016/12/17 0017.
  */
-public class InitLoaderPresenterImp implements InitLoaderContract.Presenter {
+public class InitLoaderPresenterImp implements InitLoaderContract.Presenter,RefreshWithData {
 
     private InitLoaderContract.View mView;
 
@@ -22,11 +24,13 @@ public class InitLoaderPresenterImp implements InitLoaderContract.Presenter {
         this.mView = view;
         mView.setPresenter(this);
         start();
+        RefreshManager.getInstance().addNewListener(RefreshKey.LOGIN_RESULT_BACK, this);
+
     }
 
     @Override
     public void start() {
-       //tryLogInBackGroud();
+       tryLogInBackGroud();
     }
 
     public void tryLogInBackGroud() {
@@ -45,6 +49,7 @@ public class InitLoaderPresenterImp implements InitLoaderContract.Presenter {
 
     @Override
     public void finish() {
+        RefreshManager.getInstance().removeListner(RefreshKey.LOGIN_RESULT_BACK, this);
 
     }
 
