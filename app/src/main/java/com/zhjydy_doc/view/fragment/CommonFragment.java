@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.zhjydy_doc.R;
 import com.zhjydy_doc.presenter.contract.CommonContract;
 import com.zhjydy_doc.presenter.presenterImp.CommonPresenterImp;
+import com.zhjydy_doc.util.DataCleanManager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -80,6 +81,8 @@ public class CommonFragment extends PageImpBaseFragment implements CommonContrac
                 back();
                 break;
             case R.id.clear_layout:
+
+                DataCleanManager.cleanApplicationData(getContext(),"");
                 break;
         }
     }
