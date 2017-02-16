@@ -171,18 +171,19 @@ public class ExpertData {
         return Observable.zip(getGuanData(), getMeGuanData(), new Func2<List<Map<String, Object>>, List<Map<String, Object>>, Integer>() {
             @Override
             public Integer call(List<Map<String, Object>> guanList, List<Map<String, Object>> meGuanList) {
-                if (TextUtils.isEmpty(id)) {
-                    return GUAN_STAT_NUL;
+
+                for (Map<String, Object> m : meGuanList) {
+                    if (id.equals(Utils.toString(m.get("id")))) {
+                        return GUAN_STAT_MEGUAN;
+                    }
                 }
                 for (Map<String, Object> m : guanList) {
                     if (id.equals(Utils.toString(m.get("id")))) {
                         return GUAN_STAT_GUAN;
                     }
                 }
-                for (Map<String, Object> m : meGuanList) {
-                    if (id.equals(Utils.toString(m.get("id")))) {
-                        return GUAN_STAT_MEGUAN;
-                    }
+                if (TextUtils.isEmpty(id)) {
+                    return GUAN_STAT_NUL;
                 }
                 return GUAN_STAT_NUL;
             }

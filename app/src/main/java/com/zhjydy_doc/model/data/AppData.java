@@ -1,7 +1,23 @@
 package com.zhjydy_doc.model.data;
 
 
+import android.text.TextUtils;
+
+import com.alibaba.fastjson.JSONObject;
+import com.zhjydy_doc.app.ZhJDocApplication;
 import com.zhjydy_doc.model.entity.TokenInfo;
+import com.zhjydy_doc.model.net.WebResponse;
+import com.zhjydy_doc.model.preference.SPUtils;
+import com.zhjydy_doc.util.DataCleanManager;
+import com.zhjydy_doc.util.ImageUtils;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by Administrator on 2016/11/8 0008.
@@ -37,6 +53,9 @@ public class AppData {
         }
         return mToken;
     }
+
+
+
 
 
 }

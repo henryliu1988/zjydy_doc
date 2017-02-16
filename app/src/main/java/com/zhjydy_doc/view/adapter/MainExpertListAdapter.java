@@ -28,7 +28,6 @@ public class MainExpertListAdapter extends PageLoadListAdapter {
     private int expertDataType = ExpertData.GUAN_STAT_NUL;
     public MainExpertListAdapter(Context context, List<Map<String, Object>> datas) {
         super(context, datas, R.layout.listview_main_expert_info_item);
-        this.expertDataType = expertDataType;
         this.mContext = context;
     }
 
