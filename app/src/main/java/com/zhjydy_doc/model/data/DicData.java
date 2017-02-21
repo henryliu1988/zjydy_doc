@@ -539,7 +539,6 @@ public class DicData {
 
     public Observable<List<NormalDicItem>> getOfficeObserver() {
         WebResponse memoryResponse = new WebResponse();
-        memoryResponse.setData(officeListData);
         return WebCall.getInstance().callCacheThree(WebKey.func_getoffice, new HashMap<String, Object>(), memoryResponse, "office_dic").map(new Func1<WebResponse, List<NormalDicItem>>() {
             @Override
             public List<NormalDicItem> call(WebResponse webResponse) {
