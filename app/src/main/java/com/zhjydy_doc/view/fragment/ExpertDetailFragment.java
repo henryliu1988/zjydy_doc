@@ -314,6 +314,7 @@ public class ExpertDetailFragment extends PageImpBaseFragment implements ExpertD
                     return;
                 }
                 mPresenter.makeNewComment(commentNew);
+                closeKeyBoard(commentMakeEdit);
                 break;
             case R.id.title_back:
                 back();

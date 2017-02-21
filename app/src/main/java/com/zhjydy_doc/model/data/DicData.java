@@ -76,8 +76,7 @@ public class DicData {
         if (TextUtils.isEmpty(officeListData)) {
             return new ArrayList<>();
         }
-        list = JSON.parseObject(officeListData, new TypeReference<List<NormalDicItem>>() {
-        });
+        list = partNormalDicJson(officeListData);
         return list;
 
     }
@@ -90,9 +89,7 @@ public class DicData {
         if (TextUtils.isEmpty(businessListData)) {
             return new ArrayList<>();
         }
-        list = JSON.parseObject(businessListData, new TypeReference<List<NormalDicItem>>() {
-
-        });
+        list = partNormalDicJson(businessListData);
         return list;
 
     }
@@ -106,8 +103,7 @@ public class DicData {
         if (TextUtils.isEmpty(hospitalListData)) {
             return new ArrayList<>();
         }
-        list = JSON.parseObject(hospitalListData, new TypeReference<List<HospitalDicItem>>() {
-        });
+        list = partHospitalDicJson(hospitalListData);
         return list;
     }
 
@@ -115,8 +111,7 @@ public class DicData {
     public List<District> getAllPros() {
         if (mProList == null || mProList.size() < 1) {
             prosListData = (String) SPUtils.get("pro_dic", "");
-            mProList = JSON.parseObject(prosListData, new TypeReference<List<District>>() {
-            });
+            mProList = parseDistrictJson(prosListData);
         }
         return mProList;
     }
@@ -124,8 +119,7 @@ public class DicData {
     public List<District> getAllCities() {
         if (mCityList == null || mCityList.size() < 1) {
             cityListData = (String) SPUtils.get("city_dic", "");
-            mCityList = JSON.parseObject(cityListData, new TypeReference<List<District>>() {
-            });
+            mCityList = parseDistrictJson(cityListData);
         }
         return mCityList;
     }
@@ -134,8 +128,7 @@ public class DicData {
     public List<District> getAllQus() {
         if (mQuList == null || mQuList.size() < 1) {
             quListData = (String) SPUtils.get("qu_dic", "");
-            mQuList = JSON.parseObject(quListData, new TypeReference<List<District>>() {
-            });
+            mQuList =  parseDistrictJson(quListData);
         }
         return mQuList;
     }
@@ -145,8 +138,7 @@ public class DicData {
 
         if (mProList == null || mProList.size() < 1) {
             prosListData = (String) SPUtils.get("pro_dic", "");
-            mProList = JSON.parseObject(prosListData, new TypeReference<List<District>>() {
-            });
+            mProList = parseDistrictJson(prosListData);
         }
         for (District p : mProList) {
             map.put(p.getId(), p);
@@ -158,8 +150,7 @@ public class DicData {
         Map<String, District> map = new HashMap<>();
         if (mCityList == null || mCityList.size() < 1) {
             cityListData = (String) SPUtils.get("city_dic", "");
-            mCityList = JSON.parseObject(cityListData, new TypeReference<List<District>>() {
-            });
+            mCityList = parseDistrictJson(cityListData);
         }
         for (District c : mCityList) {
             map.put(c.getId(), c);
@@ -722,5 +713,38 @@ public class DicData {
                 return "订单进行中";
         }
         return "";
+    }
+
+    public List<District> parseDistrictJson(String json) {
+        List<District> list = new ArrayList<>();
+        try {
+            list = JSON.parseObject(json, new TypeReference<List<District>>() {
+            });
+        } catch (Exception e) {
+
+        }
+        return list;
+    }
+
+    public List<HospitalDicItem> partHospitalDicJson(String json) {
+        List<HospitalDicItem> list = new ArrayList<>();
+        try {
+            list = JSON.parseObject(json, new TypeReference<List<HospitalDicItem>>() {
+            });
+        } catch (Exception e) {
+
+        }
+        return list;
+    }
+
+    public List<NormalDicItem> partNormalDicJson(String json) {
+        List<NormalDicItem> list = new ArrayList<>();
+        try {
+            list = JSON.parseObject(json, new TypeReference<List<NormalDicItem>>() {
+            });
+        } catch (Exception e) {
+
+        }
+        return list;
     }
 }
